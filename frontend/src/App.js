@@ -1,9 +1,10 @@
 import './App.css';
+import MainPage from './views/MainPage';
 
-function App() {
+const App = () => {
   return (
-    <div className="App text-3xl">
-      초기 프로젝트 생성중입니다...
+    <div className="App min-h-screen">
+      <MainPage/>
     </div>
   );
 }
