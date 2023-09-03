@@ -13,7 +13,7 @@ const AccountChangePage = () => {
                 accountNumber="121254-4564"
                 balance="420원"
             />
-                        <AccountCard
+            <AccountCard
                 imageUrl="../chacha2.jpg"
                 accountName="차곡차곡계좌"
                 accountNumber="121254-4564"
