@@ -41,9 +41,20 @@ public class UserController {
     @Operation(description = "특정 유저 조회 메서드입니다.")
     @GetMapping("{id}")
     public ResponseEntity<UserEntity> getUser(@PathVariable("id") String id) {
-
         UserEntity user = userService.getUser(id);
-
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    /**
+     * Id에 해당하는 Member 삭제
+     *✨
+     * @param id
+     * @return
+     */
+    @Operation(description = "특정 유저 제거 메서드입니다.")
+    @DeleteMapping("{id}")
+    public ResponseEntity<String> deleteUser(@PathVariable("id") String id) {
+        userService.deleteUser(id);
+        return new ResponseEntity<>(id, HttpStatus.OK);
     }
 }
