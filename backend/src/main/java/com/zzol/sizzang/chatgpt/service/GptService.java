@@ -2,7 +2,9 @@ package com.zzol.sizzang.chatgpt.service;
 
 
 import com.zzol.sizzang.chatgpt.model.RequestQuestionVo;
+import com.zzol.sizzang.chatgpt.model.RequestRecommFoodVo;
 import com.zzol.sizzang.chatgpt.model.ResponseVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpEntity;
@@ -16,13 +18,35 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Service
-//@PropertySource("classpath:apikey.properties")
+@PropertySource("classpath:apikey.yml")
 public class GptService {
 
-    @Value("${gpt.token}")
+    @Value("${apikey}")
     private String API_KEY;
     private static final String COMPLETION_ENDPOINT = "https://api.openai.com/v1/completions";
+
+    public ResponseVo getRecommendFood(RequestRecommFoodVo requestRecommFoodVo) {
+        ResponseVo responseVo = new ResponseVo();
+        try {
+            log.info("재료 :" + requestRecommFoodVo.getText());
+//            String question = requestRecommFoodVo.getText() + "(을)를 재료로 만들 수 있는 음식은 무엇이 있을까요? ";
+            String question = "Recommend foods that can be made with " + requestRecommFoodVo.getText();
+            System.out.println(question);
+            String answer = generateText(question, 0.0f, 20);
+
+            String answerFilter1 = answer.replaceAll("\n", "");
+            String result =  answerFilter1.replaceAll("\\.","");
+            responseVo.setCode(200);
+            responseVo.setResponse(result);
+
+        } catch (Exception e) {
+            responseVo.setCode(500);
+            responseVo.setResponse("generateText error(서버 에러)");
+        }
+        return responseVo;
+    }
 
     public ResponseVo getConversation(RequestQuestionVo requestQuestionVo) {
         ResponseVo responseVo = new ResponseVo();
