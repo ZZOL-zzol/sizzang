@@ -3,6 +3,7 @@ package com.zzol.sizzang.user.controller;
 
 import com.zzol.sizzang.user.entity.UserEntity;
 import com.zzol.sizzang.user.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ public class UserController {
      *
      * @return
      */
+    @Operation(description = "유저 전체 조회 메서드입니다.")
     @GetMapping()
     public ResponseEntity<List<UserEntity>> getUsers() {
         List<UserEntity> users = userService.getUsers();
@@ -36,7 +38,7 @@ public class UserController {
      * @param id
      * @return
      */
-//    @Operation(description = "특정 유저 조회 메서드입니다.")
+    @Operation(description = "특정 유저 조회 메서드입니다.")
     @GetMapping("{id}")
     public ResponseEntity<UserEntity> getUser(@PathVariable("id") String id) {
 
