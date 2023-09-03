@@ -4,6 +4,7 @@ import Header from '../components/common/Header';
 import Navbar from '../components/common/Navbar';
 import TextInput from '../components/common/TextInput';
 import DetailInfoCard from '../components/common/DetailInfoCard';
+import SmallButton from '../components/common/SmallButton';
 
 const MainPage = () => {
   return (
@@ -14,6 +15,7 @@ const MainPage = () => {
       <TextInput/>
       <MarketStoreCard/>
       <DetailInfoCard/>
+      <SmallButton/>
       </div>
       <Navbar/>
     </div>
