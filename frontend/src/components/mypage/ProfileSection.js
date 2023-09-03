@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-{/* 프로필 사진 */}
+/* 프로필 사진 */
 const ProfileImage = ({ imageUrl, altText }) => {
   return (
     <div className="w-20 h-20 rounded-full overflow-hidden"> {/* 100x100 크기로 설정 */}
@@ -11,7 +11,7 @@ const ProfileImage = ({ imageUrl, altText }) => {
 }
 
 
-{/* 유저 정보 */}
+/* 유저 정보 */
 const UserInfo = ({ marketName, userName }) => {
   return (
     <div className="bg-gray-800 text-white p-4">
