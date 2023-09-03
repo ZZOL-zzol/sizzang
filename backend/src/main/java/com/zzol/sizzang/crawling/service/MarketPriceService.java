@@ -12,16 +12,22 @@ import javax.annotation.PostConstruct;
 import javax.swing.*;
 import java.io.IOException;
 import java.sql.SQLOutput;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class MarketPriceService {
-    private static String[] Country_Code = {"1101", "2100", "2200", "2401", "2501"};
+    private static String[] Country_Code = {"1101", "2100", "2200", "2401", "2501"}; //대구
     @PostConstruct
     public void getMarketPriceData() throws IOException {
+        LocalDate now = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formatNow = now.format(formatter);
+        System.out.println(formatNow);
         for (String str : Country_Code) {
-            String URL = "https://www.kamis.or.kr/customer/price/wholesale/catalogue.do?action=daily&regday=2023-09-01&countycode=" + str + "&itemcategorycode=&convert_kg_yn=N";
+            String URL = "https://www.kamis.or.kr/customer/price/wholesale/catalogue.do?action=daily&regday="+formatNow+"&countycode=" + str + "&itemcategorycode=&convert_kg_yn=N";
             System.out.println(str);
             List<MarketPrice> marketPriceList = new ArrayList<>();
             Document document = Jsoup.connect(URL).get();
