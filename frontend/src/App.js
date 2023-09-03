@@ -7,8 +7,9 @@ import AccountChangePage from './views/mypage/AccountChangePage';
 const App = () => {
   return (
     <div className="App min-h-screen flex w-screen">
-      {/* <MainPage/> */}
-      <AccountChangePage/>
+      <MainPage/>
+
+      {/* <AccountChangePage/> */}
     </div>
   );
 }
