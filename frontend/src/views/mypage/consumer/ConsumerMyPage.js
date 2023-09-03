@@ -6,7 +6,7 @@ import AccountCard from '../../../components/mypage/AccountCard';
 
 const ConsumerMyPage = () => {
   return (
-    <div className="SellerMyPage  bg-whitegray font-spoqa">
+    <div className="ConsumerMyPage  bg-whitegray font-spoqa">
       <PageTitle pageTitle="마이페이지" />
       <ProfileSection />
       <AccountCard
