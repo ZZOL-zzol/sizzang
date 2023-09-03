@@ -1,9 +1,18 @@
 import './App.css';
+import MainPage from './views/MainPage';
+import SellerMyPage from './views/mypage/seller/SellerMyPage';
+import StoreInfoPage from './views/mypage/seller/StoreInfoPage';
+import AccountChangePage from './views/mypage/AccountChangePage';
+import ConsumerMyPage from './views/mypage/consumer/ConsumerMyPage';
+import ConsumptionDetailPage from './views/mypage/consumer/ConsumptionDetailPage';
 
-function App() {
+
+const App = () => {
   return (
-    <div className="App text-3xl">
-      초기 프로젝트 생성중입니다...
+    <div className="App min-h-screen flex w-screen">
+      {/* <MainPage/> */}
+
+      <ConsumptionDetailPage/>
     </div>
   );
 }
