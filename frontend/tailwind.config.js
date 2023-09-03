@@ -11,6 +11,9 @@ module.exports = {
       'midgray': '#DCE1E9',
       'whitegray': '#F3F4F8',
     },
+    fontFamily: {
+      spoqa: ['Spoqa Han Sans', 'spoqa'],
+    },
     extend: {},
   },
   plugins: [require("daisyui")],
