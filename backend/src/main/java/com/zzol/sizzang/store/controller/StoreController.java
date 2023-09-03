@@ -14,13 +14,23 @@ public class StoreController {
     private StoreService storeService;
 
     /**
-     * 점포 등록
+     * Store 등록
      */
     @Operation(description = "점포 등록 메서드입니다.")
     @GetMapping()
     public ResponseEntity<?> insertStore(StoreEntity storeEntity){
         storeService.insertStore();
-        return new ResponseEntity<StoreEntity>(storeEntity, HttpStatus.CREATED);
-
+        return new ResponseEntity<StoreEntity>(storeEntity, HttpStatus.OK);
+    }
+    /**
+     * Store List 조회
+     *
+     * @return
+     */
+    @Operation(description = "점포 전체 조회 메서드입니다.")
+    @GetMapping()
+    public ResponseEntity<List<StoreEntity>> getStores() {
+        List<StoreEntity> stores = storeService.getStores();
+        return new ResponseEntity<>(stores, HttpStatus.OK);
     }
 }
