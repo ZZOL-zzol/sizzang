@@ -1,10 +1,10 @@
 import React from 'react';
 
-function MenuSection({ menuName, iconPath }) {
+function MenuSection({ menuName, imageUrl }) {
     return (
-        <div className="MenuSection w-[100px] h-[100px] m-4">
-            <div className="text-left">{menuName}</div>
-            <img src={iconPath} alt="아이콘" className="float-right w-35 h-35" />
+        <div className="MenuSection flex flex-col justify-between bg-secondary-container rounded-2xl w-[100px] h-[100px] m-4 p-2">
+            <div className="text-center font-bold">{menuName}</div>
+            <img src={imageUrl} alt="아이콘" className="self-end rounded-full overflow-hidden w-[35px] h-[35px]" />
         </div>
     );
 }
