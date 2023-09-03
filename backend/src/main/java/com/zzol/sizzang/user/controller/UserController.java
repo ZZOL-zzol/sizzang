@@ -6,10 +6,7 @@ import com.zzol.sizzang.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -30,5 +27,21 @@ public class UserController {
     public ResponseEntity<List<UserEntity>> getUsers() {
         List<UserEntity> users = userService.getUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);
+    }
+
+
+    /**
+     * Id에 해당하는 Member 조회
+     *
+     * @param id
+     * @return
+     */
+//    @Operation(description = "특정 유저 조회 메서드입니다.")
+    @GetMapping("{id}")
+    public ResponseEntity<UserEntity> getUser(@PathVariable("id") String id) {
+
+        UserEntity user = userService.getUser(id);
+
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }
