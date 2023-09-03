@@ -6,20 +6,20 @@ import MenuSection from '../../../components/mypage/MenuSection';
 
 
 const SellerMyPage = () => {
-  return (
-    <div className="SellerMyPage">
-      <PageTitle pageTitle="페이지제목"/>
-      <ProfileSection />
-      <AccountSection 
-        accountName="차곡차곡계좌"
-        accountNumber="121254-4564"
-        balance="420원"
-      />
-      <MenuSection
-        menuName="상품관리"
-      />
-    </div>
-  );
+    return (
+        <div className="SellerMyPage">
+            <PageTitle pageTitle="페이지제목" />
+            <ProfileSection />
+            <AccountSection
+              accountName="차곡차곡계좌"
+              accountNumber="121254-4564"
+              balance="420원"
+            />
+            <MenuSection
+              menuName="상품관리"
+            />
+        </div>
+    );
 }
 
 export default SellerMyPage;
