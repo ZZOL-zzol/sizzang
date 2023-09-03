@@ -1,8 +1,9 @@
-import Card from '../components/common/Card';
+import MarketStoreCard from '../components/common/MarketStoreCard';
 import Carousel from '../components/common/Carousel';
 import Header from '../components/common/Header';
 import Navbar from '../components/common/Navbar';
 import TextInput from '../components/common/TextInput';
+import DetailInfoCard from '../components/common/DetailInfoCard';
 
 const MainPage = () => {
   return (
@@ -11,7 +12,8 @@ const MainPage = () => {
       <div className='flex flex-col flex-grow'>바디이이이이
       <Carousel></Carousel>
       <TextInput/>
-      <Card/>
+      <MarketStoreCard/>
+      <DetailInfoCard/>
       </div>
       <Navbar/>
     </div>
