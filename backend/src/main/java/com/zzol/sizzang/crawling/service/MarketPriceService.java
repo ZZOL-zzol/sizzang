@@ -17,17 +17,23 @@ import java.util.List;
 
 @Service
 public class MarketPriceService {
-    private static String News_URL = "https://www.kamis.or.kr/customer/price/wholesale/catalogue.do?action=daily&regday=2023-09-01&countycode=1101&itemcategorycode=&convert_kg_yn=N";
+    private static String[] Country_Code = {"1101", "2100", "2200", "2401", "2501"};
     @PostConstruct
-    public List<MarketPrice> getMarketPriceData() throws IOException{
-        List<MarketPrice> marketPriceList = new ArrayList<>();
-        Document document = Jsoup.connect(News_URL).get();
-        Elements contents = document.select(".wtable3");
-        for (Element content : contents) {
-            MarketPrice marketPrice = MarketPrice.builder().build();
-            System.out.println(content);
-        }
+    public void getMarketPriceData() throws IOException {
+        for (String str : Country_Code) {
+            String URL = "https://www.kamis.or.kr/customer/price/wholesale/catalogue.do?action=daily&regday=2023-09-01&countycode=" + str + "&itemcategorycode=&convert_kg_yn=N";
+            System.out.println(str);
+            List<MarketPrice> marketPriceList = new ArrayList<>();
+            Document document = Jsoup.connect(URL).get();
+            Elements contents = document.select(".wtable3");
+            Elements trs = contents.select("tr");
+            for (Element tr : trs) {
+                MarketPrice marketPrice = MarketPrice.builder().build();
+                System.out.println(tr);
+                System.out.println("-----------------------------------------------------------------");
+                Elements tds = trs.select("td");
+            }
 
-        return marketPriceList;
+        }
     }
 }
