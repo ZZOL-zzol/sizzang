@@ -8,7 +8,7 @@ import SmallButton from '../components/common/SmallButton';
 
 const MainPage = () => {
   return (
-    <div className="App flex flex-col text-3xl h-full w-full bg-background-fill">
+    <div className="App flex flex-col text-3xl h-full w-full bg-gray-100">
       <Header/>
       <div className='flex flex-col flex-grow'>바디이이이이
       <Carousel></Carousel>
