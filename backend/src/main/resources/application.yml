@@ -1,1 +1,19 @@
+server.port: 8080
+server.ssl.enabled: false
+
+# sizzang
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://sizzang.cggdc2hymcot.ap-northeast-2.rds.amazonaws.com/sizzang?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+    username: sizzang
+    password: sizzangssafy
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql : true
 
