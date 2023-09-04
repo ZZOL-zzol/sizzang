@@ -29,7 +29,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
 
-	implementation 'com.h2database:h2' // dp 연결전 에러방지 -> H2 데이터베이스 사용 가정
+//	implementation 'com.h2database:h2' // dp 연결전 에러방지 -> H2 데이터베이스 사용 가정
+	runtimeOnly 'com.mysql:mysql-connector-j'
 }
 
 tasks.named('test') {
