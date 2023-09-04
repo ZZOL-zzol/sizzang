@@ -1,6 +1,6 @@
 import React from 'react';
 
-function PageTitle({ pageTitle }) {
+const PageTitle = ({ pageTitle }) => {
     return (
         <div className="flex items-center w-[393px] h-[60px] p-2">
           <div className="text-left font-bold text-xl">&lt;</div>

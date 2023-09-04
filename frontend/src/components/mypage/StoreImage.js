@@ -1,6 +1,6 @@
 import React from 'react';
 
-function StoreImage({imageUrl, altText}) {
+const StoreImage = ({imageUrl, altText}) => {
     return (
         <div className="StoreImage bg-white p-4">
             <div className="w-[320px] h-[160px] rounded-lg overflow-hidden m-4">
