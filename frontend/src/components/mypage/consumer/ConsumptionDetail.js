@@ -4,7 +4,7 @@ import ConsumptionCard from '../../../components/mypage/ConsumptionCard';
 
 
 
-const ConsumptionDetailPage = () => {
+const ConsumptionDetail = () => {
     return (
         <div className="ConsumptionDetailPage  bg-whitegray font-spoqa">
             <PageTitle pageTitle="내 소비 내역" />
@@ -18,4 +18,4 @@ const ConsumptionDetailPage = () => {
     );
 }
 
-export default ConsumptionDetailPage;
+export default ConsumptionDetail;
