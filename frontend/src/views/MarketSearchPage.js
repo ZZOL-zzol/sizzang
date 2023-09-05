@@ -1,6 +1,7 @@
 import Header from '../components/common/Header';
 import Navbar from '../components/common/Navbar';
 import KakaoMap from '../components/common/KakaoMap';
+import MapExample from '../components/common/MapExample';
 
 
 const MarketSearchPage = () => {
@@ -11,7 +12,8 @@ const MarketSearchPage = () => {
       <Header/>
       <div className='flex flex-col flex-grow'>
         <input/>
-        <KakaoMap/>
+        {/* <KakaoMap/> */}
+        <MapExample/>
       </div>
       <Navbar/>
     </div>
