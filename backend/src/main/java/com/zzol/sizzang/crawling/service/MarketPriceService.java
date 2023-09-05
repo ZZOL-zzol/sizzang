@@ -19,27 +19,27 @@ import java.util.List;
 
 @Service
 public class MarketPriceService {
-    private static String[] Country_Code = {"1101", "2100", "2200", "2401", "2501"}; //대구
-    @PostConstruct
-    public void getMarketPriceData() throws IOException {
-        LocalDate now = LocalDate.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        String formatNow = now.format(formatter);
-        System.out.println(formatNow);
-        for (String str : Country_Code) {
-            String URL = "https://www.kamis.or.kr/customer/price/wholesale/catalogue.do?action=daily&regday="+formatNow+"&countycode=" + str + "&itemcategorycode=&convert_kg_yn=N";
-            System.out.println(str);
-            List<MarketPrice> marketPriceList = new ArrayList<>();
-            Document document = Jsoup.connect(URL).get();
-            Elements contents = document.select(".wtable3");
-            Elements trs = contents.select("tr");
-            for (Element tr : trs) {
-                MarketPrice marketPrice = MarketPrice.builder().build();
-                System.out.println(tr);
-                System.out.println("-----------------------------------------------------------------");
-                Elements tds = trs.select("td");
-            }
-
-        }
-    }
+//    private static String[] Country_Code = {"1101", "2100", "2200", "2401", "2501"}; //대구
+//    @PostConstruct
+//    public void getMarketPriceData() throws IOException {
+//        LocalDate now = LocalDate.now();
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//        String formatNow = now.format(formatter);
+//        System.out.println(formatNow);
+//        for (String str : Country_Code) {
+//            String URL = "https://www.kamis.or.kr/customer/price/wholesale/catalogue.do?action=daily&regday="+formatNow+"&countycode=" + str + "&itemcategorycode=&convert_kg_yn=N";
+//            System.out.println(str);
+//            List<MarketPrice> marketPriceList = new ArrayList<>();
+//            Document document = Jsoup.connect(URL).get();
+//            Elements contents = document.select(".wtable3");
+//            Elements trs = contents.select("tr");
+//            for (Element tr : trs) {
+//                MarketPrice marketPrice = MarketPrice.builder().build();
+//                System.out.println(tr);
+//                System.out.println("-----------------------------------------------------------------");
+//                Elements tds = trs.select("td");
+//            }
+//
+//        }
+//    }
 }
