@@ -1,5 +1,6 @@
 package com.zzol.sizzang.store.controller;
 
+import com.zzol.sizzang.common.model.CommonResponse;
 import com.zzol.sizzang.store.dto.request.StoreRegistInsertReq;
 import com.zzol.sizzang.store.entity.StoreEntity;
 import com.zzol.sizzang.store.service.StoreService;
@@ -30,24 +31,24 @@ public class StoreController {
      */
     @Operation(description = "점포 등록 메서드입니다")
     @PostMapping
-    public ResponseEntity<?> insertStore(@RequestBody StoreRegistInsertReq insertInfo) {
+    public CommonResponse<?> insertStore(@RequestBody StoreRegistInsertReq insertInfo) {
 
         log.info("TemplateController_regist_start: " + insertInfo.toString());
 
         storeService.insertStore(insertInfo);
 
         log.info("StoreController_insert_end: success");
-        return ResponseEntity<>(insertInfo, HttpStatus.OK);
+        return CommonResponse.success(SUCCESS);
     }
     /**
      * Store List 조회
      *
      * @return
      */
-    @Operation(description = "점포 전체 조회 메서드입니다.")
-    @GetMapping()
-    public ResponseEntity<List<StoreEntity>> getStores() {
-        List<StoreEntity> stores = storeService.getStores();
-        return new ResponseEntity<>(stores, HttpStatus.OK);
-    }
+//    @Operation(description = "점포 전체 조회 메서드입니다.")
+//    @GetMapping()
+//    public ResponseEntity<List<StoreEntity>> getStores() {
+//        List<StoreEntity> stores = storeService.getStores();
+//        return new ResponseEntity<>(stores, HttpStatus.OK);
+//    }
 }
