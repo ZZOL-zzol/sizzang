@@ -1,6 +1,8 @@
 package com.zzol.sizzang.user.controller;
 
 
+import com.zzol.sizzang.jwt.JwtService;
+import com.zzol.sizzang.user.dto.UserSignUpDto;
 import com.zzol.sizzang.user.dto.UserUpdateDTO;
 import com.zzol.sizzang.user.entity.UserEntity;
 import com.zzol.sizzang.user.service.UserService;
@@ -11,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.util.List;
 
@@ -21,6 +24,22 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final JwtService jwtService;
+
+    /**
+     * Member 생성
+     *
+     * @return
+     * @throws ParseException
+     */
+    @Operation(description = "유저 등록 메서드입니다.")
+    @PostMapping("")
+    public ResponseEntity<?> createUser(@RequestBody UserSignUpDto userSignUpDto, HttpServletRequest request) throws Exception {
+        userSignUpDto.setAccessToken(jwtService.extractAccessToken(request).orElse(null));
+        String nickname = userService.signUp(userSignUpDto);
+
+        return ResponseEntity.ok(nickname);
+    }
 
     /**
      * User List 조회
