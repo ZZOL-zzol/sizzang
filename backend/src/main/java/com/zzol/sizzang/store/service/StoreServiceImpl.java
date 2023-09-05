@@ -1,11 +1,15 @@
 package com.zzol.sizzang.store.service;
 
 import com.zzol.sizzang.store.dto.request.StoreRegistInsertReq;
+import com.zzol.sizzang.store.dto.response.StoreFindRes;
 import com.zzol.sizzang.store.entity.StoreEntity;
 import com.zzol.sizzang.store.repository.StoreRepositoty;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional
@@ -18,6 +22,11 @@ public class StoreServiceImpl implements StoreService{
         this.storeRepositoty = storeRepositoty;
     }
 
+    /**
+     * 게시글 Regist API 에 대한 서비스
+     *
+     * @param insertInfo : 게시글 등록할 때 입력한 정보
+     */
     @Override
     public StoreEntity insertStore(StoreRegistInsertReq insertInfo) {
         log.info("TemplateService_registTemplate_start: " + insertInfo.toString());
@@ -46,5 +55,21 @@ public class StoreServiceImpl implements StoreService{
 
         log.info("StoreService_insertStore_end: success");
         return storeEntity;
+    }
+
+    /**
+     *  점포 전체 조회 API에 대한 서비스
+     */
+    @Override
+    public List<StoreFindRes> selectAllStore() {
+
+        log.info("TemplateService_findAllTemplate_start: ");
+
+        List<StoreFindRes> res = storeRepositoty.findAll()
+                .stream().map(m -> StoreFindRes
+                ).collect(Collectors.toList());
+
+        log.info("TemplateService_findAllTemplate_end: success");
+        return res;
     }
 }

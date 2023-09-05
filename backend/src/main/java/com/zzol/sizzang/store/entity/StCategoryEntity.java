@@ -14,10 +14,10 @@ import javax.persistence.*;
 @Entity
 public class StCategoryEntity {
     @Id
-    @Column(name = "st_code")
+    @Column(name = "sc_code")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int stCode;
 
-    @Column(name = "st_name", nullable = false, columnDefinition = "VARCHAR(40)")
+    @Column(name = "sc_name", nullable = false, columnDefinition = "VARCHAR(40)")
     private String stName;
 }
