@@ -1,5 +1,6 @@
 package com.zzol.sizzang.user.service;
 
+import com.zzol.sizzang.user.dto.UserUpdateDTO;
 import com.zzol.sizzang.user.entity.UserEntity;
 import com.zzol.sizzang.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -42,6 +43,34 @@ public class UserService {
     public void deleteUser(String id) {
         userRepository.deleteById(id);
     }
+
+
+//    public UserEntity updateUserInfo(UserUpdateDTO updateData){
+//        UserEntity updatedUser = null;
+//
+//        try {
+//            if (updateData.isUserUpdateEmpty())
+//                throw new Exception("Required info is not qualified");
+//
+//            UserEntity existUser = getUser(token.getUsername());
+//
+//            existUser.setNickname(updateData.getNickname());
+//            existUser.setBirthDay(updateData.getBirthDay());
+//            existUser.setPhoneNum(updateData.getPhoneNum());
+//
+//            if (!existUser.isUserInfoEmpty())
+//                existUser.authorizeUser();
+//
+//            // if (!ObjectUtils.isEmpty(existUser))
+//            // updatedUser = userRepository.save(model);
+//
+//        } catch (Exception e) {
+//
+//            log.info("[Fail] e: " + e.toString());
+//        }
+//
+//        return updatedUser;
+//    }
 
 
 
