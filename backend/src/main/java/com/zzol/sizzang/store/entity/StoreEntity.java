@@ -2,7 +2,6 @@ package com.zzol.sizzang.store.entity;
 
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.Where;
 
@@ -43,7 +42,7 @@ public class StoreEntity {
     @Column(name = "st_intro",columnDefinition = "TEXT")
     private String stIntro;
     @Column(name = "st_time",columnDefinition = "VARCHAR(100)")
-    private LocalDateTime stTime;
+    private String stTime;
 
     @Column // 기본값 null
     private LocalDateTime deletedAt;

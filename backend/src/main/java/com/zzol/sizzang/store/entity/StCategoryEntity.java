@@ -16,7 +16,7 @@ public class StCategoryEntity {
     @Id
     @Column(name = "st_code")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long stCode;
+    private int stCode;
 
     @Column(name = "st_name", nullable = false, columnDefinition = "VARCHAR(40)")
     private String stName;
