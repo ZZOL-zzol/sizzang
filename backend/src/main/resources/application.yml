@@ -1,17 +1,11 @@
+
+server.port: 8080
 server.ssl.enabled: false
 
 # sizzang
 spring:
   profiles:
     active: secret
-  #spring:
-#  datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#    url: ${application-secret.url}
-#    username: ${application-secret.username}
-#    password: ${application-secret.password}
-#    hikari:
-#      maximum-pool-size: 5
 
   jpa:
     show-sql: true
@@ -20,13 +14,12 @@ spring:
     properties:
       hibernate:
         format_sql : true
-
-
+        
 jwt:
   secretKey: "77669629e79bec9fdc11391e28bb7232c80660499499add816f4ae3ff1a5c10a1aa4fffadddd0b725957934271e1c54a061e2f2956ebba3727aa7aa7a3fee8c6480a97"
   access:
-    expiration: 1800000 # 30 ?
+    expiration: 1800000 
     header: Authorization
   refresh:
-    expiration: 1209600000 #  2?
+    expiration: 1209600000 
     header: Authorization-refresh

@@ -1,18 +1,27 @@
-import Carousel from '../components/common/Carousel';
-import Header from '../components/common/Header';
-import Navbar from '../components/common/Navbar';
+import SmallButton from "../components/common/SmallButton";
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useDispatch } from "react-redux";
+import {plusTest} from '../store'
 
 const MainPage = () => {
+  const exampleState = useSelector((state) => state.exampleState.value);
+  const dispatch = useDispatch();
+
   return (
-    <div className="App flex flex-col text-3xl h-full w-full">
-      <Header/>
-      <div className='h-96  flex flex-col flex-grow'>바디이이이이
-      <Carousel></Carousel>
-      
-      </div>
-      <Navbar/>
+    <div>
+      홈이에용
+      <SmallButton />
+      <button
+        type="button"
+        onClick={() => 
+          dispatch(plusTest(2))
+        }
+      >
+        뭐야이거
+      </button>
+      {exampleState}
     </div>
   );
-}
+};
 
 export default MainPage;
