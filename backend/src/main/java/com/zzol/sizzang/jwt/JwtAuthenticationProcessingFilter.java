@@ -46,7 +46,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
         log.info("doFilterInternal 호출 :{}",request.getRequestURI());
-        if (request.getRequestURI().equals(NO_CHECK_URL) || request.getRequestURI().equals("/oauth")) {
+        if (request.getRequestURI().equals(NO_CHECK_URL)) {
             filterChain.doFilter(request, response); // "/login" 요청이 들어오면, 다음 필터 호출
             return; // return으로 이후 현재 필터 진행 막기 (안해주면 아래로 내려가서 계속 필터 진행시킴)
         }
@@ -120,7 +120,7 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
         jwtService.extractAccessToken(request)
                 .filter(jwtService::isTokenValid)
-                .ifPresent(accessToken -> jwtService.extractEmail(accessToken)
+                .ifPresent(accessToken -> jwtService.extractId(accessToken)
                         .ifPresent(userId -> saveAuthentication(userRepository.findByUserId(userId).get())));
 //                .ifPresent(this::saveAuthentication)));
         if (jwtService.extractAccessToken(request).isPresent()) {
@@ -150,9 +150,6 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
         log.info("saveAutentiation : {}", myUser);
 
         String password = null;
-//        if (password == null) { // 소셜 로그인 유저의 비밀번호 임의로 설정 하여 소셜 로그인 유저도 인증 되도록 설정
-//            password = PasswordUtil.generateRandomPassword();
-//        }
 
         UserDetails userDetailsUser = org.springframework.security.core.userdetails.User.builder()
                 .username(myUser.getUserId())
