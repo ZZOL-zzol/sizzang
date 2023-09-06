@@ -57,6 +57,12 @@ public class StoreController {
         return CommonResponse.success(findRes.orElseThrow(TemplateNoResultException::new));
     }
 
+    /**
+     * 점포 modify API 에 대한 서비스
+     *
+     * @param modifyInfo : 게시글 수정할 때 입력한 정보
+     * @param fileList   : 게시글 사진, 게시글에는 사진이 반드시 있을 필요가 없음
+     */
 
 
 }

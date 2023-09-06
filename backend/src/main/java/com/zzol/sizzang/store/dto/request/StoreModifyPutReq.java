@@ -1,13 +1,10 @@
-package com.zzol.sizzang.store.dto.response;
+package com.zzol.sizzang.store.dto.request;
 
-import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder
-public class StoreSelectRes {
-//    시장코드 넣어야함
-//    Long mkCode;
+public class StoreModifyPutReq {
+
     private int scCode;
 
     private Long stCode;
