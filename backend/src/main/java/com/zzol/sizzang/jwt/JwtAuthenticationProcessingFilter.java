@@ -34,7 +34,7 @@ import java.io.IOException;
 @Slf4j
 public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
-    private static final String NO_CHECK_URL = "/users"; // Filter 동작하지 않을 경로 설정
+    private static final String NO_CHECK_URL = "/users/login"; // Filter 동작하지 않을 경로 설정
 
     private final JwtService jwtService;
     private final UserRepository userRepository;
