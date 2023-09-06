@@ -12,7 +12,7 @@ const isLogedin = true;
 
 const App = () => {
   return (
-    <div className="App min-h-screen flex w-screen">
+    <div className="App h-screen flex w-screen">
       <Routes>
         {/* 임시로 main으로 리다이렉트 */}
         {/* 버튼으로 리다이렉트시 useNavigate나 Link태그 사용 */}
