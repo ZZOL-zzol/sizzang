@@ -10,7 +10,6 @@ import com.zzol.sizzang.store.entity.StoreEntity;
 import com.zzol.sizzang.store.repository.StCategoryRepository;
 import com.zzol.sizzang.store.repository.StoreRepositoty;
 import lombok.extern.slf4j.Slf4j;
-import org.h2.mvstore.db.Store;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -121,9 +120,9 @@ public class StoreServiceImpl implements StoreService{
 //        return false;
     }
     /**
-     * 유저가 게시글의 상세 정보를 확인하기 위한 API 서비스
+     * 유저가 점포의 상세 정보를 확인하기 위한 API 서비스
      *
-     * @param stCode : 게시글의 Id
+     * @param stCode : 점포의 Id
      */
     @Override
     public StoreSelectRes selectStore(Long stCode) {
@@ -135,6 +134,7 @@ public class StoreServiceImpl implements StoreService{
 
         StoreSelectRes storeSelectRes = StoreSelectRes.builder()
                 .stCode(stCode)
+                //user 연동
 //                .userId(article.getUser().getId())
 //                .author(article.getUser().getNickname())
                 .stName(storeEntity.getStName())
@@ -150,4 +150,39 @@ public class StoreServiceImpl implements StoreService{
         log.info("StoreService_findStore_end: " + storeSelectRes.toString());
         return storeSelectRes;
     }
+
+
+//    추가작업 필요
+    /**
+     * 유저가 점포 목록을 조회하기 위한 API 서비스
+     *
+     * @param keyword  : 검색어. keyword 를 공백으로 보내면 전체 검색
+     * @param pageable : Spring Data JPA 의 페이징 기능
+     */
+//    @Override
+//    public Page<ArticleFindRes> findAllArticle(String keyword, Pageable pageable) {
+//
+//        log.info("ArticleService_findAllArticle_start: " + keyword + ", "
+//                + pageable.toString());
+//
+//        Page<ArticleFindRes> articleFindRes = articleRepository.findByTitleContaining(keyword,
+//                        pageable)
+//                .map(m -> ArticleFindRes.builder()
+//                        .id(m.getId())
+//                        .userId(m.getUser().getId())
+//                        .author(m.getUser().getNickname())
+//                        .title(m.getTitle())
+//                        .content(m.getContent())
+//                        .viewCount(m.getViewCount())
+//                        .likeCount(m.getLikeCount())
+//                        .reportCount(m.getReportCount())
+//                        .time(m.getTime().toString())
+//                        .lastUpdateTime(m.getLastUpdateTime().toString())
+//                        .articlePicturePathNames(articlePictureRepository.findPathNameByArticle(m.getId()))
+//                        .build());
+//
+//        // 게시글 조회 결과 리스트
+//        log.info("ArticleService_findAllArticle_end: " + articleFindRes);
+//        return articleFindRes;
+//    }
 }

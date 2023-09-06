@@ -5,6 +5,8 @@ import com.zzol.sizzang.store.dto.request.StoreRegistInsertReq;
 import com.zzol.sizzang.store.dto.response.StoreFindRes;
 import com.zzol.sizzang.store.dto.response.StoreSelectRes;
 import com.zzol.sizzang.store.entity.StoreEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -18,4 +20,6 @@ public interface StoreService {
     boolean modifyStore(StoreModifyPutReq modifyInfo, List<MultipartFile> files);
 
     StoreSelectRes selectStore(Long stCode);
+
+//    Page<StoreFindRes> findAllArticle(String keyword, Pageable pageable);
 }
