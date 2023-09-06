@@ -19,6 +19,6 @@ public class MarketPriceController {
     @GetMapping("/marketprice")
     public void marketPrice(Model model) throws Exception{
 //        List<MarketPrice> marketPriceList = marketPriceService.getMarketPriceData();
-        marketPriceService.getMarketPriceData();
+//        marketPriceService.getMarketPriceData();
     }
 }

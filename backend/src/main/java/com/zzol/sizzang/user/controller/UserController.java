@@ -1,14 +1,20 @@
 package com.zzol.sizzang.user.controller;
 
 
+import com.zzol.sizzang.jwt.JwtService;
+import com.zzol.sizzang.user.dto.UserSignUpDto;
+import com.zzol.sizzang.user.dto.UserUpdateDTO;
 import com.zzol.sizzang.user.entity.UserEntity;
 import com.zzol.sizzang.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -18,6 +24,22 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final JwtService jwtService;
+
+    /**
+     * Member 생성
+     *
+     * @return
+     * @throws ParseException
+     */
+    @Operation(description = "유저 등록 메서드입니다.")
+    @PostMapping("")
+    public ResponseEntity<?> createUser(@RequestBody UserSignUpDto userSignUpDto, HttpServletRequest request) throws Exception {
+        userSignUpDto.setAccessToken(jwtService.extractAccessToken(request).orElse(null));
+        String nickname = userService.signUp(userSignUpDto);
+
+        return ResponseEntity.ok(nickname);
+    }
 
     /**
      * User List 조회
@@ -57,4 +79,21 @@ public class UserController {
         userService.deleteUser(id);
         return new ResponseEntity<>(id, HttpStatus.OK);
     }
+
+//  @Operation(description = "유저 정보 수정 메서드입니다.")
+//  @PutMapping()
+//  public ResponseEntity<UserEntity> updateUser(@RequestBody UserUpdateDTO updateData) throws ParseException {
+//
+//    UserEntity updatedUser = userService.updateUserInfo(updateData); //TODO: token 기능 추가후 수정 예정
+//
+//    if (!ObjectUtils.isEmpty(updatedUser)) {
+//
+//      return new ResponseEntity<>(updatedUser, HttpStatus.OK);
+//
+//    } else {
+//
+//      return new ResponseEntity<>(updatedUser, HttpStatus.NOT_FOUND);
+//    }
+//  }
+
 }
