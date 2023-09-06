@@ -57,13 +57,13 @@ public class UserController {
     /**
      * Id에 해당하는 Member 조회
      *
-     * @param id
+     * @param userId
      * @return
      */
     @Operation(description = "특정 유저 조회 메서드입니다.")
-    @GetMapping("{id}")
-    public ResponseEntity<UserEntity> getUser(@PathVariable("id") String id) {
-        UserEntity user = userService.getUser(id);
+    @GetMapping("/{id}")
+    public ResponseEntity<UserEntity> getUser(@PathVariable("userId") String userId) {
+        UserEntity user = userService.getUser(userId);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
@@ -74,7 +74,7 @@ public class UserController {
      * @return
      */
     @Operation(description = "특정 유저 제거 메서드입니다.")
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteUser(@PathVariable("id") String id) {
         userService.deleteUser(id);
         return new ResponseEntity<>(id, HttpStatus.OK);
