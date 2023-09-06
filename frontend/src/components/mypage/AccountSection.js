@@ -1,6 +1,6 @@
 import React from 'react';
 
-function AccountSection({ accountName, accountNumber, balance, imageUrl }) {
+const AccountSection = ({ accountName, accountNumber, balance, imageUrl }) => {
   return (
     <div className="AccountSection">
         <div className="bg-white rounded-lg shadow-lg m-4 p-4">

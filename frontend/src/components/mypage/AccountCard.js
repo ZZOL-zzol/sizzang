@@ -1,6 +1,6 @@
 import React from 'react';
 
-function AccountCard({ accountName, accountNumber, balance, imageUrl }) {
+const AccountCard = ({ accountName, accountNumber, balance, imageUrl }) => {
     return (
         <div className="AccountCard">
             <div className="bg-white rounded-lg shadow-lg mx-4 my-2 p-4">
