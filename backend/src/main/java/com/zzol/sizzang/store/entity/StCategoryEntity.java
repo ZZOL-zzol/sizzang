@@ -14,8 +14,10 @@ import javax.persistence.*;
 @Entity
 public class StCategoryEntity {
     @Id
+    @Column(name = "sc_code")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long stCode;
+    private int stCode;
 
+    @Column(name = "sc_name", nullable = false, columnDefinition = "VARCHAR(40)")
     private String stName;
 }
