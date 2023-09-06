@@ -63,13 +63,17 @@ public class StoreServiceImpl implements StoreService{
     @Override
     public List<StoreFindRes> selectAllStore() {
 
-        log.info("TemplateService_findAllTemplate_start: ");
+        log.info("StoreService_findAll_start: ");
 
         List<StoreFindRes> res = storeRepositoty.findAll()
-                .stream().map(m -> StoreFindRes
+                .stream().map(m -> StoreFindRes.builder()
+                        .stCode(m.getStCode())
+                        .stImg(m.getStImg())
+                        .stName(m.getStName())
+                        .build()
                 ).collect(Collectors.toList());
 
-        log.info("TemplateService_findAllTemplate_end: success");
+        log.info("StoreService_findAll_end: success");
         return res;
     }
 }

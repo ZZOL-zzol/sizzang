@@ -1,17 +1,17 @@
 package com.zzol.sizzang.store.controller;
 
+import com.zzol.sizzang.common.exception.Template.TemplateNoResultException;
 import com.zzol.sizzang.common.model.CommonResponse;
 import com.zzol.sizzang.store.dto.request.StoreRegistInsertReq;
-import com.zzol.sizzang.store.entity.StoreEntity;
+import com.zzol.sizzang.store.dto.response.StoreFindRes;
 import com.zzol.sizzang.store.service.StoreService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @RestController
@@ -45,10 +45,15 @@ public class StoreController {
      *
      * @return
      */
-//    @Operation(description = "점포 전체 조회 메서드입니다.")
-//    @GetMapping()
-//    public ResponseEntity<List<StoreEntity>> getStores() {
-//        List<StoreEntity> stores = storeService.getStores();
-//        return new ResponseEntity<>(stores, HttpStatus.OK);
-//    }
+    @Operation(description = "점포 전체 조회 메서드입니다.")
+    @GetMapping()
+    public CommonResponse<List<StoreFindRes>> findAll() {
+        log.info("TemplateController_findAll_start: ");
+
+        Optional<List<StoreFindRes>> findRes = Optional.ofNullable(
+                storeService.selectAllStore());
+
+        log.info("TemplateController_findAll_end: " + findRes);
+        return CommonResponse.success(findRes.orElseThrow(TemplateNoResultException::new));
+    }
 }
