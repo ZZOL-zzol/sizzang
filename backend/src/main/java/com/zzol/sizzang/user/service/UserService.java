@@ -1,22 +1,18 @@
 package com.zzol.sizzang.user.service;
 
 import com.zzol.sizzang.jwt.JwtService;
+import com.zzol.sizzang.user.dto.UserLoginDto;
 import com.zzol.sizzang.user.dto.UserSignUpDto;
-import com.zzol.sizzang.user.dto.UserUpdateDTO;
 import com.zzol.sizzang.user.entity.UserEntity;
 import com.zzol.sizzang.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.naming.AuthenticationException;
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -25,7 +21,6 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
-//    private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     /**
      * User List 조회
@@ -80,26 +75,11 @@ public class UserService {
 
 
     /**
-     * User 생성
+     * User 생성, 회원가입 메서드
      * JPA Repository의 save Method를 사용하여 객체를 생성
-     * Entity인 Model 객체에 @Id로 설정한 키 값이 없을 경우 해당하는 데이터를 추가
-     * 만약 추가하려는 Entity인 Model 객체에 @Id 값이 이미 존재하면 갱신되기 때문에
-     * 아래와 같이 추가하고자 하는 User가 존재하는지 체크하는 로직을 추가
-     *
-     *
-     * @return
      */
     public String signUp(UserSignUpDto userSignUpDto) throws Exception {
-        String id = jwtService.extractId(userSignUpDto.getAccessToken()).orElse(null);
-
-        log.info("회원가입 : {}",id);
-
-        if(id == null){
-            throw new AuthenticationException("유효하지 않은 토큰 입니다.");
-        }
-        log.info("회원가입 시도 : {} {} {} {}",userSignUpDto.getUserId(), userSignUpDto.getUserName(), userSignUpDto.getUserAccount(), userSignUpDto.getUserNickname());
-        //id, name, account, nickname 순서
-        if (userRepository.findByUserAccount(id).isPresent()) {
+        if (userRepository.findByUserAccount(userSignUpDto.getUserId()).isPresent()) { //아이디 중복 불가
             throw new Exception("이미 존재하는 아이디입니다.");
         }
         if (userRepository.findByUserAccount(userSignUpDto.getUserAccount()).isPresent()){ //계좌 일치시
@@ -107,7 +87,7 @@ public class UserService {
         }
         UserEntity user = UserEntity.builder()
                 .userName(userSignUpDto.getUserName())
-                .userId(id)
+                .userId(userSignUpDto.getUserId())
                 .userAccount(userSignUpDto.getUserAccount())
                 .userNickname(userSignUpDto.getUserNickname())
                 .userPassword(userSignUpDto.getUserPassword())
@@ -120,6 +100,12 @@ public class UserService {
         return user.getUserNickname();
     }
 
-
+    public void loginAndUpdateRefreshToken(String userId, String refreshToken){
+        userRepository.findByUserId(userId)
+                .ifPresent(user -> {
+                    user.updateRefreshToken(refreshToken);
+                    userRepository.saveAndFlush(user); //Spring Data JPA에서 사용되는 메서드, 변경데이터 db 저장됨
+                });
+    }
 
 }

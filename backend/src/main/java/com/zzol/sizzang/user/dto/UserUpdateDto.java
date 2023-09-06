@@ -6,10 +6,5 @@ import lombok.Setter;
 
 @Data
 @Setter(AccessLevel.NONE)
-public class UserUpdateDTO {
-
-
-
-
-
+public class UserUpdateDto {
 }
