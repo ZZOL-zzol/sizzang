@@ -11,4 +11,6 @@ public interface StoreService {
     StoreEntity insertStore(StoreRegistInsertReq insertInfo);
 
     List<StoreFindRes> selectAllStore();
+
+
 }

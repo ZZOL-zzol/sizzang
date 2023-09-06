@@ -56,4 +56,7 @@ public class StoreController {
         log.info("TemplateController_findAll_end: " + findRes);
         return CommonResponse.success(findRes.orElseThrow(TemplateNoResultException::new));
     }
+
+
+
 }

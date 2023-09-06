@@ -2,9 +2,12 @@ package com.zzol.sizzang.store.service;
 
 import com.zzol.sizzang.store.dto.request.StoreRegistInsertReq;
 import com.zzol.sizzang.store.dto.response.StoreFindRes;
+import com.zzol.sizzang.store.entity.StCategoryEntity;
 import com.zzol.sizzang.store.entity.StoreEntity;
+import com.zzol.sizzang.store.repository.StCategoryRepository;
 import com.zzol.sizzang.store.repository.StoreRepositoty;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,9 +19,12 @@ import java.util.stream.Collectors;
 @Service
 public class StoreServiceImpl implements StoreService{
 
+    private final StCategoryRepository stCategoryRepository;
     private final StoreRepositoty storeRepositoty;
 
-    public StoreServiceImpl(StoreRepositoty storeRepositoty) {
+    @Autowired
+    public StoreServiceImpl(StCategoryRepository stCategoryRepository, StoreRepositoty storeRepositoty) {
+        this.stCategoryRepository = stCategoryRepository;
         this.storeRepositoty = storeRepositoty;
     }
 
@@ -40,8 +46,11 @@ public class StoreServiceImpl implements StoreService{
         String stIntro = insertInfo.getStIntro();
         String stTime = insertInfo.getStTime();
 
+        StCategoryEntity stCategoryEntity = stCategoryRepository.findById(scCode)
+                .orElseThrow(NullPointerException::new);
 
         StoreEntity storeEntity = StoreEntity.builder()
+                .stCategoryEntity(stCategoryEntity)
                 .stName(stName)
                 .stPhone(stPhone)
                 .stImg(stImg)
@@ -76,4 +85,6 @@ public class StoreServiceImpl implements StoreService{
         log.info("StoreService_findAll_end: success");
         return res;
     }
+
+
 }
