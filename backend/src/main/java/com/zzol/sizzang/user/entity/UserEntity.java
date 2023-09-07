@@ -26,8 +26,9 @@ public class UserEntity {
     private String userPassword;
     private int stamp;
 
-    @Enumerated(EnumType.STRING)
-    private Role role;
+//    @Enumerated(EnumType.STRING)
+//    private Role role;
+    private String role;
     private String refreshToken;
     private boolean deleted; //회원탈퇴 여부 구분
 

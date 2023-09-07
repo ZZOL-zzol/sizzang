@@ -1,4 +1,4 @@
-package com.zzol.sizzang.jwt;
+package com.zzol.sizzang.global.jwt;
 
 
 import javax.servlet.FilterChain;
@@ -34,7 +34,7 @@ import java.io.IOException;
 @Slf4j
 public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
 
-    private static final String NO_CHECK_URL = "/users/login"; // Filter 동작하지 않을 경로 설정
+    private static final String NO_CHECK_URL = "/login"; // Filter 동작하지 않을 경로 설정
 
     private final JwtService jwtService;
     private final UserRepository userRepository;
@@ -77,7 +77,8 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
     }
 
     /**
-     * Refresh Token 으로 유저 정보 찾기와 AccessToken/RefreshToken을 재발급하는 메소드 파라미터로 들어온 헤더에서 추출한 리프레시 토큰으로
+     * Refresh Token 으로 '유저 정보 찾기와 AccessToken/RefreshToken을 재발급하는 메소드'
+     * 파라미터로 들어온 헤더에서 추출한 리프레시 토큰으로
      * DB에서 유저를 찾고 해당 유저가 있다면, JwtService.createAccessToken()으로 AccessToken 생성
      * reIssueRefreshToken()로 리프레시 토큰 재발급 & DB에 리프레시 토큰 업데이트 메소드 호출 그 후
      * JwtService.sendAccessTokenAndRefreshToken()으로 응답 헤더에 보냄
@@ -94,7 +95,8 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
     }
 
     /**
-     * Refresh Token을 재발급하고 DB에 Refresh Token을 업데이트하는 메소드 jwtService.createRefreshToken()으로 Refresh
+     * Refresh Token을 재발급하고 DB에 Refresh Token을 업데이트하는 메소드
+     * jwtService.createRefreshToken()으로 Refresh
      * Token을 재발급 후 DB에 재발급한 Refresh Token 업데이트 후 Flush
      */
     private String reIssueRefreshToken(UserEntity user) {
@@ -107,7 +109,8 @@ public class JwtAuthenticationProcessingFilter extends OncePerRequestFilter {
     }
 
     /**
-     * Access Token 체크 및 인증 처리 메소드 request에서 extractAccessToken()으로 Access Token 추출 후,
+     * Access Token 체크 및 인증 처리 메소드
+     * request에서 extractAccessToken()으로 Access Token 추출 후,
      * isTokenValid()로 유효한 토큰인지 검증 유효한 토큰이면, 액세스 토큰에서 extractEmail로 Email을 추출한 후 findByEmail()로 해당
      * 이메일을 사용하는 유저 객체 반환 그 유저 객체를 saveAuthentication()으로 인증 처리하여 인증 허가 처리된 객체를
      * SecurityContextHolder에 담기 그 후 다음 인증 필터로 진행

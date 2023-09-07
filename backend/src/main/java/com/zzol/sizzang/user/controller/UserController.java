@@ -1,7 +1,7 @@
 package com.zzol.sizzang.user.controller;
 
 
-import com.zzol.sizzang.jwt.JwtService;
+import com.zzol.sizzang.global.jwt.JwtService;
 import com.zzol.sizzang.user.dto.UserLoginDto;
 import com.zzol.sizzang.user.dto.UserSignUpDto;
 import com.zzol.sizzang.user.entity.UserEntity;
@@ -37,8 +37,11 @@ public class UserController {
     @Operation(description = "유저 등록 메서드입니다.")
     @PostMapping("/signup")
     public ResponseEntity<?> createUser(@RequestBody UserSignUpDto userSignUpDto, HttpServletRequest request) throws Exception {
-        String userName = userService.signUp(userSignUpDto);
-        return ResponseEntity.ok(userName);
+//        String userName = userService.signUp(userSignUpDto);
+        if(!userService.signUp(userSignUpDto)) {
+            return new ResponseEntity<>("login 실패", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(userSignUpDto.getUserName(),HttpStatus.OK );
     }
 
     /**
@@ -81,18 +84,18 @@ public class UserController {
     }
 
     @Operation(description = "유저 로그인 메서드입니다.")
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<?> login (@RequestBody UserLoginDto userLoginDto, HttpServletResponse response) throws Exception {
         String userId = userLoginDto.getUserId();
         log.info("로그인 시도 id: {}", userId);
-        String userPassword = userLoginDto.getUserPassword();
         if(userService.getUser(userId) == null){
             return new ResponseEntity<>("해당하는 아이디가 없습니다.", HttpStatus.NOT_FOUND);
         }
         UserEntity user = userService.getUser(userId);
-        if(user.getUserPassword() != userLoginDto.getUserPassword()){
-            return new ResponseEntity<>("비밀번호가 일치하지 않습니다.", HttpStatus.NOT_FOUND);
+        if (!user.getUserPassword().equals(userLoginDto.getUserPassword())) {
+            return new ResponseEntity<>("비밀번호가 일치하지 않습니다.", HttpStatus.UNAUTHORIZED);
         }
+
         //아이디와 비밀번호 일치시 토큰 발급
         String accessToken = jwtService.createAccessToken(userId);
         String refreshToken = jwtService.createRefreshToken();
@@ -101,7 +104,7 @@ public class UserController {
         log.info("로그인에 성공하였습니다. userId : {}", userId);
         log.info("---------------------- AccessToken : {}", accessToken);
 
-        userService.loginAndUpdateRefreshToken(userId, refreshToken); //refreshToken update
+//        userService.loginAndUpdateRefreshToken(userId, refreshToken); //refreshToken update
 
         return ResponseEntity.ok("로그인성공");
     }

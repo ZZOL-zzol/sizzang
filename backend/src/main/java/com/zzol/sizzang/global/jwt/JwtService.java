@@ -1,4 +1,4 @@
-package com.zzol.sizzang.jwt;
+package com.zzol.sizzang.global.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -50,12 +50,12 @@ public class JwtService {
     /**
      * AccessToken 생성 메소드
      */
-    public String createAccessToken(String id) {
+    public String createAccessToken(String userId) {
         Date now = new Date();
         return JWT.create() // JWT 토큰을 생성하는 빌더 반환
                 .withSubject(ACCESS_TOKEN_SUBJECT) // JWT의 Subject 지정
                 .withExpiresAt(new Date(now.getTime() + accessTokenExpirationPeriod)) // 토큰 만료 시간 설정
-                .withClaim("userId", id) // 클레임으로는 userId 하나만 사용
+                .withClaim("userId", userId) // 클레임으로는 userId 하나만 사용
                 .sign(Algorithm.HMAC512(secretKey)); // HMAC512 알고리즘 사용
     }
 

@@ -1,4 +1,4 @@
-package com.zzol.sizzang.jwt;
+package com.zzol.sizzang.global.jwt;
 
 import java.util.Random;
 

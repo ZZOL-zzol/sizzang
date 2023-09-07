@@ -12,6 +12,6 @@ public class UserSignUpDto {
     private String userAccount;
     private String userNickname;
     private String userPassword;
-    private Role role;
+    private String role;
 
 }
