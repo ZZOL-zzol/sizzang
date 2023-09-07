@@ -9,7 +9,8 @@ server.ssl.enabled: false
 #    url: jdbc:mysql://sizzang.cggdc2hymcot.ap-northeast-2.rds.amazonaws.com/sizzang?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
 #    username: sizzang
 #    password: sizzangssafy
-
+#  profiles:
+#    active: secret
   #sizzang
 spring:
   datasource:

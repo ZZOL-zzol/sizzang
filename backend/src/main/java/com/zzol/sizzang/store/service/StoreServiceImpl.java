@@ -90,6 +90,8 @@ public class StoreServiceImpl implements StoreService{
         return res;
     }
 
+
+
     /**
      * 게시글 modify API 에 대한 서비스
      *
