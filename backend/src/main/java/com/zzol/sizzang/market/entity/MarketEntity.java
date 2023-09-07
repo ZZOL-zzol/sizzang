@@ -8,6 +8,7 @@ import javax.persistence.*;
 @ToString
 @Getter
 @Entity
+@Table(name = "market")
 public class MarketEntity {
 
     @Id

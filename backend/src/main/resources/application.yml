@@ -29,7 +29,7 @@ spring:
         format_sql : true
         
 jwt:
-  secretKey: "77669629e79bec9fdc11391e28bb7232c80660499499add816f4ae3ff1a5c10a1aa4fffadddd0b725957934271e1c54a061e2f2956ebba3727aa7aa7a3fee8c6480a97"
+  secretKey: "669629e79bec9fdc11391e28bb7232c80660499499add816f4ae3ff1a5c10a1aa4fffa0b725957934271e1c54a061e2f2956ebba3727aa7aa7a3fee8c6480a97"
   access:
     expiration: 1800000 
     header: Authorization
