@@ -16,7 +16,8 @@ const App = () => {
       <Routes>
         {/* 임시로 main으로 리다이렉트 */}
         {/* 버튼으로 리다이렉트시 useNavigate나 Link태그 사용 */}
-        <Route path='/' element={<Navigate to='/main'/>}></Route>
+        {/* <Route path='/' element={<Navigate to='/main'/>}></Route> */}
+        <Route path='/' element={<Navigate to='/entrance'/>}></Route>
         <Route path="/entrance" element={<EntrancePage/>}></Route>
         <Route path="/signup" element={<SignupPage/>}></Route>
         <Route path="/main" element={isLogedin ?<MainPage/> : <Navigate to="/entrance" />}></Route>

@@ -9,10 +9,8 @@ const MarketSearchPage = () => {
 
   return (
     <div className="App flex flex-col text-3xl h-full w-full bg-background-fill">
-      <Header/>
-      <div className='flex flex-col flex-grow'>
-        <input/>
-        {/* <KakaoMap/> */}
+      <Header title='시장 찾기' button={true}/>
+      <div className='flex flex-col'>
         <MapExample/>
       </div>
       <Navbar/>

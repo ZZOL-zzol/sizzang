@@ -40,7 +40,7 @@ module.exports = {
       fuchsia: colors.fuchsia,
       pink: colors.pink,
       rose: colors.rose,
-      'primary': '#277CE0',
+      'myprimary': '#277CE0',
       'primary-container': '#D5F1FF',
       'secondary' : '#5954A8',
       'secondary-container': '#EBE8FF',
