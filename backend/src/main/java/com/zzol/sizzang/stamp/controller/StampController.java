@@ -13,6 +13,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@RequestMapping("/stamp")
 public class StampController {
 
     private final StampService stampService;
@@ -22,7 +23,7 @@ public class StampController {
         this.stampService = stampService;
     }
 
-    @PostMapping("/addStamp")
+    @PostMapping("/add")
     @Operation(summary = "스탬프추가", description = "그 지역 시장에서 구매한 횟수 기반")
     public CommonResponse<?> addStamp(@RequestBody StampAddReq stampAddReq) {
 

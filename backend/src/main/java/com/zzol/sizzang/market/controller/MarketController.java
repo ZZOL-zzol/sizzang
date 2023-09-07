@@ -39,7 +39,7 @@ public class MarketController {
     }
 
     // 시장 상세
-    @GetMapping("/search/{mkCode}")
+    @GetMapping("/info/{mkCode}")
     @Operation(summary = "시장 상세", description = "시장코드로 상세 보기")
     public CommonResponse<?> getMarketDetails(@PathVariable int mkCode) {
 
