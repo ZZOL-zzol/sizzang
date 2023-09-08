@@ -1,12 +1,11 @@
 package com.zzol.sizzang.store.service;
 
+import com.zzol.sizzang.store.dto.request.FindByConditionGetReq;
 import com.zzol.sizzang.store.dto.request.StoreModifyPutReq;
 import com.zzol.sizzang.store.dto.request.StoreRegistInsertReq;
 import com.zzol.sizzang.store.dto.response.StoreFindRes;
 import com.zzol.sizzang.store.dto.response.StoreSelectRes;
 import com.zzol.sizzang.store.entity.StoreEntity;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -21,5 +20,5 @@ public interface StoreService {
 
     StoreSelectRes selectStore(Long stCode);
 
-//    Page<StoreFindRes> findAllArticle(String keyword, Pageable pageable);
+    List<StoreFindRes> findByCondition(FindByConditionGetReq findByConditionGetReq);
 }

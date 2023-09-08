@@ -1,6 +1,7 @@
 package com.zzol.sizzang.store.service;
 
 import com.zzol.sizzang.common.exception.Template.StoreNotFoundException;
+import com.zzol.sizzang.store.dto.request.FindByConditionGetReq;
 import com.zzol.sizzang.store.dto.request.StoreModifyPutReq;
 import com.zzol.sizzang.store.dto.request.StoreRegistInsertReq;
 import com.zzol.sizzang.store.dto.response.StoreFindRes;
@@ -8,7 +9,7 @@ import com.zzol.sizzang.store.dto.response.StoreSelectRes;
 import com.zzol.sizzang.store.entity.StCategoryEntity;
 import com.zzol.sizzang.store.entity.StoreEntity;
 import com.zzol.sizzang.store.repository.StCategoryRepository;
-import com.zzol.sizzang.store.repository.StoreRepositoty;
+import com.zzol.sizzang.store.repository.StoreRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,12 +25,12 @@ import java.util.stream.Collectors;
 public class StoreServiceImpl implements StoreService{
 
     private final StCategoryRepository stCategoryRepository;
-    private final StoreRepositoty storeRepositoty;
+    private final StoreRepository storeRepository;
 
     @Autowired
-    public StoreServiceImpl(StCategoryRepository stCategoryRepository, StoreRepositoty storeRepositoty) {
+    public StoreServiceImpl(StCategoryRepository stCategoryRepository, StoreRepository storeRepository) {
         this.stCategoryRepository = stCategoryRepository;
-        this.storeRepositoty = storeRepositoty;
+        this.storeRepository = storeRepository;
     }
 
     /**
@@ -64,7 +65,7 @@ public class StoreServiceImpl implements StoreService{
                 .stTime(stTime)
                 .build();
 
-        storeRepositoty.save(storeEntity);
+        storeRepository.save(storeEntity);
 
         log.info("StoreService_insertStore_end: success");
         return storeEntity;
@@ -78,7 +79,7 @@ public class StoreServiceImpl implements StoreService{
 
         log.info("StoreService_findAll_start: ");
 
-        List<StoreFindRes> res = storeRepositoty.findAll()
+        List<StoreFindRes> res = storeRepository.findAll()
                 .stream().map(m -> StoreFindRes.builder()
                         .stCode(m.getStCode())
                         .stImg(m.getStImg())
@@ -90,7 +91,20 @@ public class StoreServiceImpl implements StoreService{
         return res;
     }
 
+    /**
+     *  게시글 검색어로 검색하여 조회 API에 대한 서비스
+     */
+    @Override
+    public List<StoreFindRes> findByCondition(
+            FindByConditionGetReq findByConditionGetReq) {
 
+        log.info("StoreService_findByCondition_start: " + findByConditionGetReq.toString());
+
+        List<StoreFindRes> res = storeRepository.findByCondition(findByConditionGetReq);
+
+        log.info("TemplateService_findByConditionTemplate_end: success");
+        return res;
+    }
 
     /**
      * 게시글 modify API 에 대한 서비스
@@ -108,7 +122,7 @@ public class StoreServiceImpl implements StoreService{
             log.info("StoreService_modifyStore_start: " + modifyInfo.toString());
         }
 
-        StoreEntity storeEntity = storeRepositoty.findById(modifyInfo.getStCode())
+        StoreEntity storeEntity = storeRepository.findById(modifyInfo.getStCode())
                 .orElseThrow(StoreNotFoundException::new);
         // 현재 로그인 유저의 id와 글쓴이의 id가 일치할 때
 //        if (storeEntity.getUser().getId().equals(modifyInfo.getUserId())) {
@@ -131,7 +145,7 @@ public class StoreServiceImpl implements StoreService{
 
         log.info("StoreService_findStore_start: " + stCode);
 
-        StoreEntity storeEntity= storeRepositoty.findById(stCode)
+        StoreEntity storeEntity= storeRepository.findById(stCode)
                 .orElseThrow(StoreNotFoundException::new);
 
         StoreSelectRes storeSelectRes = StoreSelectRes.builder()
