@@ -4,9 +4,9 @@ const Header = (props) => {
   return (
     <div className="navbar bg-base-100">
       <div className="flex-1">
-        {props.button ? (
+        {props.backButton ? (
           <Link to='/main'>
-          <button className="btn btn-ghost normal-case text-xl font-environmentR">
+          <button className="btn btn-ghost normal-case text-xl font-environmentR pr-1">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               height="1em"
@@ -17,7 +17,7 @@ const Header = (props) => {
           </button>
           </Link>
         ) : null}
-        <div className="btn btn-ghost normal-case text-xl font-environmentR p-0">
+        <div className={props.backButton?"btn btn-ghost normal-case text-xl font-environmentR p-0":"btn btn-ghost normal-case text-xl font-environmentR"}>
           {props.title}
         </div>
       </div>

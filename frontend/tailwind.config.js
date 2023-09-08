@@ -47,7 +47,7 @@ module.exports = {
       'surface' : '#001B2A',
       'outline': '#787D85',
       'outline-container' : '#DCE1E9',
-      'error' : '#C21B43',
+      'myerror' : '#C21B43',
       'error-container' : '#FCD5DA',
       'background-fill' : '#F3F4F8',
     },

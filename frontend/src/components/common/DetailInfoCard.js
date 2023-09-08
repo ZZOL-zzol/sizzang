@@ -1,6 +1,6 @@
 const DetailInfoCard = () => {
     return (
-      <div class="card card-side bg-base-100 shadow-xl mx-5 h-28">
+      <div class="card card-side bg-base-100 shadow-xl mx-5 h-[120px]">
         <div class="card-body p-3 justify-between">
           <div className="gap-0 flex flex-col">
             <div class="card-title text-xl mx-auto">가게 이름 or 시장 이름</div>
