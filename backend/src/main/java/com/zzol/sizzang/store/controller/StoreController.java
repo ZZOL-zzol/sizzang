@@ -1,9 +1,6 @@
 package com.zzol.sizzang.store.controller;
 
-import com.zzol.sizzang.common.exception.Template.FileIOException;
-import com.zzol.sizzang.common.exception.Template.StoreNotFoundException;
-import com.zzol.sizzang.common.exception.Template.StorePossessionFailException;
-import com.zzol.sizzang.common.exception.Template.TemplateNoResultException;
+import com.zzol.sizzang.common.exception.Template.*;
 import com.zzol.sizzang.common.model.CommonResponse;
 import com.zzol.sizzang.store.dto.request.FindByConditionGetReq;
 import com.zzol.sizzang.store.dto.request.StoreModifyPutReq;
@@ -39,7 +36,7 @@ public class StoreController {
      */
     @Operation(description = "점포 등록 메서드입니다")
     @PostMapping
-    public CommonResponse<?> insertStore(@RequestPart StoreRegistInsertReq registInfo, @RequestPart(value = "files", required = false) MultipartFile file) {
+    public CommonResponse<?> insertStore(@RequestPart StoreRegistInsertReq registInfo, @RequestPart(value = "file", required = false) MultipartFile file) {
 
         if (file != null) { // 게시물에 파일 있으면
             log.info("StoreController_regist_start: " + registInfo.toString() + ", "
@@ -64,7 +61,7 @@ public class StoreController {
      * @return
      */
     @Operation(description = "점포 전체 조회 메서드입니다.")
-    @GetMapping()
+    @GetMapping
     public CommonResponse<List<StoreFindRes>> findAll() {
         log.info("TemplateController_findAll_start: ");
 
@@ -97,7 +94,7 @@ public class StoreController {
      *
      * @param stCode
      */
-    @GetMapping()
+    @GetMapping("/{stCode}")
     public CommonResponse<?> find(@PathVariable Long stCode) {
 
         log.info("StoreController_find_start: " + stCode);
@@ -136,6 +133,24 @@ public class StoreController {
             return CommonResponse.success(SUCCESS);
         } else {    // 수정 실패하면 Exception
             throw new StorePossessionFailException();
+        }
+    }
+
+    /**
+     * 점포 삭제하기 위한 API
+     */
+    @PutMapping("/delete/{stCode}")
+    public CommonResponse<?> delete(@PathVariable Long stCode) {
+
+        log.info("TemplateController_delete_start: " + stCode);
+
+        boolean isDeleted = storeService.deleteStore(stCode);
+
+        if (isDeleted) {    // 삭제 성공하면 success
+            log.info("TemplateController_delete_end: success");
+            return CommonResponse.success(SUCCESS);
+        } else {    // 삭제 실패하면 Exception
+            throw new TemplatePossessionFailException();
         }
     }
 
