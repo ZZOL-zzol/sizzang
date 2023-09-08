@@ -21,4 +21,6 @@ public interface StoreService {
     StoreSelectRes selectStore(Long stCode);
 
     List<StoreFindRes> findByCondition(FindByConditionGetReq findByConditionGetReq);
+
+    Boolean deleteStore(Long stCode);
 }

@@ -1,5 +1,6 @@
 package com.zzol.sizzang.store.service;
 
+import com.zzol.sizzang.common.exception.Template.NoDataException;
 import com.zzol.sizzang.common.exception.Template.StoreNotFoundException;
 import com.zzol.sizzang.s3.service.S3Service;
 import com.zzol.sizzang.store.dto.request.FindByConditionGetReq;
@@ -150,7 +151,7 @@ public class StoreServiceImpl implements StoreService{
             // 점포 수정
             StCategoryEntity stCategoryEntity = stCategoryRepository.findById((modifyInfo.getScCode())).orElseThrow(NullPointerException::new);
             storeEntity.modifyStore(stCategoryEntity, modifyInfo.getStName(), modifyInfo.getStPhone(), modifyInfo.getStImg(), modifyInfo.getStIntro(), modifyInfo.getStTime());
-
+//          TODO : 사진 어떻게 처리할지 관리
             log.info("StoreService_modifyStore_end: true");
             return true;
 //        }
@@ -187,6 +188,24 @@ public class StoreServiceImpl implements StoreService{
         // 게시글 상세 정보 조회 결과
         log.info("StoreService_findStore_end: " + storeSelectRes.toString());
         return storeSelectRes;
+    }
+
+    /**
+     * 점포 삭제 (Soft Delete) API 에 대한 서비스
+     */
+    @Override
+    public Boolean deleteStore(Long stCode) {
+
+        log.info("StoreService_deleteStore_start: ");
+
+        StoreEntity storeEntity = storeRepository.findById(stCode)
+                .orElseThrow(NoDataException::new);
+
+        // 실제 서비스에서는 article을 작성한 유저와 삭제 요청을 한 유저를 비교해서 둘이 같을 경우에만 삭제가 되도록.
+        // 둘을 비교해서 두 유저 정보가 다를 경우 false 를 리턴하면 됨
+        storeEntity.deleteTemplate();
+        log.info("StoreService_deleteStore_end: true");
+        return true;
     }
 
 }
