@@ -47,8 +47,9 @@ public class QStoreRepositoryImpl implements QStoreRepository{
 
     /**
      * keyword 로 제목 검색
+     * TODO : 검색
      */
-    private BooleanExpression keywordSearch(String keyword) {
+    private BooleanExpression keywordSearch(String keyword){
         return keyword == null ? null : storeEntity.stName.contains(keyword);
     }
 
