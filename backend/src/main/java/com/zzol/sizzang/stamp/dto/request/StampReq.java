@@ -3,7 +3,7 @@ package com.zzol.sizzang.stamp.dto.request;
 import lombok.Getter;
 
 @Getter
-public class StampAddReq {
+public class StampReq {
 
     private int userCode;
     private int regionCode;
