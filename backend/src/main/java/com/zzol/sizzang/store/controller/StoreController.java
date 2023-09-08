@@ -1,15 +1,23 @@
 package com.zzol.sizzang.store.controller;
 
+import com.zzol.sizzang.common.exception.Template.FileIOException;
+import com.zzol.sizzang.common.exception.Template.StoreNotFoundException;
+import com.zzol.sizzang.common.exception.Template.StorePossessionFailException;
 import com.zzol.sizzang.common.exception.Template.TemplateNoResultException;
 import com.zzol.sizzang.common.model.CommonResponse;
 import com.zzol.sizzang.store.dto.request.FindByConditionGetReq;
+import com.zzol.sizzang.store.dto.request.StoreModifyPutReq;
 import com.zzol.sizzang.store.dto.request.StoreRegistInsertReq;
 import com.zzol.sizzang.store.dto.response.StoreFindRes;
+import com.zzol.sizzang.store.dto.response.StoreSelectRes;
+import com.zzol.sizzang.store.entity.StoreEntity;
 import com.zzol.sizzang.store.service.StoreService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,15 +39,25 @@ public class StoreController {
      */
     @Operation(description = "점포 등록 메서드입니다")
     @PostMapping
-    public CommonResponse<?> insertStore(@RequestBody StoreRegistInsertReq insertInfo) {
+    public CommonResponse<?> insertStore(@RequestPart StoreRegistInsertReq registInfo, @RequestPart(value = "files", required = false) MultipartFile file) {
 
-        log.info("TemplateController_regist_start: " + insertInfo.toString());
+        if (file != null) { // 게시물에 파일 있으면
+            log.info("StoreController_regist_start: " + registInfo.toString() + ", "
+                    + file);
+        } else {
+            log.info("StoreController_regist_start: " + registInfo.toString());
+        }
 
-        storeService.insertStore(insertInfo);
-
-        log.info("StoreController_insert_end: success");
-        return CommonResponse.success(SUCCESS);
+        StoreEntity storeEntity = storeService.registStore(registInfo, file);
+        if (storeEntity != null) {  // regist 성공하면 success
+            log.info("StoreController_regist_end: success");
+            return CommonResponse.success(SUCCESS);
+        } else {    // 실패하면 Exception
+            throw new FileIOException();
+        }
     }
+
+
     /**
      * Store List 조회
      *
@@ -74,13 +92,51 @@ public class StoreController {
         return CommonResponse.success(findRes.orElseThrow(TemplateNoResultException::new));
     }
 
+    /**
+     * 유저가 게시글의 상세 정보를 확인하기 위한 API
+     *
+     * @param stCode
+     */
+    @GetMapping()
+    public CommonResponse<?> find(@PathVariable Long stCode) {
+
+        log.info("StoreController_find_start: " + stCode);
+
+        StoreSelectRes findInfo = storeService.selectStore(stCode);
+
+        if (findInfo != null) { // 조회 성공하면 조회 결과 return
+            log.info("ArticleController_find_end: " + findInfo.toString());
+            return CommonResponse.success(findInfo);
+        } else {    // 조회 실패하면 Exception
+            throw new StoreNotFoundException();
+        }
+    }
+
 
     /**
      * 점포 modify API 에 대한 서비스
      *
-     * @param modifyInfo : 게시글 수정할 때 입력한 정보
-     * @param fileList   : 게시글 사진, 게시글에는 사진이 반드시 있을 필요가 없음
+     * @param modifyInfo : 점포 수정할 때 입력한 정보
+     * @param fileList   : 점포 사진, 게시글에는 사진이 반드시 있을 필요가 없음
      */
+    @PutMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public CommonResponse<?> modify(@RequestPart StoreModifyPutReq modifyInfo,
+                                    @RequestPart(value = "files", required = false) MultipartFile fileList) {
 
+        if (fileList != null) {
+            log.info("StoreController_modify_start: " + modifyInfo.toString() + ", "
+                    + fileList);
+        } else {
+            log.info("StoreController_modify_start: " + modifyInfo.toString());
+        }
+        boolean isModified = storeService.modifyStore(modifyInfo, fileList);
+
+        if (isModified) {   // 수정 성공하면 success
+            log.info("ArticleController_modify_end: success");
+            return CommonResponse.success(SUCCESS);
+        } else {    // 수정 실패하면 Exception
+            throw new StorePossessionFailException();
+        }
+    }
 
 }

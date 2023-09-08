@@ -12,11 +12,11 @@ import java.util.List;
 
 public interface StoreService {
 
-    StoreEntity insertStore(StoreRegistInsertReq insertInfo);
+    StoreEntity registStore(StoreRegistInsertReq insertInfo, MultipartFile file);
 
     List<StoreFindRes> selectAllStore();
 
-    boolean modifyStore(StoreModifyPutReq modifyInfo, List<MultipartFile> files);
+    boolean modifyStore(StoreModifyPutReq modifyInfo, MultipartFile file);
 
     StoreSelectRes selectStore(Long stCode);
 

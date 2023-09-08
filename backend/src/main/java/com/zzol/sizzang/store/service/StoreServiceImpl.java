@@ -1,6 +1,7 @@
 package com.zzol.sizzang.store.service;
 
 import com.zzol.sizzang.common.exception.Template.StoreNotFoundException;
+import com.zzol.sizzang.s3.service.S3Service;
 import com.zzol.sizzang.store.dto.request.FindByConditionGetReq;
 import com.zzol.sizzang.store.dto.request.StoreModifyPutReq;
 import com.zzol.sizzang.store.dto.request.StoreRegistInsertReq;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -27,6 +29,8 @@ public class StoreServiceImpl implements StoreService{
     private final StCategoryRepository stCategoryRepository;
     private final StoreRepository storeRepository;
 
+    private S3Service s3Service;
+
     @Autowired
     public StoreServiceImpl(StCategoryRepository stCategoryRepository, StoreRepository storeRepository) {
         this.stCategoryRepository = stCategoryRepository;
@@ -36,23 +40,39 @@ public class StoreServiceImpl implements StoreService{
     /**
      * 게시글 Regist API 에 대한 서비스
      *
-     * @param insertInfo : 게시글 등록할 때 입력한 정보
+     * @param registInfo : 게시글 등록할 때 입력한 정보
+     * @param fileList   : 게시글 사진, 게시글에는 사진이 반드시 있을 필요가 없음
      */
     @Override
-    public StoreEntity insertStore(StoreRegistInsertReq insertInfo) {
-        log.info("TemplateService_registTemplate_start: " + insertInfo.toString());
+    public StoreEntity registStore(StoreRegistInsertReq registInfo, MultipartFile fileList) {
+        if (fileList != null) {
+            log.info("ArticleService_registArticle_start: " + registInfo.toString() + ", "
+                    + fileList);
+        } else {
+            log.info("ArticleService_registArticle_start: " + registInfo.toString());
+        }
+        //TODO 작성자 정보 가져오기
+//        User user = userRepository.findById(registInfo.getUserId())
+//                .orElseThrow(UserNotFoundException::new);
 
-        int scCode = insertInfo.getScCode();
-        String stName = insertInfo.getStName();
-        String stPhone = insertInfo.getStPhone();
-        String stImg = insertInfo.getStImg();
-        String stAccount = insertInfo.getStAccount();
-        String stAccountHolder = insertInfo.getStAccountHolder();
-        String stIntro = insertInfo.getStIntro();
-        String stTime = insertInfo.getStTime();
+        int scCode = registInfo.getScCode();
+        String stName = registInfo.getStName();
+        String stPhone = registInfo.getStPhone();
+        String stImg = "";
+        String stAccount = registInfo.getStAccount();
+        String stAccountHolder = registInfo.getStAccountHolder();
+        String stIntro = registInfo.getStIntro();
+        String stTime = registInfo.getStTime();
 
         StCategoryEntity stCategoryEntity = stCategoryRepository.findById(scCode)
                 .orElseThrow(NullPointerException::new);
+
+        //파일 저장
+        if (!Objects.isNull(fileList) && fileList.getSize() > 0) {
+            String imgPath = s3Service.saveFile(fileList);
+            stImg = "https://d3brc3t3x7lzht.cloudfront.net/"+imgPath;
+        }
+
 
         StoreEntity storeEntity = StoreEntity.builder()
                 .stCategoryEntity(stCategoryEntity)
@@ -66,6 +86,7 @@ public class StoreServiceImpl implements StoreService{
                 .build();
 
         storeRepository.save(storeEntity);
+
 
         log.info("StoreService_insertStore_end: success");
         return storeEntity;
@@ -113,7 +134,7 @@ public class StoreServiceImpl implements StoreService{
      * @param fileList   : 게시글 사진, 게시글에는 사진이 반드시 있을 필요가 없음
      */
     @Override
-    public boolean modifyStore(StoreModifyPutReq modifyInfo, List<MultipartFile> fileList) {
+    public boolean modifyStore(StoreModifyPutReq modifyInfo, MultipartFile fileList) {
 
         if (fileList != null) {
             log.info("StoreService_modifyStore_start: " + modifyInfo.toString() + ", "
@@ -150,7 +171,7 @@ public class StoreServiceImpl implements StoreService{
 
         StoreSelectRes storeSelectRes = StoreSelectRes.builder()
                 .stCode(stCode)
-                //user 연동
+                //TODO : user 연동
 //                .userId(article.getUser().getId())
 //                .author(article.getUser().getNickname())
                 .stName(storeEntity.getStName())
@@ -167,38 +188,4 @@ public class StoreServiceImpl implements StoreService{
         return storeSelectRes;
     }
 
-
-//    추가작업 필요
-    /**
-     * 유저가 점포 목록을 조회하기 위한 API 서비스
-     *
-     * @param keyword  : 검색어. keyword 를 공백으로 보내면 전체 검색
-     * @param pageable : Spring Data JPA 의 페이징 기능
-     */
-//    @Override
-//    public Page<ArticleFindRes> findAllArticle(String keyword, Pageable pageable) {
-//
-//        log.info("ArticleService_findAllArticle_start: " + keyword + ", "
-//                + pageable.toString());
-//
-//        Page<ArticleFindRes> articleFindRes = articleRepository.findByTitleContaining(keyword,
-//                        pageable)
-//                .map(m -> ArticleFindRes.builder()
-//                        .id(m.getId())
-//                        .userId(m.getUser().getId())
-//                        .author(m.getUser().getNickname())
-//                        .title(m.getTitle())
-//                        .content(m.getContent())
-//                        .viewCount(m.getViewCount())
-//                        .likeCount(m.getLikeCount())
-//                        .reportCount(m.getReportCount())
-//                        .time(m.getTime().toString())
-//                        .lastUpdateTime(m.getLastUpdateTime().toString())
-//                        .articlePicturePathNames(articlePictureRepository.findPathNameByArticle(m.getId()))
-//                        .build());
-//
-//        // 게시글 조회 결과 리스트
-//        log.info("ArticleService_findAllArticle_end: " + articleFindRes);
-//        return articleFindRes;
-//    }
 }
