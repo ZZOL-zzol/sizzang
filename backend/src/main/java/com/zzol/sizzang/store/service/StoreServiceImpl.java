@@ -123,7 +123,7 @@ public class StoreServiceImpl implements StoreService{
 
         List<StoreFindRes> res = storeRepository.findByCondition(findByConditionGetReq);
 
-        log.info("TemplateService_findByConditionTemplate_end: success");
+        log.info("StoreService_findByConditionTemplate_end: success");
         return res;
     }
 
@@ -147,8 +147,9 @@ public class StoreServiceImpl implements StoreService{
                 .orElseThrow(StoreNotFoundException::new);
         // 현재 로그인 유저의 id와 글쓴이의 id가 일치할 때
 //        if (storeEntity.getUser().getId().equals(modifyInfo.getUserId())) {
-            // 게시글 수정
-
+            // 점포 수정
+            StCategoryEntity stCategoryEntity = stCategoryRepository.findById((modifyInfo.getScCode())).orElseThrow(NullPointerException::new);
+            storeEntity.modifyStore(stCategoryEntity, modifyInfo.getStName(), modifyInfo.getStPhone(), modifyInfo.getStImg(), modifyInfo.getStIntro(), modifyInfo.getStTime());
 
             log.info("StoreService_modifyStore_end: true");
             return true;
