@@ -245,7 +245,7 @@ const MapExample = () => {
           <div>
             <form>
               <div className="flex flex-col w-full bg-white pb-2">
-                <SearchBar palceholder='시장, 점포를 입력하세요.' setKeyword={setKeyword}></SearchBar>
+                <SearchBar palceholder='시장, 점포를 입력하세요.' setKeyword={()=>setKeyword}></SearchBar>
                 {/* <input
                 type="text"
                 value={keyword}
