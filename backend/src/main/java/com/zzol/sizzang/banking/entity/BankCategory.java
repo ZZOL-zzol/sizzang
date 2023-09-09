@@ -8,10 +8,10 @@ import javax.persistence.*;
 @ToString
 @Getter
 @Entity
-@Table(name = "bank")
-public class BankEntity {
+@Table(name = "bank_category")
+public class BankCategory {
     @Id
-    @Column(name = "bank_code")
+    @Column(name = "bc_code")
     private String bankCode;
     @Column(name = "bank_name")
     private String bankName;
