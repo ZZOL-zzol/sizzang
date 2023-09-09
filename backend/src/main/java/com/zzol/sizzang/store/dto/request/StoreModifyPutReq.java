@@ -15,4 +15,6 @@ public class StoreModifyPutReq {
     private String stAccountHolder;
     private String stIntro;
     private String stTime;
+    private double stLatitude;
+    private double stLongtitude;
 }

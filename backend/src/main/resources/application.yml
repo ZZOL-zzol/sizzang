@@ -15,9 +15,9 @@ spring:
         format_sql : true
 
 jwt:
-  secretKey: "669629e79bec9fdc11391e28bb7232c80660499499add816f4ae3ff1a5c10a1aa4fffa0b725957934271e1c54a061e2f2956ebba3727aa7aa7a3fee8c6480a97"
+  secretKey: ${secretKey}
   access:
-    expiration: 1800000
+    expiration: 180000000 #00 붙임
     header: Authorization
   refresh:
     expiration: 1209600000

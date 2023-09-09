@@ -64,6 +64,8 @@ public class StoreServiceImpl implements StoreService{
         String stAccountHolder = registInfo.getStAccountHolder();
         String stIntro = registInfo.getStIntro();
         String stTime = registInfo.getStTime();
+        double stLatitude = registInfo.getStLatitude();
+        double stLongtitude = registInfo.getStLongtitude();
 
         StCategoryEntity stCategoryEntity = stCategoryRepository.findById(scCode)
                 .orElseThrow(NullPointerException::new);
@@ -84,6 +86,8 @@ public class StoreServiceImpl implements StoreService{
                 .stAccountHolder(stAccountHolder)
                 .stIntro(stIntro)
                 .stTime(stTime)
+                .stLatitude(stLatitude)
+                .stLongtitude(stLongtitude)
                 .build();
 
         storeRepository.save(storeEntity);
@@ -106,6 +110,8 @@ public class StoreServiceImpl implements StoreService{
                         .stCode(m.getStCode())
                         .stImg(m.getStImg())
                         .stName(m.getStName())
+                        .stLatitude(m.getStLatitude())
+                        .stLongtitude(m.getStLongtitude())
                         .build()
                 ).collect(Collectors.toList());
 
@@ -150,7 +156,7 @@ public class StoreServiceImpl implements StoreService{
 //        if (storeEntity.getUser().getId().equals(modifyInfo.getUserId())) {
             // 점포 수정
             StCategoryEntity stCategoryEntity = stCategoryRepository.findById((modifyInfo.getScCode())).orElseThrow(NullPointerException::new);
-            storeEntity.modifyStore(stCategoryEntity, modifyInfo.getStName(), modifyInfo.getStPhone(), modifyInfo.getStImg(), modifyInfo.getStIntro(), modifyInfo.getStTime());
+            storeEntity.modifyStore(stCategoryEntity, modifyInfo.getStName(), modifyInfo.getStPhone(), modifyInfo.getStImg(), modifyInfo.getStIntro(), modifyInfo.getStTime(), modifyInfo.getStLatitude(), modifyInfo.getStLongtitude());
 //          TODO : 사진 어떻게 처리할지 관리
             log.info("StoreService_modifyStore_end: true");
             return true;
@@ -183,6 +189,8 @@ public class StoreServiceImpl implements StoreService{
                 .stAccountHolder(storeEntity.getStAccountHolder())
                 .stIntro(storeEntity.getStIntro())
                 .stTime(storeEntity.getStTime())
+                .stLatitude(storeEntity.getStLatitude())
+                .stLongtitude(storeEntity.getStLongtitude())
                 .build();
 
         // 게시글 상세 정보 조회 결과
