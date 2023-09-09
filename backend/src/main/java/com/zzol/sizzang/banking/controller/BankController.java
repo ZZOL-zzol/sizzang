@@ -2,6 +2,8 @@ package com.zzol.sizzang.banking.controller;
 
 
 import com.zzol.sizzang.banking.dto.Request.Won1TransferRequestDto;
+import com.zzol.sizzang.banking.dto.Response.SearchTransactionResponseDto;
+import com.zzol.sizzang.banking.entity.Bank;
 import com.zzol.sizzang.banking.service.BankService;
 import com.zzol.sizzang.user.entity.User;
 import com.zzol.sizzang.user.service.UserService;
@@ -11,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -30,14 +34,15 @@ public class BankController {
         return new ResponseEntity<>(checkMemo, HttpStatus.OK);
     }
 
-    @Operation(description = "거래 내역 확인 메서드")
-    @PostMapping("/v1/search/transaction")
-    public ResponseEntity<?> searchTransaction(@RequestBody String userId) {
+//    @Operation(description = "거래 내역 확인 메서드")
+//    @PostMapping("/v1/search/transaction")
+//    public ResponseEntity<?> searchTransaction(@RequestBody String userId) {
 //        log.info("searchTransaction 요청");
 //        User user = userService.getUser(userId);
-//        bankService.searchTransaction(user.getUserAccount());
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+//        System.out.println(user.getUserAccount());
+//        SearchTransactionResponseDto searchTransactionResponseDto = bankService.searchTransaction(user.getUserAccount());
+//        return new ResponseEntity<>(searchTransactionResponseDto, HttpStatus.OK);
+//    }
 
 
 
