@@ -23,7 +23,7 @@ const UserInfo = ({ marketName, userName }) => {
 }
 
 
-function ProfileSection() {
+const ProfileSection = () => {
   return (
     <div className="ProfileSection">
       <div className="flex items-center m-4">
