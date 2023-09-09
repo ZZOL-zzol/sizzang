@@ -10,10 +10,22 @@ const exampleState = createSlice({
   }
 })
 
+const currentTab = createSlice({
+  name: 'currentTab',
+  initialState : {value : 0},
+  reducers: {
+    setCurrentTab(state, action) {
+      state.value = action.payload;
+    }
+  }
+})
+
 export const {plusTest} = exampleState.actions
+export const {setCurrentTab} = currentTab.actions
 
 export default configureStore({
   reducer: {
-  	exampleState: exampleState.reducer
+  	exampleState: exampleState.reducer,
+    currentTab: currentTab.reducer
   },
 });
