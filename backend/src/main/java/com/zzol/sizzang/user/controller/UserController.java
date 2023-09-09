@@ -36,7 +36,8 @@ import java.util.List;
     public ResponseEntity<?> createUser(@RequestBody UserSignUpDto userSignUpDto, HttpServletRequest request) throws Exception {
         User user = userService.signUp(userSignUpDto);
 //        return ResponseEntity.ok(httpStatus);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(user);
+//            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(user);
+            return new ResponseEntity<>("회원가입 완료", HttpStatus.OK);
     }
 
     /**
