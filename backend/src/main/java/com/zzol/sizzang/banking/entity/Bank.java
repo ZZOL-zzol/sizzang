@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 @ToString
@@ -16,9 +15,12 @@ public class Bank {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private long bankCode;
 
-    private String bankAccount; //계좌번호
-    private String userCode;
+    private String accountName;//계좌명
 
-    @OneToMany(mappedBy = "bank")
-    private List<Transaction> transactionList;
+//    @OneToMany(mappedBy = "bank")
+//    private List<TransactionHistory> transactionHistoryList;
+
+    private String accountNumber; //계좌번호
+    private String userId; //
+    private int accountBalance; //잔액
 }

@@ -10,6 +10,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SearchTransactionRequestDto {
-    private String userId;
-//    private String bankAccount;
+//    private String userId;
+    private String userAccount;
 }

@@ -35,6 +35,10 @@ public class UserService {
         return userRepository.findByUserId(id).orElse(null);
     }
 
+    public User findByUserAccount(String userAccount) {
+        return userRepository.findByUserAccount(userAccount).orElse(null);
+    }
+
     /**
      * Id에 해당하는 User 삭제
      * @param id

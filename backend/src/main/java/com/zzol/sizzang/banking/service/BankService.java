@@ -3,8 +3,9 @@ package com.zzol.sizzang.banking.service;
 import com.zzol.sizzang.banking.dto.Request.Won1TransferRequestDto;
 import com.zzol.sizzang.banking.dto.Response.SearchTransactionResponseDto;
 import com.zzol.sizzang.banking.entity.Bank;
-import com.zzol.sizzang.banking.entity.Transaction;
+import com.zzol.sizzang.banking.entity.TransactionHistory;
 import com.zzol.sizzang.banking.repository.BankRepository;
+import com.zzol.sizzang.banking.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BankService {
 
-    private final BankRepository bankRepository;
+    private final TransactionRepository transactionRepository;
 
     /**
      * 1원이체 메서드
@@ -35,20 +36,17 @@ public class BankService {
         return memo;
     }
 
-//    /**
-//     * 거래내역 조회 메서드
-//     * */
-//    public SearchTransactionResponseDto searchTransaction(String userAccount){
-//        Optional<Bank> optionalBank = bankRepository.findByUserAccount(userAccount);
-//        if (optionalBank.isPresent()) {
-//            Bank bank = optionalBank.get();
-//            List<Transaction> transactionList = bank.getTransactionList();
-//            return new SearchTransactionResponseDto(transactionList);
-//        } else {
-//            return new SearchTransactionResponseDto(Collections.emptyList()); //없다면 빈 리스트 반환
-////            throw new NotFoundException("Bank not found for user account: " + userAccount);
-//        }
-//    }
+    /**
+     * 거래내역 조회 메서드
+     * */
+    public SearchTransactionResponseDto searchTransaction(String userAccount){
+
+        List<TransactionHistory> transactionHistory = transactionRepository.findByAccountNumber(userAccount);
+
+        SearchTransactionResponseDto responseDto = new SearchTransactionResponseDto(transactionHistory);
+
+        return responseDto;
+    }
 
 
 }
