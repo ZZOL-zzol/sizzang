@@ -12,7 +12,10 @@ import javax.persistence.*;
 public class BankCategory {
     @Id
     @Column(name = "bc_code")
-    private String bankCategoryCode;
-    @Column(name = "bank_name")
+    @GeneratedValue( strategy = GenerationType.IDENTITY)
+    private long bankCategoryCode;
+
+    private String bankCode;
     private String bankName;
+
 }

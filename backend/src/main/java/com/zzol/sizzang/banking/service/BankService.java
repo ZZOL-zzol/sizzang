@@ -1,6 +1,7 @@
 package com.zzol.sizzang.banking.service;
 
 import com.zzol.sizzang.banking.dto.Request.Won1TransferRequestDto;
+import com.zzol.sizzang.banking.repository.BankRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -11,8 +12,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class BankService {
 
-
-
+    private final BankRepository bankRepository;
 
     public String won1Transfer(Won1TransferRequestDto won1TransferRequestDto){
         // TODO: 거래 내역 업데이트 기능 추가
@@ -24,4 +24,13 @@ public class BankService {
         log.info("won1Transfer key: {}", memo);
         return memo;
     }
+
+    public void searchTransaction(String userAccount){
+        bankRepository.findByUserAccount(userAccount);
+
+
+    }
+
+
+
 }

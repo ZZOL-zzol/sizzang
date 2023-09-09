@@ -1,5 +1,14 @@
 package com.zzol.sizzang.banking.dto.Response;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Won1TransferResponseDto {
     private int bankCode;
     private String Account;
