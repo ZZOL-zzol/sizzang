@@ -1,7 +1,7 @@
 
-const TextInput = () => {
+const TextInput = (props) => {
     return(
-        <input type="text" placeholder="검색어를 입력하세요." className="input w-full max-w-xs focus:outline-blue-200" />
+        <input type="text" placeholder={props.placeholder} id={props.id} value={props.value} onChange={props.onChange} className="input w-full border-2 border-blue-100 focus:outline-blue-500" />
     )
 };
 

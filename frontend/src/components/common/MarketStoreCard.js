@@ -1,6 +1,18 @@
-const MarketStoreCard = () => {
+import { useNavigate } from "react-router-dom";
+
+const MarketStoreCard = (props) => {
+  const navigate = useNavigate();
+
+  const navigateTo = () => {
+    if(props.market){
+    navigate('/market/'+props.market.mkCode)
+  }else{
+    navigate('/store/'+props.store.stCode)
+  }
+  }
+
   return (
-    <div class="card card-side bg-base-100 rounded-none border-b-2">
+    <div class="card card-side bg-base-100 rounded-none border-b-2" onClick={()=>navigateTo()}>
       <div class="card-body p-3 justify-between">
         <div className="gap-0 flex flex-col">
           <div class="card-title text-base">가게 이름</div>
