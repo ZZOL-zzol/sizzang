@@ -27,9 +27,9 @@ public class StampController {
     @Operation(summary = "스탬프추가", description = "그 지역 시장에서 구매한 횟수 기반")
     public CommonResponse<?> addStamp(@RequestBody StampReq stampReq) {
 
-        stampService.addStamp(stampReq);
+        String data = stampService.addStamp(stampReq);
 
-        return CommonResponse.success("OK");
+        return CommonResponse.success(data);
     }
 
     @PostMapping("/getAll")

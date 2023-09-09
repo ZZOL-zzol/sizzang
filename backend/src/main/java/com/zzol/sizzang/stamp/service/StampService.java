@@ -8,7 +8,7 @@ import java.util.List;
 public interface StampService {
 
     //스탬프 등록
-    void addStamp(StampReq stampReq);
+    String addStamp(StampReq stampReq);
     List<StampEntity> getStampList(StampReq stampReq);
 
 }
