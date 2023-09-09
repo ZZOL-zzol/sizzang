@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const color = "bg-secondary-container";
 
-const SmallButton = () => {
+const SmallButton = (props) => {
   const location = useLocation();
   const navigate = useNavigate();
   const [currentLocation, setCurrentLocation] = useState("main");
@@ -15,20 +14,19 @@ const SmallButton = () => {
 
   const letsgo = (value) => {
     console.log("실행");
-    if (value === "product") {
-      navigate("/product");
-    }
+      navigate("/"+value);
+
   };
 
   console.log(currentLocation);
   return (
     <button
-      className={`btn btn-xs w-fit ${color}`}
+      className={`btn btn-xs w-fit ${props.color} rounded-full`}
       onClick={
-        currentLocation === "main" ? () => letsgo("product") : null
+        props.innerText === "담기" ? () => {props.onClick();} : null
       }
     >
-      {currentLocation === "main" ? "상품찾기페이지 ㄱㄱ" : "작은버튼"}
+      {props.innerText}
     </button>
   );
 };
