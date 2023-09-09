@@ -8,6 +8,8 @@ import ProductSearchPage from "./views/ProductSearchPage";
 import MarketDetailPage from "./views/MarketDetailPage";
 import PlaceSearchPage from "./views/PlaceSearchPage";
 import StoreDetailPage from "./views/StoreDetailPage";
+import BasketPage from "./views/BasketPage";
+import HistoryPage from "./views/HistoryPage";
 
 const isLogedin = true;
 
@@ -34,12 +36,14 @@ const App = () => {
             isLogedin ? <PlaceSearchPage /> : <Navigate to="/entrance" />
           }
         ></Route>
-        <Route path="market/:mkCode" element={<MarketDetailPage />}></Route>
-        <Route path="store/:stCode" element={<StoreDetailPage />}></Route>
+        <Route path="/market/:mkCode" element={<MarketDetailPage />}></Route>
+        <Route path="/store/:stCode" element={<StoreDetailPage />}></Route>
+        <Route path="/basket" element={<BasketPage />}></Route>
         <Route
           path="/profile"
           element={isLogedin ? <ProfilePage /> : <Navigate to="/entrance" />}
         ></Route>
+        <Route path="/history" element={<HistoryPage />}></Route> 
       </Routes>
     </div>
   );
