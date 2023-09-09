@@ -8,7 +8,6 @@ import MenuSection from '../../../components/mypage/MenuSection';
 const SellerMyPage = () => {
     return (
         <div className="SellerMyPage  bg-whitegray font-spoqa">
-            <PageTitle pageTitle="마이페이지" />
             <ProfileSection />
             <AccountSection
               imageUrl="../chacha2.jpg"

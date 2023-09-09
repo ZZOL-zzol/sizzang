@@ -14,10 +14,10 @@ const ProfileImage = ({ imageUrl, altText }) => {
 /* 유저 정보 */
 const UserInfo = ({ marketName, userName }) => {
   return (
-    <div className="bg-gray-800 text-black p-4">
-      <div className="text-left font-bold">{marketName}</div>
-      <div className="text-left font-bold">{userName}</div>
-      <div className="text-left text-sm text-gray">내 정보 수정 &gt;</div>
+    <div>
+      <div className="text-left text-lg font-bold">{marketName}</div>
+      <div className="text-left text-xl font-bold">{userName}</div>
+      <div className="text-left text-sm text-outline">내 정보 수정 &gt;</div>
     </div>
   );
 }
@@ -25,8 +25,8 @@ const UserInfo = ({ marketName, userName }) => {
 
 const ProfileSection = () => {
   return (
-    <div className="ProfileSection">
-      <div className="flex items-center m-4">
+    <div className="w-full">
+      <div className="flex items-center m-4 gap-3">
         <ProfileImage       
           imageUrl="../chacha2.jpg"
           altText="대체문구"
