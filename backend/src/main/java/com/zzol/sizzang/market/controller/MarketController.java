@@ -32,7 +32,6 @@ public class MarketController {
     @GetMapping("/search/{mkName}/{limit}/{offset}")
     @Operation(summary = "시장 검색", description = "시장이름으로 검색")
     public CommonResponse<?> searchMarket(@PathVariable String mkName, @PathVariable int limit, @PathVariable int offset) {
-
         List<MarketSearchRes> data = marketService.searchMarket(mkName, limit, offset);
 
         return CommonResponse.success(data);
