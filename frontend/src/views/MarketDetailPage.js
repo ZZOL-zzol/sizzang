@@ -20,7 +20,50 @@ const MarketExample = {
 };
 
 
-const StoreExample = [{},{},{},{}]
+const storeList = [
+  {
+    stCode: 1,
+    mkCode: 1,
+    stOwner: "차차아버님",
+    stName: "네네치킨",
+    stPhone: "010-6664-9510",
+    stImg: "../chacha2.jpg",
+    stAccount: "",
+    stAccountHolder: "정재웅",
+    stIntro: "파닭은 네네가 제일 맛있는듯",
+    stTime: "",
+    stAddress : '관악구 봉천로 466',
+    scName : '음식점'
+  },
+  {
+    stCode: 1,
+    mkCode: 1,
+    stOwner: "차차아버님",
+    stName: "네네치킨",
+    stPhone: "010-6664-9510",
+    stImg: "../chacha2.jpg",
+    stAccount: "",
+    stAccountHolder: "정재웅",
+    stIntro: "파닭은 네네가 제일 맛있는듯",
+    stTime: "",
+    stAddress : '관악구 봉천로 466',
+    scName : '음식점'
+  },
+  {
+    stCode: 1,
+    mkCode: 1,
+    stOwner: "차차아버님",
+    stName: "네네치킨",
+    stPhone: "010-6664-9510",
+    stImg: "../chacha2.jpg",
+    stAccount: "",
+    stAccountHolder: "정재웅",
+    stIntro: "파닭은 네네가 제일 맛있는듯",
+    stTime: "",
+    stAddress : '관악구 봉천로 466',
+    scName : '음식점'
+  },
+];
 
 const MarketDetailPage = () => {
   const location = useLocation();
@@ -29,13 +72,11 @@ const MarketDetailPage = () => {
   const mkCode = location.pathname.split("/")[2];
   console.log(mkCode);
 
-  const navigateTo = () => {
-    navigate('/market/'+mkCode)
-  }
+  
 
   return (
     <div className="flex flex-col w-full h-full bg-white outline outline-1">
-      <Header/>
+      <Header title='시장 상세' backButton/>
       <div className="relative w-full overflow-auto items-center">
         <div className="absolute top-[200px] w-full">
           <DetailInfoCard Market={MarketExample} />
@@ -60,7 +101,7 @@ const MarketDetailPage = () => {
         </div>
       </div>
       <div className="flex flex-col w-full h-[350px] overflow-auto">
-        {StoreExample.map(store => <MarketStoreCard store={store}/>)}
+        {storeList.map(store => <MarketStoreCard store={store}/>)}
       
       </div>
       <Navbar />

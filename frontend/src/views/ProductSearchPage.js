@@ -8,23 +8,27 @@ import SmallButton from "../components/common/SmallButton";
 import SearchBar from "../components/common/SearchBar";
 import Category from "../components/product/Category";
 import ProductCard from "../components/product/ProductCard";
+import { useState } from "react";
 
 const productList = [
-  { product: "옛날통닭", price: 50000 },
-  { product: "옛날통닭", price: 50000 },
-  { product: "옛날통닭", price: 50000 },
-  { product: "옛날통닭", price: 50000 },
+  { pdCode:1, pcCode:1, stCode:'', mkCode:'', scCode:'', pdName: "옛날통닭", pdCost: 50000 },
+  { pdCode:1, pcCode:1, stCode:'', mkCode:'', scCode:'', pdName: "옛날통닭", pdCost: 50000 },
+  { pdCode:1, pcCode:1, stCode:'', mkCode:'', scCode:'', pdName: "옛날통닭", pdCost: 50000 },
+  { pdCode:1, pcCode:1, stCode:'', mkCode:'', scCode:'', pdName: "옛날통닭", pdCost: 50000 },
 ];
 
 const ProductSearchPage = () => {
+
+  const [selectedPdCode,setSelectedPdCode] = useState(null);
+
   return (
     <div className="App flex flex-col text-3xl h-full w-full bg-background-fill">
-      <Header title="상품" button={true} />
+      <Header title="상품" basketButton/>
       <div className="flex flex-col flex-grow">
         <div className="bg-white w-full h-16">
           <SearchBar placeholder="상품을 검색하세요." />
         </div>
-        <Category></Category>
+        {selectedPdCode !==null? null :<Category></Category>}
         <div className="bg-white">
           <div className="flex font-semibold text-xl justify-center items-center">
             <svg
@@ -40,7 +44,7 @@ const ProductSearchPage = () => {
           <Carousel></Carousel>
         </div>
         {productList.map((product) => (
-          <ProductCard product="옛날통닭" price={5000} />
+          <ProductCard product={product} setSelectedPdCode={()=>setSelectedPdCode(product.pdCode)}/>
         ))}
       </div>
       <Navbar />
