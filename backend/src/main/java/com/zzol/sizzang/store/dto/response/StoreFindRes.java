@@ -13,5 +13,6 @@ public class StoreFindRes {
     Long stCode;
     String stName;
     String stImg;
-
+    private double stLatitude;
+    private double stLongtitude;
 }

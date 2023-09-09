@@ -10,6 +10,7 @@ public class StoreSelectRes {
 //    Long mkCode;
     private int scCode;
 
+    private Long stCode;
     private String stName;
     private String stPhone;
     private String stImg;
@@ -17,4 +18,6 @@ public class StoreSelectRes {
     private String stAccountHolder;
     private String stIntro;
     private String stTime;
+    private double stLatitude;
+    private double stLongtitude;
 }
