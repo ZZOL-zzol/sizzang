@@ -4,6 +4,7 @@ import com.zzol.sizzang.common.exception.Template.FileIOException;
 import com.zzol.sizzang.common.exception.Template.StorePossessionFailException;
 import com.zzol.sizzang.common.exception.Template.TemplateNoResultException;
 import com.zzol.sizzang.common.model.CommonResponse;
+import com.zzol.sizzang.product.dto.request.ProductModifyPutReq;
 import com.zzol.sizzang.product.dto.request.ProductRegistInsertReq;
 import com.zzol.sizzang.product.dto.response.ProductFindRes;
 import com.zzol.sizzang.product.entity.ProductEntity;
@@ -81,7 +82,7 @@ public class ProductController {
      * @param modifyInfo : 점포 수정할 때 입력한 정보
      */
     @PutMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public CommonResponse<?> modify(@RequestPart StoreModifyPutReq modifyInfo) {
+    public CommonResponse<?> modify(@RequestPart ProductModifyPutReq modifyInfo) {
 
         boolean isModified = productService.modifyProduct(modifyInfo);
 
