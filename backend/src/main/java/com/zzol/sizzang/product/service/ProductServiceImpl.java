@@ -2,6 +2,7 @@ package com.zzol.sizzang.product.service;
 
 import com.zzol.sizzang.product.dto.request.ProductRegistInsertReq;
 //import com.zzol.sizzang.product.dto.response.ProductFindRes;
+import com.zzol.sizzang.product.dto.response.ProductFindRes;
 import com.zzol.sizzang.product.entity.PrTagEntity;
 import com.zzol.sizzang.product.entity.ProductEntity;
 import com.zzol.sizzang.product.repository.PdCategoryRepository;
@@ -16,7 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional
@@ -88,24 +91,24 @@ public class ProductServiceImpl implements ProductService{
     }
 
     /**
-     *  점포 전체 조회 API에 대한 서비스
+     *  물품 전체 조회 API에 대한 서비스
      */
-//    @Override
-//    public List<ProductFindRes> selectAllProduct(Long stCode) {
-//
-//        log.info("ProductService_findAll_start: ");
-//
-//        List<ProductFindRes> res = productRepository.findByStoreEntity_StCode(stCode)
-//                .stream().map(m -> ProductFindRes.builder()
-//                        .pdCode(m.getPdCode())
-//                        .pdCost(m.getPdCost())
-//                        .pdImg(m.getPdImg())
-//                        .pdName(m.getPdName())
-//                        .build()
-//                ).collect(Collectors.toList());
-//
-//        log.info("ProductService_findAll_end: success");
-//        return res;
-//    }
+    @Override
+    public List<ProductFindRes> selectAllProduct(Long stCode) {
+
+        log.info("ProductService_findAll_start: ");
+
+        List<ProductFindRes> res = productRepository.findByStoreEntity_StCode(stCode)
+                .stream().map(m -> ProductFindRes.builder()
+                        .pdCode(m.getPdCode())
+                        .pdCost(m.getPdCost())
+                        .pdImg(m.getPdImg())
+                        .pdName(m.getPdName())
+                        .build()
+                ).collect(Collectors.toList());
+
+        log.info("ProductService_findAll_end: success");
+        return res;
+    }
 
 }
