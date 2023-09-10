@@ -11,6 +11,6 @@ public class ProductRegistInsertReq {
     private int pdCost;
     private String pdName;
     private String pdIntro;
-    private String pdImg;
+//    private String pdImg;
 
 }

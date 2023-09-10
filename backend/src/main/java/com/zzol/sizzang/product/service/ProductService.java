@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ProductService {
 
-    ProductEntity registProduct(ProductRegistInsertReq insertInfo, MultipartFile file);
+    ProductEntity registProduct(ProductRegistInsertReq insertInfo);
 
     List<ProductFindRes> selectAllProduct(Long stCode);
 //

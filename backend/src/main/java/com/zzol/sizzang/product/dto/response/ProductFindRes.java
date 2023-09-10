@@ -12,5 +12,5 @@ public class ProductFindRes {
     String pdName;
     int pdCost;
     String pdIntro;
-    String pdImg;
+//    String pdImg;
 }

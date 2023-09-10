@@ -42,8 +42,8 @@ public class ProductEntity {
     @Column(name = "pd_intro", columnDefinition = "Text")
     private String pdIntro;
 
-    @Column(name = "pd_img",columnDefinition = "VARCHAR(200)")
-    private String pdImg;
+//    @Column(name = "pd_img",columnDefinition = "VARCHAR(200)")
+//    private String pdImg;
 
     @Column // 기본값 null
     private LocalDateTime deletedAt;

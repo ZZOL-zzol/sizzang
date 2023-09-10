@@ -44,16 +44,17 @@ public class ProductServiceImpl implements ProductService{
      * 점포 Regist API 에 대한 서비스
      *
      * @param registInfo : 게시글 등록할 때 입력한 정보
-     * @param file   : 게시글 사진, 게시글에는 사진이 반드시 있을 필요가 없음
+//     * @param file   : 게시글 사진, 게시글에는 사진이 반드시 있을 필요가 없음
      */
     @Override
-    public ProductEntity registProduct(ProductRegistInsertReq registInfo, MultipartFile file){
-        if (file != null) {
-            log.info("ProductService_registProduct_start: " + registInfo.toString() + ", "
-                    + file);
-        } else {
-            log.info("ArticleService_registArticle_start: " + registInfo.toString());
-        }
+    public ProductEntity registProduct(ProductRegistInsertReq registInfo){
+//        if (file != null) {
+//            log.info("ProductService_registProduct_start: " + registInfo.toString() + ", "
+//                    + file);
+//        } else {
+//            log.info("ArticleService_registArticle_start: " + registInfo.toString());
+//        }
+        log.info("ArticleService_registArticle_start: " + registInfo.toString());
         //TODO 작성자 정보 가져오기
 //        User user = userRepository.findById(registInfo.getUserId())
 //                .orElseThrow(UserNotFoundException::new);
@@ -63,18 +64,18 @@ public class ProductServiceImpl implements ProductService{
         int pdCost = registInfo.getPdCost();
         String pdName = registInfo.getPdName();
         String pdIntro = registInfo.getPdIntro();
-        String pdImg = "";
+//        String pdImg = "";
 
         PrTagEntity prTagEntity = prTagRepository.findById(pcCode)
                 .orElseThrow(NullPointerException::new);
         StoreEntity storeEntity = storeRepository.findById(stCode)
                 .orElseThrow(NullPointerException::new);
 
-        //파일 저장
-        if (!Objects.isNull(file) && file.getSize() > 0) {
-            String imgPath = s3Service.saveFile(file);
-            pdImg = "https://d3brc3t3x7lzht.cloudfront.net/"+imgPath;
-        }
+//        //파일 저장
+//        if (!Objects.isNull(file) && file.getSize() > 0) {
+//            String imgPath = s3Service.saveFile(file);
+//            pdImg = "https://d3brc3t3x7lzht.cloudfront.net/"+imgPath;
+//        }
 
         ProductEntity productEntity = ProductEntity.builder()
                 .prTagEntity(prTagEntity)
@@ -82,7 +83,7 @@ public class ProductServiceImpl implements ProductService{
                 .pdCost(pdCost)
                 .pdName(pdName)
                 .storeEntity(storeEntity)
-                .pdImg(pdImg)
+//                .pdImg(pdImg)
                 .build();
         productRepository.save(productEntity);
 
@@ -102,7 +103,7 @@ public class ProductServiceImpl implements ProductService{
                 .stream().map(m -> ProductFindRes.builder()
                         .pdCode(m.getPdCode())
                         .pdCost(m.getPdCost())
-                        .pdImg(m.getPdImg())
+//                        .pdImg(m.getPdImg())
                         .pdName(m.getPdName())
                         .build()
                 ).collect(Collectors.toList());

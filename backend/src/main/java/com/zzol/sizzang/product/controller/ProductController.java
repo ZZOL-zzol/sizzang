@@ -37,16 +37,16 @@ public class ProductController {
      */
     @Operation(description = "물품 등록 메서드입니다")
     @PostMapping
-    public CommonResponse<?> insertProduct(@RequestPart ProductRegistInsertReq registInfo, @RequestPart(value = "file", required = false) MultipartFile file) {
+    public CommonResponse<?> insertProduct(@RequestPart ProductRegistInsertReq registInfo) {
 
-        if (file != null) { // 게시물에 파일 있으면
-            log.info("ProductController_regist_start: " + registInfo.toString() + ", "
-                    + file);
-        } else {
-            log.info("ProductController_regist_start: " + registInfo.toString());
-        }
-
-        ProductEntity productEntity = productService.registProduct(registInfo, file);
+//        if (file != null) { // 게시물에 파일 있으면
+//            log.info("ProductController_regist_start: " + registInfo.toString() + ", "
+//                    + file);
+//        } else {
+//            log.info("ProductController_regist_start: " + registInfo.toString());
+//        }
+        log.info("ProductController_regist_start: " + registInfo.toString());
+        ProductEntity productEntity = productService.registProduct(registInfo);
         if (productEntity != null) {  // regist 성공하면 success
             log.info("ProductController_regist_end: success");
             return CommonResponse.success(SUCCESS);
