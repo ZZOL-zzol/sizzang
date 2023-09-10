@@ -2,6 +2,7 @@ package com.zzol.sizzang.global.login;
 
 import com.zzol.sizzang.global.jwt.JwtService;
 import com.zzol.sizzang.user.repository.UserRepository;
+import com.zzol.sizzang.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +33,8 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
         // 응답 헤더에 AccessToken, RefreshToken 실어서 응답
         jwtService.sendAccessAndRefreshToken(response, accessToken, refreshToken);
+
+
 
         userRepository.findByUserId(userId)
                 .ifPresent(user -> {

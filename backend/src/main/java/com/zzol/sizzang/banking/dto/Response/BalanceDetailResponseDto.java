@@ -1,19 +1,15 @@
 package com.zzol.sizzang.banking.dto.Response;
 
-import com.zzol.sizzang.banking.entity.TransactionHistory;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
-public class SearchTransactionResponseDto {
-
-    private List<TransactionHistory> transactionHistoryList;//거래 내역 리스트
-
+public class BalanceDetailResponseDto {
+    private String accountNumber; //계좌번호
+    private int accountBalance;//출금가능잔액
 }

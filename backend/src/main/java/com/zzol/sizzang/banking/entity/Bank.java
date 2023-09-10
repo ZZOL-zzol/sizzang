@@ -21,6 +21,6 @@ public class Bank {
 //    private List<TransactionHistory> transactionHistoryList;
 
     private String accountNumber; //계좌번호
-    private String userId; //
+    private String userId; // -> userCode 수정
     private int accountBalance; //잔액
 }

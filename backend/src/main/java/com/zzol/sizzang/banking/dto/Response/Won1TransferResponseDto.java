@@ -7,8 +7,8 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @Setter
+@Getter
 public class Won1TransferResponseDto {
     private int bankCode;
     private String Account;

@@ -9,9 +9,8 @@ import lombok.*;
 public class UserSignUpDto {
     private String userName;
     private String userId;
-    private String userAccount;
+//    private String userAccount;
     private String userNickname;
     private String userPassword;
     private String role;
-
 }

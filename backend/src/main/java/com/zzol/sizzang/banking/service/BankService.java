@@ -1,6 +1,8 @@
 package com.zzol.sizzang.banking.service;
 
+import com.zzol.sizzang.banking.dto.Request.BalanceDetailRequestDto;
 import com.zzol.sizzang.banking.dto.Request.Won1TransferRequestDto;
+import com.zzol.sizzang.banking.dto.Response.BalanceDetailResponseDto;
 import com.zzol.sizzang.banking.dto.Response.SearchTransactionResponseDto;
 import com.zzol.sizzang.banking.entity.Bank;
 import com.zzol.sizzang.banking.entity.TransactionHistory;
@@ -21,31 +23,45 @@ import java.util.Optional;
 public class BankService {
 
     private final TransactionRepository transactionRepository;
+    private final BankRepository bankRepository;
 
     /**
      * 1원이체 메서드
-     * */
-    public String won1Transfer(Won1TransferRequestDto won1TransferRequestDto){
+     */
+    public String won1Transfer(Won1TransferRequestDto won1TransferRequestDto) {
         // TODO: 거래 내역 업데이트 기능 추가
         String userAccount = won1TransferRequestDto.getAccount();
         String userBankCode = won1TransferRequestDto.getBankCode();
         String memo = won1TransferRequestDto.getMemo();
-        memo = memo.replace("ZZOL",""); //서비스명 제거
-        memo = memo.replace(" ",""); //공백제거
+        memo = memo.replace("ZZOL", ""); //서비스명 제거
+        memo = memo.replace(" ", ""); //공백제거
         log.info("won1Transfer key: {}", memo);
         return memo;
     }
 
     /**
      * 거래내역 조회 메서드
-     * */
-    public SearchTransactionResponseDto searchTransaction(String userAccount){
+     */
+    public SearchTransactionResponseDto searchTransaction(String userAccount) {
 
         List<TransactionHistory> transactionHistory = transactionRepository.findByAccountNumber(userAccount);
 
         SearchTransactionResponseDto responseDto = new SearchTransactionResponseDto(transactionHistory);
 
         return responseDto;
+    }
+
+    /**
+     * 잔액 조회 메서드
+     */
+    public BalanceDetailResponseDto balanceDetail(String accountNumber) {
+        Bank bank = bankRepository.findByAccountNumber(accountNumber);
+        log.info("bank.getAccountNumber():{}", bank.getAccountNumber());
+        log.info("bank.getAccountBalance():{}", bank.getAccountBalance());
+        BalanceDetailResponseDto balanceDetailResponseDto = new BalanceDetailResponseDto();
+        balanceDetailResponseDto.setAccountNumber(accountNumber);
+        balanceDetailResponseDto.setAccountBalance(bank.getAccountBalance());
+        return balanceDetailResponseDto;
     }
 
 

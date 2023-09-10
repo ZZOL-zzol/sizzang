@@ -8,7 +8,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class SearchTransactionRequestDto {
-//    private String userId;
-    private String userAccount;
+public class BalanceDetailRequestDto {
+    private String accountNumber; //계좌번호
 }
