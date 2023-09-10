@@ -36,8 +36,8 @@ public class BankController {
     @PostMapping("/v1/auth/1transfer")
     public ResponseEntity<?> won1Transfer(@RequestBody Won1TransferRequestDto won1TransferRequestDto) {
         log.info("won1Transfer 요청");
-        bankService.won1Transfer(won1TransferRequestDto);
-        return new ResponseEntity<>("checkMemo", HttpStatus.OK);
+        String certificationKey = bankService.won1Transfer(won1TransferRequestDto);
+        return new ResponseEntity<>(certificationKey, HttpStatus.OK);
     }
 
     @Operation(description = "거래 내역 확인 메서드")

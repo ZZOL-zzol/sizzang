@@ -11,5 +11,5 @@ import lombok.Setter;
 @Getter
 public class Won1TransferRequestDto {
     private String bankCode;
-    private String Account;
+    private String accountNumber;
 }

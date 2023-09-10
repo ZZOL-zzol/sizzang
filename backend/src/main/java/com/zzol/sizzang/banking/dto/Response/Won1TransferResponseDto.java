@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 public class Won1TransferResponseDto {
     private int bankCode;
-    private String Account;
+    private String accountNumber;
     private String checkedKey; //본인계좌 확인을 위한 key
     private String successCode;
     private String resultCode;

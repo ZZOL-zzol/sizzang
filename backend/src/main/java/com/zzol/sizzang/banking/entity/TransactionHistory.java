@@ -1,6 +1,7 @@
 package com.zzol.sizzang.banking.entity;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.sql.Timestamp;
 
 import static javax.persistence.FetchType.LAZY;
 
+@Setter
 @ToString
 @Getter
 @Entity
