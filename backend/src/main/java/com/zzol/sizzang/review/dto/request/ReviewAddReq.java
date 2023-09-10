@@ -8,6 +8,7 @@ public class ReviewAddReq {
 
     private int userCode;
     private int stCode;
+    private int puCode;
     private String reTitle;
     private String reContent;
     private String reImg;

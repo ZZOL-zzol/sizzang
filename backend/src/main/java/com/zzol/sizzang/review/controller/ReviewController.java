@@ -2,6 +2,7 @@ package com.zzol.sizzang.review.controller;
 
 import com.zzol.sizzang.common.model.CommonResponse;
 import com.zzol.sizzang.review.dto.request.ReviewAddReq;
+import com.zzol.sizzang.review.dto.request.ReviewGetReq;
 import com.zzol.sizzang.review.entity.ReviewEntity;
 import com.zzol.sizzang.review.service.ReviewService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,16 +27,23 @@ public class ReviewController {
     }
 
     //시장검색
-    @GetMapping("/getAll/{stCode}")
+    @PostMapping("/getAll")
     @Operation(summary = "점포별 리뷰 불러오기")
-    public CommonResponse<?> searchMarket(@PathVariable int stCode) {
-        List<ReviewEntity> data = reviewService.getAllReview(stCode);
+    public CommonResponse<?> getAllReviews(@RequestBody ReviewGetReq reviewGetReq) {
+        List<ReviewEntity> data = reviewService.getAllReviews(reviewGetReq.getStCode());
+
+        return CommonResponse.success(data);
+    }
+    @PostMapping("/get/my")
+    @Operation(summary = "특정 리뷰 불러오기")
+    public CommonResponse<?> getReview(@RequestBody ReviewGetReq reviewGetReq) {
+        ReviewEntity data = reviewService.getReview(reviewGetReq.getReCode());
 
         return CommonResponse.success(data);
     }
     @PostMapping("/add")
     @Operation(summary = "리뷰등록")
-    public CommonResponse<?> searchMarket(@RequestBody ReviewAddReq reviewAddReq) {
+    public CommonResponse<?> addReview(@RequestBody ReviewAddReq reviewAddReq) {
         List<ReviewEntity> data = reviewService.addReview(reviewAddReq);
 
         return CommonResponse.success(data);

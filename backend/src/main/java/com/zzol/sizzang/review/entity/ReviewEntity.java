@@ -17,11 +17,13 @@ public class ReviewEntity {
 
         @Id
         @Column(name = "re_code")
-        private int reCode;
+        private long reCode;
         @Column(name = "user_code")
-        private int userCode;
+        private long userCode;
         @Column(name = "st_code")
-        private int stCode;
+        private long stCode;
+        @Column(name = "pu_code")
+        private long puCode;
 
         @Column(name = "re_title")
         private String reTitle;

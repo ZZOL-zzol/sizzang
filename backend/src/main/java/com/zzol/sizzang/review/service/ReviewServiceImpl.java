@@ -20,8 +20,14 @@ public class ReviewServiceImpl implements ReviewService{
 
     //리뷰전체 불러오기(점포별)
     @Override
-    public List<ReviewEntity> getAllReview(int stCode){
+    public List<ReviewEntity> getAllReviews(long stCode){
         return reviewRepository.findByStCode(stCode);
+    }
+
+    //리뷰 상세보기
+    @Override
+    public ReviewEntity getReview(long reCode){
+        return reviewRepository.findByReCode(reCode);
     }
 
     //리뷰 등록하기
@@ -31,6 +37,7 @@ public class ReviewServiceImpl implements ReviewService{
 
         review.setUserCode(reviewAddReq.getUserCode());
         review.setStCode(reviewAddReq.getStCode());
+        review.setPuCode(reviewAddReq.getPuCode());
         review.setReTitle(reviewAddReq.getReTitle());
         review.setReContent(reviewAddReq.getReContent());
         review.setReImg(reviewAddReq.getReImg());
@@ -39,6 +46,8 @@ public class ReviewServiceImpl implements ReviewService{
         reviewRepository.save(review);
         return reviewRepository.findByStCode(reviewAddReq.getStCode());
     }
+
+
 
 
 }
