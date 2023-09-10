@@ -10,6 +10,5 @@ import java.util.List;
 public interface ReviewRepository extends JpaRepository<ReviewEntity, Long> {
     List<ReviewEntity> findByStCode(long stCode);
 
-    ReviewEntity findByReCode (long reCode);
 
 }

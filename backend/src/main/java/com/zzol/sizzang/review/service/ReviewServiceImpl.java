@@ -24,15 +24,10 @@ public class ReviewServiceImpl implements ReviewService{
         return reviewRepository.findByStCode(stCode);
     }
 
-    //리뷰 상세보기
-    @Override
-    public ReviewEntity getReview(long reCode){
-        return reviewRepository.findByReCode(reCode);
-    }
 
     //리뷰 등록하기
     @Override
-    public List<ReviewEntity> addReview(ReviewAddReq reviewAddReq){
+    public void addReview(ReviewAddReq reviewAddReq){
         ReviewEntity review = new ReviewEntity();
 
         review.setUserCode(reviewAddReq.getUserCode());
@@ -44,7 +39,6 @@ public class ReviewServiceImpl implements ReviewService{
         review.setReScore(reviewAddReq.getReScore());
 
         reviewRepository.save(review);
-        return reviewRepository.findByStCode(reviewAddReq.getStCode());
     }
 
 

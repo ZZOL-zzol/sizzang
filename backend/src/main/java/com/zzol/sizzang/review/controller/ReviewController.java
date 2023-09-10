@@ -34,22 +34,12 @@ public class ReviewController {
 
         return CommonResponse.success(data);
     }
-    @PostMapping("/get/my")
-    @Operation(summary = "특정 리뷰 불러오기")
-    public CommonResponse<?> getReview(@RequestBody ReviewGetReq reviewGetReq) {
-        ReviewEntity data = reviewService.getReview(reviewGetReq.getReCode());
-
-        return CommonResponse.success(data);
-    }
     @PostMapping("/add")
     @Operation(summary = "리뷰등록")
     public CommonResponse<?> addReview(@RequestBody ReviewAddReq reviewAddReq) {
-        List<ReviewEntity> data = reviewService.addReview(reviewAddReq);
+        reviewService.addReview(reviewAddReq);
 
-        return CommonResponse.success(data);
+        return CommonResponse.success("리뷰가 성공적으로 등록되었습니다.");
     }
-
-
-
 
 }
