@@ -1,6 +1,7 @@
 package com.zzol.sizzang.stamp.service;
 
 import com.zzol.sizzang.stamp.dto.request.StampReq;
+import com.zzol.sizzang.stamp.entity.RegionEntity;
 import com.zzol.sizzang.stamp.entity.StampEntity;
 import com.zzol.sizzang.stamp.repository.RegionRepository;
 import com.zzol.sizzang.stamp.repository.StampRepository;
@@ -30,20 +31,26 @@ public class StampServiceImpl implements StampService{
 
     //스탬프 등록
     @Override
-    public void addStamp(StampReq stampReq) {
+    public String addStamp(StampReq stampReq) {
 
         Optional<StampEntity> stamp = stampRepository.findByUserCodeAndRegionCode(stampReq.getUserCode(), stampReq.getRegionCode());
+
+        int regionCode;
 
         if(stamp.isEmpty()) {
             StampEntity newStamp = new StampEntity();
             newStamp.setUserCode(stampReq.getUserCode());
             newStamp.setRegionCode(stampReq.getRegionCode());
             newStamp.setStampCount(1);
-            stampRepository.save(newStamp);
+            regionCode = stampRepository.save(newStamp).getRegionCode();
         } else {
             StampEntity existingStamp = stamp.get();
             existingStamp.setStampCount(existingStamp.getStampCount() + 1);
-            stampRepository.save(existingStamp);
+            regionCode = stampRepository.save(existingStamp).getRegionCode();
         }
+        Optional<RegionEntity> region = regionRepository.findByRegionCode(regionCode);
+        String stampedRegion = region.get().getRegionNameFirst() +" " + region.get().getRegionNameSecond();
+        return stampedRegion;
+
     }
 }

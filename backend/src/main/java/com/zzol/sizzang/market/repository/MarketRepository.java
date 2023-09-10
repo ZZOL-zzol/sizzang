@@ -25,7 +25,7 @@ public interface MarketRepository extends JpaRepository<MarketEntity, Long> {
     @Query(value = "SELECT mk_code, mk_name, mk_address, mk_toilet, mk_parking, mk_latitude, mk_longtitude " +
                     "FROM market WHERE mk_name LIKE '%'|| ?1 || '%' " +
                     "ORDER BY (CASE WHEN mk_name LIKE %?1% THEN 2 " +
-                    "ELSE 1 END), " +
+                    "ELSE 1 END) " +
                     "DESC LIMIT ?2 OFFSET ?3", nativeQuery = true)
     List<MarketSearchRes> searchMarketByName(String marketName, int limit, int offset);
 

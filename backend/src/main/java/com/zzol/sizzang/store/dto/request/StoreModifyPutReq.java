@@ -3,10 +3,11 @@ package com.zzol.sizzang.store.dto.request;
 import lombok.Data;
 
 @Data
-public class StoreRegistInsertReq {
+public class StoreModifyPutReq {
 
     private int scCode;
 
+    private Long stCode;
     private String stName;
     private String stPhone;
     private String stImg;
