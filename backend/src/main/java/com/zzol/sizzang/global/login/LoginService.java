@@ -1,5 +1,6 @@
 package com.zzol.sizzang.global.login;
 
+import com.zzol.sizzang.user.dto.UserLoginResponseDto;
 import com.zzol.sizzang.user.entity.User;
 import com.zzol.sizzang.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,9 +26,7 @@ public class LoginService implements UserDetailsService {
 //                .authorities("user")
                 .roles(user.getRole())
                 .build();
-        System.out.println(user.getRole());
         return userDetails;
-
 
     }
 }

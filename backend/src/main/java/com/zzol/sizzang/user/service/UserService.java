@@ -48,34 +48,6 @@ public class UserService {
     }
 
 
-//    public UserEntity updateUserInfo(UserUpdateDTO updateData){
-//        UserEntity updatedUser = null;
-//
-//        try {
-//            if (updateData.isUserUpdateEmpty())
-//                throw new Exception("Required info is not qualified");
-//
-//            UserEntity existUser = getUser(token.getUsername());
-//
-//            existUser.setNickname(updateData.getNickname());
-//            existUser.setBirthDay(updateData.getBirthDay());
-//            existUser.setPhoneNum(updateData.getPhoneNum());
-//
-//            if (!existUser.isUserInfoEmpty())
-//                existUser.authorizeUser();
-//
-//            // if (!ObjectUtils.isEmpty(existUser))
-//            // updatedUser = userRepository.save(model);
-//
-//        } catch (Exception e) {
-//
-//            log.info("[Fail] e: " + e.toString());
-//        }
-//
-//        return updatedUser;
-//    }
-
-
     /**
      * User 생성, 회원가입 메서드
      * JPA Repository의 save Method를 사용하여 객체를 생성
