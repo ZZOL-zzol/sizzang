@@ -1,8 +1,10 @@
 package com.zzol.sizzang.banking.controller;
 
 
+import com.zzol.sizzang.banking.dto.Request.BalanceDetailRequestDto;
 import com.zzol.sizzang.banking.dto.Request.SearchTransactionRequestDto;
 import com.zzol.sizzang.banking.dto.Request.Won1TransferRequestDto;
+import com.zzol.sizzang.banking.dto.Response.BalanceDetailResponseDto;
 import com.zzol.sizzang.banking.dto.Response.SearchTransactionResponseDto;
 import com.zzol.sizzang.banking.entity.Bank;
 import com.zzol.sizzang.banking.service.BankService;
@@ -44,6 +46,16 @@ public class BankController {
         SearchTransactionResponseDto searchTransactionResponseDto = bankService.searchTransaction(searchTransactionRequestDto.getUserAccount());
         return new ResponseEntity<>(searchTransactionResponseDto, HttpStatus.OK);
     }
+
+    @Operation(description = "잔액 조회 메서드")
+    @PostMapping("/v1/account/balance/detail")
+    public ResponseEntity<?> checkBalanceDetail(@RequestBody BalanceDetailRequestDto balanceDetailRequestDto) {
+        log.info("checkBalanceDetail 요청");
+        log.info("계좌확인 : {}", balanceDetailRequestDto.getAccountNumber());
+        BalanceDetailResponseDto responseDto = bankService.balanceDetail(balanceDetailRequestDto.getAccountNumber());
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+    }
+
 
 
 

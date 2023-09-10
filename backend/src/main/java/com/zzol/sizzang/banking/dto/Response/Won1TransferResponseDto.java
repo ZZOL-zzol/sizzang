@@ -8,6 +8,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
+@Getter
 public class Won1TransferResponseDto {
     private int bankCode;
     private String Account;

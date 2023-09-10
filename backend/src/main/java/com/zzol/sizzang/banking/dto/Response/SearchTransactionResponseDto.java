@@ -11,7 +11,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
+@Getter
 public class SearchTransactionResponseDto {
 
     private List<TransactionHistory> transactionHistoryList;//거래 내역 리스트
+
 }
