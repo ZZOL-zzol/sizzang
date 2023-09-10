@@ -12,21 +12,21 @@ const ProfileImage = ({ imageUrl, altText }) => {
 
 
 /* 유저 정보 */
-const UserInfo = ({ marketName, userName }) => {
+const UserInfo = ({ marketName, userName, setOpenProfileEdit }) => {
   return (
     <div>
       <div className="text-left text-lg font-bold">{marketName}</div>
       <div className="text-left text-xl font-bold">{userName}</div>
-      <div className="text-left text-sm text-outline">내 정보 수정 &gt;</div>
+      <div className="text-left text-sm text-outline" onClick={()=>setOpenProfileEdit(true)}>내 정보 수정 &gt;</div>
     </div>
   );
 }
 
 
-const ProfileSection = () => {
+const ProfileSection = (props) => {
   return (
     <div className="w-full">
-      <div className="flex items-center m-4 gap-3">
+      <div className="flex items-center gap-3">
         <ProfileImage       
           imageUrl="../chacha2.jpg"
           altText="대체문구"
@@ -34,6 +34,7 @@ const ProfileSection = () => {
         <UserInfo 
           marketName="경동시장"
           userName="할머니냉면"
+          setOpenProfileEdit = {props.setOpenProfileEdit}
         />
       </div>
     </div>
