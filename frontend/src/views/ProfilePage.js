@@ -9,9 +9,9 @@ import SellerMyPage from "../components/mypage/seller/SellerMyPage";
 
 const ProfilePage = ({ userType }) => {
   return (
-    <div className="w-full">
+    <div className="w-full bg-background-fill">
       <Header title='마이페이지'/>
-      <div className="w-full px-5">
+      <div className="w-full">
       {userType === "seller" ? <SellerMyPage /> : <ConsumerMyPage />}
       </div>
       <Navbar/>

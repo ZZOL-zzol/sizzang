@@ -1,6 +1,6 @@
 const SearchBar = (props) => {
   return (
-    <div className='relative mx-5 mt-1'>
+    <div className='relative w-full mx-5 mt-1'>
     <input
       type="text"
       placeholder={props.placeholder}
@@ -10,7 +10,7 @@ const SearchBar = (props) => {
     </input>
     <button
     type="submit"
-    className="absolute right-0 top-1/4 flex bg-transparent px-2 py-1 rounded-md text-lg w-16 justify-center items-center"
+    className="absolute right-0 top-1/4 flex bg-transparent px-2 rounded-md text-lg w-16 justify-center items-center"
 
   >
     <svg

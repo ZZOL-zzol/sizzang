@@ -3,20 +3,21 @@ import SmallButton from "../common/SmallButton";
 
 
 
-const HistoryCard = (props) => {
+const ReviewCard = (props) => {
   const navigate = useNavigate();
   const onReviewButtonClick = () => {
     navigate('/review', {state:{history : props.history}})
   }
   return (
     <div className=" bg-white h-[80px] p-[10px]">
-      <div className="w-full h-full flex flex-row justify-between">
+      <div className="w-full h-full flex flex-col items-center">
+      
         <div className="flex flex-col">
         <div className="card-title text-base">{props.history.hsName}</div>
-          <span className="text-sm text-left">{props.history.hsDate}</span>
+          
+          <span className="text-sm">{props.history.hsDate}</span>
         </div>
-        <div className="flex flex-col h-full justify-between">
-          {props.history.reviewed?  <div className="w-[64px]"></div> : <SmallButton innerText="리뷰 쓰기" color="bg-primary-container" onReviewButtonClick={onReviewButtonClick}/>}
+        <div className="flex flex-col h-full self-end">
           
           <div>{props.history.hsCost}</div>
         </div>
@@ -25,4 +26,4 @@ const HistoryCard = (props) => {
   );
 };
 
-export default HistoryCard;
+export default ReviewCard;

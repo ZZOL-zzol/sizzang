@@ -20,12 +20,24 @@ const currentTab = createSlice({
   }
 })
 
+const basketCount = createSlice({
+  name: 'basketCount',
+  initialState : {value : 0},
+  reducers: {
+    setBasketCount(state, action) {
+      state.value = action.payload;
+    }
+  }
+})
+
 export const {plusTest} = exampleState.actions
 export const {setCurrentTab} = currentTab.actions
+export const {setBasketCount} = basketCount.actions
 
 export default configureStore({
   reducer: {
   	exampleState: exampleState.reducer,
-    currentTab: currentTab.reducer
+    currentTab: currentTab.reducer,
+    basketCount : basketCount.reducer
   },
 });

@@ -6,24 +6,42 @@ const ProductCard = (props) => {
   const location = useLocation();
   const currentPage = location.pathname.split("/")[1];
 
-  const addBasket = (value) => {
-    window.localStorage.setItem(props.store.stName, {stName: "네네치킨",
-    stAddress: "관악구 봉천로 466",
-    stPhone: '010-6664-9510',
-    productList: [
-      {
-        pdCode: 1,
-        pcCode: 1,
-        stCode: "",
+  const addBasket = () => {
+    window.localStorage.setItem("basket", {
+      stCode: props.store.stCode,
+      stName: props.store.stName,
+      stAddress: props.store.stAddress,
+      stPhone: props.store.stPhone,
+      productList: [
+        {
+          pdCode: props.product.pdCode,
+          pcCode: props.product.pcCode,
+          pdName: props.product.pdName,
+          pdCost: props.product.pdCost,
+          pdIntro: props.product.pdIntro,
+          count: 1,
+        },
+      ],
+    });
+  };
 
-        mkCode: "",
-        scCode: "",
-        pdName: "옛날통닭",
-        pdCost: 50000,
-        pdIntro: "파닭파닭",
-        count: 1,
-      }],})
-  }
+  const setProductCount = (pdCode, type) => {
+    const basket = JSON.parse(window.localStorage.getItem("basket"));
+
+    if (type === "plus") {
+      basket.productList.map((product) =>
+        product.pdCode === pdCode ? (product.count += 1) : null
+      );
+    } else {
+      basket.productList.map((product, index) =>
+        product.pdCode === pdCode && product.count === 1
+          ? basket.productList.splice(index, 1)
+          : product.pdCode === pdCode && product.count > 1
+          ? (product.count -= 1)
+          : null
+      );
+    }
+  };
   return (
     <div className="card-body p-3 justify-between border-b-2 bg-white border-outline-container">
       <div className="gap-0 flex justify-between">
@@ -37,13 +55,20 @@ const ProductCard = (props) => {
             <button className="btn btn-xs btn-circle bg-outline-container">
               -
             </button>
-            <div className='mx-1'>{props.product.count}</div>
-            <button className="btn btn-xs btn-circle bg-myprimary">
+            <div className="mx-1">{props.product.count}</div>
+            <button
+              className="btn btn-xs btn-circle bg-myprimary"
+              onClick={() => setProductCount(props.product.pdCode, "plus")}
+            >
               +
             </button>
           </div>
         ) : (
-          <SmallButton color="bg-primary-container" innerText="담기" onClick={()=>addBasket(props.product)}/>
+          <SmallButton
+            color="bg-primary-container"
+            innerText="담기"
+            onClick={() => addBasket()}
+          />
         )}
       </div>
 
