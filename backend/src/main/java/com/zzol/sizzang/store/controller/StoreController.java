@@ -142,12 +142,12 @@ public class StoreController {
     @PutMapping("/delete/{stCode}")
     public CommonResponse<?> delete(@PathVariable Long stCode) {
 
-        log.info("TemplateController_delete_start: " + stCode);
+        log.info("StoreController_delete_start: " + stCode);
 
         boolean isDeleted = storeService.deleteStore(stCode);
 
         if (isDeleted) {    // 삭제 성공하면 success
-            log.info("TemplateController_delete_end: success");
+            log.info("StoreController_delete_end: success");
             return CommonResponse.success(SUCCESS);
         } else {    // 삭제 실패하면 Exception
             throw new TemplatePossessionFailException();

@@ -3,6 +3,7 @@ package com.zzol.sizzang.product.controller;
 import com.zzol.sizzang.common.exception.Template.FileIOException;
 import com.zzol.sizzang.common.exception.Template.StorePossessionFailException;
 import com.zzol.sizzang.common.exception.Template.TemplateNoResultException;
+import com.zzol.sizzang.common.exception.Template.TemplatePossessionFailException;
 import com.zzol.sizzang.common.model.CommonResponse;
 import com.zzol.sizzang.product.dto.request.ProductModifyPutReq;
 import com.zzol.sizzang.product.dto.request.ProductRegistInsertReq;
@@ -91,6 +92,25 @@ public class ProductController {
             return CommonResponse.success(SUCCESS);
         } else {    // 수정 실패하면 Exception
             throw new StorePossessionFailException();
+        }
+    }
+
+
+    /**
+     * 물품 삭제하기 위한 API
+     */
+    @PutMapping("/delete/{pdCode}")
+    public CommonResponse<?> delete(@PathVariable Long pdCode) {
+
+        log.info("ProductController_delete_start: " + pdCode);
+
+        boolean isDeleted = productService.deleteProduct(pdCode);
+
+        if (isDeleted) {    // 삭제 성공하면 success
+            log.info("ProductController_delete_end: success");
+            return CommonResponse.success(SUCCESS);
+        } else {    // 삭제 실패하면 Exception
+            throw new TemplatePossessionFailException();
         }
     }
 
