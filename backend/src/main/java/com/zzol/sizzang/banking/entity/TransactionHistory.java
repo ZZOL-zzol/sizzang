@@ -10,17 +10,17 @@ import static javax.persistence.FetchType.LAZY;
 @ToString
 @Getter
 @Entity
-public class Transaction {
+@Table(name = "transaction_history")
+public class TransactionHistory {
 
     @Id
-    @Column(name = "transaction_code")
+    @Column(name = "th_code")
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private long transactionCode;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "bank_code") // 현재 엔터티(Transaction)의 외래 키 컬럼 이름
-    private Bank bank;
 
+    @JoinColumn(name = "account_number") // 현재 엔터티(Transaction)의 외래 키 컬럼 이름
+    private String accountNumber; //계좌
 
     private String content; //거래내용
     private int accountBalance; //잔액

@@ -1,6 +1,7 @@
 package com.zzol.sizzang.banking.controller;
 
 
+import com.zzol.sizzang.banking.dto.Request.SearchTransactionRequestDto;
 import com.zzol.sizzang.banking.dto.Request.Won1TransferRequestDto;
 import com.zzol.sizzang.banking.dto.Response.SearchTransactionResponseDto;
 import com.zzol.sizzang.banking.entity.Bank;
@@ -34,15 +35,15 @@ public class BankController {
         return new ResponseEntity<>(checkMemo, HttpStatus.OK);
     }
 
-//    @Operation(description = "거래 내역 확인 메서드")
-//    @PostMapping("/v1/search/transaction")
-//    public ResponseEntity<?> searchTransaction(@RequestBody String userId) {
-//        log.info("searchTransaction 요청");
-//        User user = userService.getUser(userId);
-//        System.out.println(user.getUserAccount());
-//        SearchTransactionResponseDto searchTransactionResponseDto = bankService.searchTransaction(user.getUserAccount());
-//        return new ResponseEntity<>(searchTransactionResponseDto, HttpStatus.OK);
-//    }
+    @Operation(description = "거래 내역 확인 메서드")
+    @PostMapping("/v1/search/transaction")
+    public ResponseEntity<?> searchTransaction(@RequestBody SearchTransactionRequestDto searchTransactionRequestDto) {
+        log.info("searchTransaction 요청");
+        log.info("계좌확인 userId: {}", searchTransactionRequestDto.getUserAccount());
+
+        SearchTransactionResponseDto searchTransactionResponseDto = bankService.searchTransaction(searchTransactionRequestDto.getUserAccount());
+        return new ResponseEntity<>(searchTransactionResponseDto, HttpStatus.OK);
+    }
 
 
 

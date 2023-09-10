@@ -1,6 +1,6 @@
 package com.zzol.sizzang.banking.dto.Response;
 
-import com.zzol.sizzang.banking.entity.Transaction;
+import com.zzol.sizzang.banking.entity.TransactionHistory;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,5 +13,6 @@ import java.util.List;
 @Getter
 @Setter
 public class SearchTransactionResponseDto {
-    private List<Transaction> transactionList;//거래 내역 리스트
+
+    private List<TransactionHistory> transactionHistoryList;//거래 내역 리스트
 }
