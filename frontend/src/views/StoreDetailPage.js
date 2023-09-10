@@ -129,7 +129,7 @@ const StoreDetailPage = () => {
 
         {/* <div className={scrollY !==undefined && scrollY > 314? 'sticky top-[56px]': 'w-full'}> */}
         <div className="w-full">
-          <Tabs type="market" setCurrentTab={setCurrentTab} />
+          <Tabs type="store" setCurrentTab={setCurrentTab} />
         </div>
       </div>
       {currentTab === "products" ? (

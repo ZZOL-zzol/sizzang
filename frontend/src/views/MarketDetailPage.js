@@ -17,6 +17,7 @@ const MarketExample = {
   mkPhone: "010-6664-9510",
   mkLatitude: "",
   mklongtitude: "",
+  mkIntro : "시장 소개이에이이에이이이"
 };
 
 
@@ -79,7 +80,7 @@ const MarketDetailPage = () => {
       <Header title='시장 상세' backButton/>
       <div className="relative w-full overflow-auto items-center">
         <div className="absolute top-[200px] w-full">
-          <DetailInfoCard Market={MarketExample} />
+          <DetailInfoCard market={MarketExample} />
         </div>
         <div className="w-full h-[260px]">
           <img

@@ -23,7 +23,7 @@ const SmallButton = (props) => {
     <button
       className={`btn btn-xs w-fit ${props.color} rounded-full`}
       onClick={
-        props.innerText === "담기" ? () => {props.onClick();} : null
+        props.innerText === "담기" ? () => {props.onClick();} : props.onReviewButtonClick? ()=> props.onReviewButtonClick(): null
       }
     >
       {props.innerText}

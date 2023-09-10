@@ -115,7 +115,7 @@ const BasketPage = () => {
       <div className="fixed w-full flex flex-col bg-white bottom-0 items-center justify-center px-5 py-7 gap-2">
         {showAccount
           ? accountList.map((account) => (
-              <AccountCard account={account} setShowAccount={setShowAccount} />
+              <AccountCard account={account} setShowAccount={setShowAccount} type='pay'/>
             ))
           : null}
 
