@@ -85,13 +85,13 @@ public class UserService {
             throw new Exception("이미 존재하는 아이디입니다.");
 //            return HttpStatus.
         }
-        if (userRepository.findByUserAccount(userSignUpDto.getUserAccount()).isPresent()){ //계좌 일치시
-            throw new Exception("이미 가입한 회원입니다.");
-        }
+//        if (userRepository.findByUserAccount(userSignUpDto.getUserAccount()).isPresent()){ //계좌 일치시
+//            throw new Exception("이미 가입한 회원입니다.");
+//        }
         User user = User.builder()
                 .userName(userSignUpDto.getUserName())
                 .userId(userSignUpDto.getUserId())
-                .userAccount(userSignUpDto.getUserAccount())
+//                .userAccount(userSignUpDto.getUserAccount())
                 .userNickname(userSignUpDto.getUserNickname())
                 .userPassword(userSignUpDto.getUserPassword())
                 .stamp(0)
