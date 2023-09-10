@@ -1,11 +1,13 @@
 package com.zzol.sizzang.product.service;
 
 import com.zzol.sizzang.product.dto.request.ProductRegistInsertReq;
+import com.zzol.sizzang.product.dto.response.ProductFindRes;
 import com.zzol.sizzang.product.entity.PdCategoryEntity;
 import com.zzol.sizzang.product.entity.ProductEntity;
 import com.zzol.sizzang.product.repository.PdCategoryRepository;
 import com.zzol.sizzang.product.repository.ProductRepository;
 import com.zzol.sizzang.s3.service.S3Service;
+import com.zzol.sizzang.store.dto.response.StoreFindRes;
 import com.zzol.sizzang.store.entity.StoreEntity;
 import com.zzol.sizzang.store.repository.StoreRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -14,7 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional
@@ -84,4 +88,26 @@ public class ProductServiceImpl implements ProductService{
         log.info("ProductService_insertProduct_end: success");
         return productEntity;
     }
+
+    /**
+     *  점포 전체 조회 API에 대한 서비스
+     */
+    @Override
+    public List<ProductFindRes> selectAllProduct(Long stCode) {
+
+        log.info("ProductService_findAll_start: ");
+
+        List<ProductFindRes> res = productRepository.findByStoreEntity_StCode(stCode)
+                .stream().map(m -> ProductFindRes.builder()
+                        .pdCode(m.getPdCode())
+                        .pdCost(m.getPdCost())
+                        .pdImg(m.getPdImg())
+                        .pdName(m.getPdName())
+                        .build()
+                ).collect(Collectors.toList());
+
+        log.info("ProductService_findAll_end: success");
+        return res;
+    }
+
 }
