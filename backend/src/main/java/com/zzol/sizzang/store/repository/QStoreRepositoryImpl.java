@@ -52,5 +52,5 @@ public class QStoreRepositoryImpl implements QStoreRepository{
     private BooleanExpression keywordSearch(String keyword){
         return keyword == null ? null : storeEntity.stName.contains(keyword);
     }
-
+    // TODO : 물품으로 검색
 }

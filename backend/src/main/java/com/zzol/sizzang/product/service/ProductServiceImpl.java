@@ -1,13 +1,13 @@
 package com.zzol.sizzang.product.service;
 
 import com.zzol.sizzang.product.dto.request.ProductRegistInsertReq;
-import com.zzol.sizzang.product.dto.response.ProductFindRes;
-import com.zzol.sizzang.product.entity.PdCategoryEntity;
+//import com.zzol.sizzang.product.dto.response.ProductFindRes;
+import com.zzol.sizzang.product.entity.PrTagEntity;
 import com.zzol.sizzang.product.entity.ProductEntity;
 import com.zzol.sizzang.product.repository.PdCategoryRepository;
+import com.zzol.sizzang.product.repository.PrTagRepository;
 import com.zzol.sizzang.product.repository.ProductRepository;
 import com.zzol.sizzang.s3.service.S3Service;
-import com.zzol.sizzang.store.dto.response.StoreFindRes;
 import com.zzol.sizzang.store.entity.StoreEntity;
 import com.zzol.sizzang.store.repository.StoreRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -16,9 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Transactional
@@ -26,21 +24,21 @@ import java.util.stream.Collectors;
 public class ProductServiceImpl implements ProductService{
     private final ProductRepository productRepository;
 
-    private final PdCategoryRepository pdCategoryRepository;
+    private final PrTagRepository prTagRepository;
 
     private final StoreRepository storeRepository;
 
     private S3Service s3Service;
 
     @Autowired
-    public ProductServiceImpl(ProductRepository productRepository, PdCategoryRepository pdCategoryRepository, StoreRepository storeRepository) {
+    public ProductServiceImpl(ProductRepository productRepository, PdCategoryRepository pdCategoryRepository, PrTagRepository prTagRepository, StoreRepository storeRepository) {
         this.productRepository = productRepository;
-        this.pdCategoryRepository = pdCategoryRepository;
+        this.prTagRepository = prTagRepository;
         this.storeRepository = storeRepository;
     }
 
     /**
-     * 게시글 Regist API 에 대한 서비스
+     * 점포 Regist API 에 대한 서비스
      *
      * @param registInfo : 게시글 등록할 때 입력한 정보
      * @param file   : 게시글 사진, 게시글에는 사진이 반드시 있을 필요가 없음
@@ -64,7 +62,7 @@ public class ProductServiceImpl implements ProductService{
         String pdIntro = registInfo.getPdIntro();
         String pdImg = "";
 
-        PdCategoryEntity pdCategoryEntity = pdCategoryRepository.findById(pcCode)
+        PrTagEntity prTagEntity = prTagRepository.findById(pcCode)
                 .orElseThrow(NullPointerException::new);
         StoreEntity storeEntity = storeRepository.findById(stCode)
                 .orElseThrow(NullPointerException::new);
@@ -76,7 +74,7 @@ public class ProductServiceImpl implements ProductService{
         }
 
         ProductEntity productEntity = ProductEntity.builder()
-                .pdCategoryEntity(pdCategoryEntity)
+                .prTagEntity(prTagEntity)
                 .pdIntro(pdIntro)
                 .pdCost(pdCost)
                 .pdName(pdName)
@@ -92,22 +90,22 @@ public class ProductServiceImpl implements ProductService{
     /**
      *  점포 전체 조회 API에 대한 서비스
      */
-    @Override
-    public List<ProductFindRes> selectAllProduct(Long stCode) {
-
-        log.info("ProductService_findAll_start: ");
-
-        List<ProductFindRes> res = productRepository.findByStoreEntity_StCode(stCode)
-                .stream().map(m -> ProductFindRes.builder()
-                        .pdCode(m.getPdCode())
-                        .pdCost(m.getPdCost())
-                        .pdImg(m.getPdImg())
-                        .pdName(m.getPdName())
-                        .build()
-                ).collect(Collectors.toList());
-
-        log.info("ProductService_findAll_end: success");
-        return res;
-    }
+//    @Override
+//    public List<ProductFindRes> selectAllProduct(Long stCode) {
+//
+//        log.info("ProductService_findAll_start: ");
+//
+//        List<ProductFindRes> res = productRepository.findByStoreEntity_StCode(stCode)
+//                .stream().map(m -> ProductFindRes.builder()
+//                        .pdCode(m.getPdCode())
+//                        .pdCost(m.getPdCost())
+//                        .pdImg(m.getPdImg())
+//                        .pdName(m.getPdName())
+//                        .build()
+//                ).collect(Collectors.toList());
+//
+//        log.info("ProductService_findAll_end: success");
+//        return res;
+//    }
 
 }

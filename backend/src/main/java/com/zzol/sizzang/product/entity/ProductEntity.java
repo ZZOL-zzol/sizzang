@@ -26,8 +26,8 @@ public class ProductEntity {
     private Long pdCode;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name="pc_code", referencedColumnName = "pc_code")
-    PdCategoryEntity pdCategoryEntity;
+    @JoinColumn(name="tag_code", referencedColumnName = "tag_code")
+    PrTagEntity prTagEntity;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name="st_code", referencedColumnName = "st_code")

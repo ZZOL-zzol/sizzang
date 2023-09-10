@@ -15,4 +15,6 @@ public class StoreFindRes {
     String stImg;
     private double stLatitude;
     private double stLongtitude;
+    //별점, 리뷰
+    //카테고
 }
