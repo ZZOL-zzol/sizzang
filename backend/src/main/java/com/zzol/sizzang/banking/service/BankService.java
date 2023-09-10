@@ -12,9 +12,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Slf4j
 @Service
@@ -32,11 +34,12 @@ public class BankService {
         // TODO: 거래 내역 업데이트 기능 추가
         String userAccount = won1TransferRequestDto.getAccount();
         String userBankCode = won1TransferRequestDto.getBankCode();
-        String memo = won1TransferRequestDto.getMemo();
-        memo = memo.replace("ZZOL", ""); //서비스명 제거
-        memo = memo.replace(" ", ""); //공백제거
-        log.info("won1Transfer key: {}", memo);
-        return memo;
+
+        String certificationKey = makeRandomKey();
+
+
+        log.info("certificationKey: {}", certificationKey);
+        return certificationKey.toString();
     }
 
     /**
@@ -62,6 +65,19 @@ public class BankService {
         balanceDetailResponseDto.setAccountNumber(accountNumber);
         balanceDetailResponseDto.setAccountBalance(bank.getAccountBalance());
         return balanceDetailResponseDto;
+    }
+
+    //랜덤 키 생성 메서드
+    public String makeRandomKey(){
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        StringBuilder certificationKey = new StringBuilder(4);
+        Random random = new Random();
+
+        for (int i = 0; i < 4; i++) {
+            int index = random.nextInt(characters.length());
+            certificationKey.append(characters.charAt(index));
+        }
+        return certificationKey.toString();
     }
 
 

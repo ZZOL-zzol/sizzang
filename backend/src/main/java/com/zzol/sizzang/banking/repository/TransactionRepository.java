@@ -10,8 +10,9 @@ import java.util.Optional;
 public interface TransactionRepository extends JpaRepository<TransactionHistory, String> {
 
     List<TransactionHistory> findByAccountNumber(String userAccount);
+//    TransactionHistory findByAccountNumber(String userAccount);
 
-//    Optional<Bank> findByUserCode(String userCode);
+//    Optional<Bank> findByAccountNumberAnd(String userCode);
 
 }
 

@@ -6,6 +6,7 @@ import lombok.ToString;
 import javax.persistence.*;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -30,5 +31,5 @@ public class TransactionHistory {
     private int depositAmount; //입금금액
     private int division; //구분 1: 입금, 2:출금
     private String transactionMsg; //상대계좌 내용
-    private Date transactionDatetime; //거래일시
+    private Timestamp transactionDatetime; //거래일시
 }

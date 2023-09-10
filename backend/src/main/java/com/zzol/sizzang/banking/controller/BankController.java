@@ -29,12 +29,15 @@ public class BankController {
     private final BankService bankService;
     private final UserService userService;
 
+    /**
+     * 계좌인증용, 랜덤숫자 생성해서 db업데이트(이체), 응답값으로 랜덤숫자 보내주기
+     * */
     @Operation(description = "1원이체 메서드")
     @PostMapping("/v1/auth/1transfer")
     public ResponseEntity<?> won1Transfer(@RequestBody Won1TransferRequestDto won1TransferRequestDto) {
         log.info("won1Transfer 요청");
-        String checkMemo = bankService.won1Transfer(won1TransferRequestDto);
-        return new ResponseEntity<>(checkMemo, HttpStatus.OK);
+        bankService.won1Transfer(won1TransferRequestDto);
+        return new ResponseEntity<>("checkMemo", HttpStatus.OK);
     }
 
     @Operation(description = "거래 내역 확인 메서드")
