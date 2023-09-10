@@ -10,6 +10,7 @@ import PlaceSearchPage from "./views/PlaceSearchPage";
 import StoreDetailPage from "./views/StoreDetailPage";
 import BasketPage from "./views/BasketPage";
 import HistoryPage from "./views/HistoryPage";
+import ReviewUploadPage from "./views/ReviewUploadPage";
 
 const isLogedin = true;
 
@@ -43,7 +44,8 @@ const App = () => {
           path="/profile"
           element={isLogedin ? <ProfilePage /> : <Navigate to="/entrance" />}
         ></Route>
-        <Route path="/history" element={<HistoryPage />}></Route> 
+        <Route path="/history" element={<HistoryPage />}></Route>
+        <Route path='/review' element={<ReviewUploadPage/>}/>
       </Routes>
     </div>
   );
