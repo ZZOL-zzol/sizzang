@@ -1,5 +1,6 @@
 package com.zzol.sizzang.product.service;
 
+import com.zzol.sizzang.common.exception.Template.NoDataException;
 import com.zzol.sizzang.product.dto.request.ProductRegistInsertReq;
 //import com.zzol.sizzang.product.dto.response.ProductFindRes;
 import com.zzol.sizzang.product.dto.response.ProductFindRes;
@@ -112,4 +113,21 @@ public class ProductServiceImpl implements ProductService{
         return res;
     }
 
+    /**
+     * 물품 삭제 (Soft Delete) API 에 대한 서비스
+     */
+    @Override
+    public Boolean deleteProduct(Long pdCode) {
+
+        log.info("ProductService_deleteProduct_start: ");
+
+        ProductEntity productEntity = productRepository.findById(pdCode)
+                .orElseThrow(NoDataException::new);
+
+        // 실제 서비스에서는 article을 작성한 유저와 삭제 요청을 한 유저를 비교해서 둘이 같을 경우에만 삭제가 되도록.
+        // 둘을 비교해서 두 유저 정보가 다를 경우 false 를 리턴하면 됨
+        productEntity.deleteTemplate();
+        log.info("ProductService_deleteProduct_end: true");
+        return true;
+    }
 }
