@@ -80,14 +80,13 @@ public class UserService {
      * User 생성, 회원가입 메서드
      * JPA Repository의 save Method를 사용하여 객체를 생성
      */
-    public User signUp(UserSignUpDto userSignUpDto) throws Exception {
+    public boolean signUp(UserSignUpDto userSignUpDto) throws Exception {
         if (userRepository.findByUserId(userSignUpDto.getUserId()).isPresent()) { //아이디 중복 불가
-            throw new Exception("이미 존재하는 아이디입니다.");
+//            throw new Exception("이미 존재하는 아이디입니다.");
+            return false;
 //            return HttpStatus.
         }
-//        if (userRepository.findByUserAccount(userSignUpDto.getUserAccount()).isPresent()){ //계좌 일치시
-//            throw new Exception("이미 가입한 회원입니다.");
-//        }
+
         User user = User.builder()
                 .userName(userSignUpDto.getUserName())
                 .userId(userSignUpDto.getUserId())
@@ -100,7 +99,7 @@ public class UserService {
                 .build();
         user.passwordEncode(passwordEncoder);
         userRepository.save(user);
-        return user;
+        return true;
     }
 
     public void loginAndUpdateRefreshToken(String userId, String refreshToken){
