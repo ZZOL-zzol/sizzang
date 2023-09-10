@@ -1,18 +1,21 @@
 package com.zzol.sizzang.product.controller;
 
 import com.zzol.sizzang.common.exception.Template.FileIOException;
+import com.zzol.sizzang.common.exception.Template.StorePossessionFailException;
 import com.zzol.sizzang.common.exception.Template.TemplateNoResultException;
 import com.zzol.sizzang.common.model.CommonResponse;
 import com.zzol.sizzang.product.dto.request.ProductRegistInsertReq;
 import com.zzol.sizzang.product.dto.response.ProductFindRes;
 import com.zzol.sizzang.product.entity.ProductEntity;
 import com.zzol.sizzang.product.service.ProductService;
+import com.zzol.sizzang.store.dto.request.StoreModifyPutReq;
 import com.zzol.sizzang.store.dto.request.StoreRegistInsertReq;
 import com.zzol.sizzang.store.dto.response.StoreFindRes;
 import com.zzol.sizzang.store.entity.StoreEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -70,6 +73,24 @@ public class ProductController {
 
         log.info("TemplateController_findAll_end: " + findRes);
         return CommonResponse.success(findRes.orElseThrow(TemplateNoResultException::new));
+    }
+
+    /**
+     * 물품 modify API 에 대한 서비스
+     *
+     * @param modifyInfo : 점포 수정할 때 입력한 정보
+     */
+    @PutMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public CommonResponse<?> modify(@RequestPart StoreModifyPutReq modifyInfo) {
+
+        boolean isModified = productService.modifyProduct(modifyInfo);
+
+        if (isModified) {   // 수정 성공하면 success
+            log.info("ArticleController_modify_end: success");
+            return CommonResponse.success(SUCCESS);
+        } else {    // 수정 실패하면 Exception
+            throw new StorePossessionFailException();
+        }
     }
 
 }

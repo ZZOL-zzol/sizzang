@@ -1,6 +1,5 @@
 package com.zzol.sizzang.product.entity;
 
-import com.zzol.sizzang.product.entity.PdCategoryEntity;
 import com.zzol.sizzang.store.entity.StoreEntity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -55,14 +54,11 @@ public class ProductEntity {
         this.deletedAt = LocalDateTime.now();
     }
 
-    public void modifyProduct(){
-//        this.stCategoryEntity = stCategoryEntity;
-//        this.stName = stName;
-//        this.stPhone = stPhone;
-//        this.stImg = stImg;
-//        this.stTime = stTime;
-//        this.stIntro =stIntro;
-//        this.stLatitude = stLatitude;
-//        this.stLongtitude = stLongtitude;
+    public void modifyProduct(StoreEntity storeEntity, PrTagEntity prTagEntity, String pdName, String pdIntro, int pdCost){
+        this.storeEntity = storeEntity;
+        this.prTagEntity =prTagEntity;
+        this.pdName = pdName;
+        this.pdCost = pdCost;
+        this.pdIntro = pdIntro;
     }
 }

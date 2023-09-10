@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class ProductRegistInsertReq {
 
-    private int pcCode;
+    private int tagCode;
     private Long stCode;
 
     private int pdCost;

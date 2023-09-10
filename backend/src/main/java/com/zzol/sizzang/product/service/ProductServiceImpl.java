@@ -1,15 +1,20 @@
 package com.zzol.sizzang.product.service;
 
 import com.zzol.sizzang.common.exception.Template.NoDataException;
+import com.zzol.sizzang.common.exception.Template.StoreNotFoundException;
+import com.zzol.sizzang.product.dto.request.ProductModifyPutReq;
 import com.zzol.sizzang.product.dto.request.ProductRegistInsertReq;
 //import com.zzol.sizzang.product.dto.response.ProductFindRes;
 import com.zzol.sizzang.product.dto.response.ProductFindRes;
+import com.zzol.sizzang.product.entity.PdCategoryEntity;
 import com.zzol.sizzang.product.entity.PrTagEntity;
 import com.zzol.sizzang.product.entity.ProductEntity;
 import com.zzol.sizzang.product.repository.PdCategoryRepository;
 import com.zzol.sizzang.product.repository.PrTagRepository;
 import com.zzol.sizzang.product.repository.ProductRepository;
 import com.zzol.sizzang.s3.service.S3Service;
+import com.zzol.sizzang.store.dto.request.StoreModifyPutReq;
+import com.zzol.sizzang.store.entity.StCategoryEntity;
 import com.zzol.sizzang.store.entity.StoreEntity;
 import com.zzol.sizzang.store.repository.StoreRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -60,7 +65,7 @@ public class ProductServiceImpl implements ProductService{
 //        User user = userRepository.findById(registInfo.getUserId())
 //                .orElseThrow(UserNotFoundException::new);
 
-        int pcCode = registInfo.getPcCode();
+        int pcCode = registInfo.getTagCode();
         Long stCode = registInfo.getStCode();
         int pdCost = registInfo.getPdCost();
         String pdName = registInfo.getPdName();
@@ -111,6 +116,31 @@ public class ProductServiceImpl implements ProductService{
 
         log.info("ProductService_findAll_end: success");
         return res;
+    }
+
+    /**
+     * 물품 modify API 에 대한 서비스
+     *
+     * @param modifyInfo : 물품 수정할 때 입력한 정보
+     */
+    @Override
+    public boolean modifyProduct(ProductModifyPutReq modifyInfo) {
+
+        ProductEntity productEntity = productRepository.findById(modifyInfo.getPdCode())
+                .orElseThrow(StoreNotFoundException::new);
+        // 현재 로그인 유저의 id와 글쓴이의 id가 일치할 때
+//        if (storeEntity.getUser().getId().equals(modifyInfo.getUserId())) {
+        PrTagEntity prTagEntity = prTagRepository.findById((modifyInfo.getTagCode()))
+                .orElseThrow(NullPointerException::new);
+        StoreEntity storeEntity = storeRepository.findById((modifyInfo.getStCode()))
+                .orElseThrow(NullPointerException::new);
+        productEntity.modifyProduct(storeEntity, prTagEntity, modifyInfo.getPdName(), modifyInfo.getPdIntro(), modifyInfo.getPdCost());
+//          TODO : 사진 어떻게 처리할지 관리
+        log.info("ProductService_modifyProduct_end: true");
+        return true;
+//        }
+//        log.info("StoreService_modifyStore_end: false");
+//        return false;
     }
 
     /**

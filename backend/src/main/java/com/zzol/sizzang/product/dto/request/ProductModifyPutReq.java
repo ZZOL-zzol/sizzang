@@ -5,9 +5,10 @@ import lombok.Data;
 @Data
 public class ProductModifyPutReq {
 
-    private int pcCode;
+    private int tagCode;
     private Long stCode;
 
+    private Long pdCode;
     private int pdCost;
     private String pdName;
     private String pdIntro;
