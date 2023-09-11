@@ -33,22 +33,14 @@ public class BankService {
      * 1원이체 메서드
      */
     public String won1Transfer(Won1TransferRequestDto won1TransferRequestDto) {
-        // TODO: 거래 내역 업데이트 기능 추가
         String userAccount = won1TransferRequestDto.getAccountNumber();
         String userBankCode = won1TransferRequestDto.getBankCode();
 
         String certificationKey = makeRandomKey(); //랜덤 인증키 생성
 
-        TransactionHistory latestTransaction = null;
-        List<TransactionHistory> history = transactionRepository.findByAccountNumber(userAccount);
+        // 가장 최신 정보 불러오기
+        TransactionHistory latestTransaction = transactionRepository.findLastestInfoByBankCode(userAccount);
 
-        //가장 최신 정보 불러오기
-        for (TransactionHistory transaction : history) {
-            Timestamp transactionDatetime = transaction.getTransactionDatetime();
-            if (latestTransaction == null || transactionDatetime.after(latestTransaction.getTransactionDatetime())) {
-                latestTransaction = transaction;
-            }
-        }
         TransactionHistory userTransaction = new TransactionHistory();
         userTransaction.setAccountNumber(userAccount); //계좌
         userTransaction.setDepositAmount(1); //임금금액
@@ -60,15 +52,15 @@ public class BankService {
         if (latestTransaction != null) {
             // 가장 최근의 거래 일자를 출력하거나 사용할 수 있음
             System.out.println("가장 최근 거래 일자: " + latestTransaction.getTransactionDatetime());
-            System.out.println(latestTransaction.getAccountBalance());
+            System.out.println("현재잔액" + latestTransaction.getAccountBalance());
             userTransaction.setAccountBalance(latestTransaction.getAccountBalance()+1); //1원인증
+            userTransaction.setBank(latestTransaction.getBank());
         } else {
             // 거래 내역이 없을 경우 처리
             System.out.println("거래 내역이 없습니다.");
             userTransaction.setAccountBalance(1); //1원인증
         }
         transactionRepository.save(userTransaction);
-
         log.info("certificationKey: {}", certificationKey);
         return certificationKey.toString();
     }
