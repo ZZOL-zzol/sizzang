@@ -14,7 +14,7 @@ const Carousel = (props) => {
   return (
     <div className="carousel carousel-center w-full p-4 space-x-4 bg-white">
       {RecommendedFoodList.map((food, index) => (
-        <div className="carousel-item">
+        <div className="carousel-item" key={index}>
           <CarouselCard food={food} index={index}/>
         </div>
       ))}

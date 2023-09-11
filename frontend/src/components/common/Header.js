@@ -25,10 +25,10 @@ const Header = (props) => {
 
   const navigate = useNavigate();
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-100 sticky top-0 z-40">
       <div className="flex-1">
         {props.backButton ? (
-          <Link to="/main">
+          <Link to={props.route}>
             <button className="btn btn-ghost normal-case text-xl font-environmentR pr-1">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

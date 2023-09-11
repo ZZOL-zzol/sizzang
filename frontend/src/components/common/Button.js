@@ -6,7 +6,7 @@ const Button = (props) => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex w-full my-5" onClick={props.type === 'mypage' && props.innerText === '소비관리'? ()=>navigate('/history'): null }>
+    <div className="flex w-full my-5" onClick={props.type === 'mypage'? ()=>navigate(props.route): null }>
       {/* <div className="flex justify-center w-full my-5"> */}
       <div
         className={`flex w-full items-center justify-center rounded-lg ${props.color}`}
