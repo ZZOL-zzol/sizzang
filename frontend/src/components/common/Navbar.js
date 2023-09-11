@@ -10,7 +10,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   return (
-    <div className="btm-nav">
+    <div className="btm-nav z-40">
       <button className={currentTab===0? 'border-t-2 border-myprimary': ''} onClick={()=>{navigate('/main'); dispatch(setCurrentTab(0))}}>
         <svg
           className={currentTab===0? 'h-5 w-5 fill-myprimary': 'h-5 w-5'}

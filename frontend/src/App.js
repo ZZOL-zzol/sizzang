@@ -11,6 +11,7 @@ import StoreDetailPage from "./views/StoreDetailPage";
 import BasketPage from "./views/BasketPage";
 import HistoryPage from "./views/HistoryPage";
 import ReviewUploadPage from "./views/ReviewUploadPage";
+import StampPage from "./views/StampPage";
 
 const isLogedin = true;
 
@@ -46,6 +47,7 @@ const App = () => {
         ></Route>
         <Route path="/history" element={<HistoryPage />}></Route>
         <Route path='/review' element={<ReviewUploadPage/>}/>
+        <Route path="/stamp" element={<StampPage/>}/>
       </Routes>
     </div>
   );
