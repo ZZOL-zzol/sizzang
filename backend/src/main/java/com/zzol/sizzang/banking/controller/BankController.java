@@ -3,9 +3,11 @@ package com.zzol.sizzang.banking.controller;
 
 import com.zzol.sizzang.banking.dto.Request.BalanceDetailRequestDto;
 import com.zzol.sizzang.banking.dto.Request.SearchTransactionRequestDto;
+import com.zzol.sizzang.banking.dto.Request.TransferRequestDto;
 import com.zzol.sizzang.banking.dto.Request.Won1TransferRequestDto;
 import com.zzol.sizzang.banking.dto.Response.BalanceDetailResponseDto;
 import com.zzol.sizzang.banking.dto.Response.SearchTransactionResponseDto;
+import com.zzol.sizzang.banking.dto.Response.TransferResponseDto;
 import com.zzol.sizzang.banking.entity.Bank;
 import com.zzol.sizzang.banking.service.BankService;
 import com.zzol.sizzang.user.entity.User;
@@ -32,7 +34,7 @@ public class BankController {
 
     /**
      * 계좌인증용, 랜덤숫자 생성해서 db업데이트(이체), 응답값으로 랜덤숫자 보내주기
-     * */
+     */
     @Operation(description = "1원이체 메서드")
     @PostMapping("/v1/auth/1transfer")
     public ResponseEntity<?> won1Transfer(@RequestBody Won1TransferRequestDto won1TransferRequestDto) {
@@ -60,11 +62,20 @@ public class BankController {
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
+    @Operation(description = "이체 메서드")
+    @PostMapping("/v1/transfer/krw")
+    public ResponseEntity<?> transfer(@RequestBody TransferRequestDto transferRequestDto) {
+        log.info("transfer 요청");
+        log.info("내 계좌확인 : {}", transferRequestDto.getMyAccountNumber());
+        log.info("상대계좌 확인: {}", transferRequestDto.getOpponentAccountNumber());
 
+        if (!bankService.transferPossible(transferRequestDto)) {
+            return new ResponseEntity<>("잔액이 부족합니다", HttpStatus.METHOD_NOT_ALLOWED);
+        }
 
-
-
-
+        TransferResponseDto responseDto = bankService.transferMoney(transferRequestDto);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+    }
 
 
 }
