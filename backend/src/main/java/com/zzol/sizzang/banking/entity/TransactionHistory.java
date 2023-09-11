@@ -1,14 +1,17 @@
 package com.zzol.sizzang.banking.entity;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import static javax.persistence.FetchType.LAZY;
 
+@Setter
 @ToString
 @Getter
 @Entity
@@ -20,7 +23,6 @@ public class TransactionHistory {
     @GeneratedValue( strategy = GenerationType.IDENTITY)
     private long transactionCode;
 
-
     @JoinColumn(name = "account_number") // 현재 엔터티(Transaction)의 외래 키 컬럼 이름
     private String accountNumber; //계좌
 
@@ -30,5 +32,9 @@ public class TransactionHistory {
     private int depositAmount; //입금금액
     private int division; //구분 1: 입금, 2:출금
     private String transactionMsg; //상대계좌 내용
-    private Date transactionDatetime; //거래일시
+    private Timestamp transactionDatetime; //거래일시
+
+    @ManyToOne
+    @JoinColumn(name="bank_code")
+    private Bank bank;
 }
