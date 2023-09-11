@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -40,6 +41,12 @@ public class ReviewController {
         reviewService.addReview(reviewAddReq);
 
         return CommonResponse.success("리뷰가 성공적으로 등록되었습니다.");
+    }
+
+    @PostMapping("/add/img")
+    public CommonResponse<?> addReviewImg(@RequestPart MultipartFile file){
+        String data = reviewService.addReviewImg(file);
+        return CommonResponse.success(data);
     }
 
 }
