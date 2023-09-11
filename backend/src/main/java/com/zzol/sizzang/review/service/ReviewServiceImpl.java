@@ -3,8 +3,11 @@ package com.zzol.sizzang.review.service;
 import com.zzol.sizzang.review.dto.request.ReviewAddReq;
 import com.zzol.sizzang.review.entity.ReviewEntity;
 import com.zzol.sizzang.review.repository.ReviewRepository;
+import com.zzol.sizzang.s3.service.FileService;
+import com.zzol.sizzang.s3.service.S3Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -13,9 +16,12 @@ public class ReviewServiceImpl implements ReviewService{
 
     private final ReviewRepository reviewRepository;
 
+    private FileService s3Service;
+
     @Autowired
-    public ReviewServiceImpl(ReviewRepository reviewRepository){
+    public ReviewServiceImpl(ReviewRepository reviewRepository, FileService s3Service){
         this.reviewRepository = reviewRepository;
+        this.s3Service = s3Service;
     }
 
     //리뷰전체 불러오기(점포별)
@@ -41,7 +47,11 @@ public class ReviewServiceImpl implements ReviewService{
         reviewRepository.save(review);
     }
 
-
+    @Override
+    public String addReviewImg(MultipartFile file) {
+        String imgPath = s3Service.saveFile(file);
+        return "https://d3brc3t3x7lzht.cloudfront.net/"+imgPath;
+    }
 
 
 }
