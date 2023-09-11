@@ -5,6 +5,7 @@ import com.zzol.sizzang.banking.dto.Request.TransferRequestDto;
 import com.zzol.sizzang.banking.dto.Request.Won1TransferRequestDto;
 import com.zzol.sizzang.banking.dto.Response.BalanceDetailResponseDto;
 import com.zzol.sizzang.banking.dto.Response.SearchTransactionResponseDto;
+import com.zzol.sizzang.banking.dto.Response.TransferResponseDto;
 import com.zzol.sizzang.banking.entity.Bank;
 import com.zzol.sizzang.banking.entity.TransactionHistory;
 import com.zzol.sizzang.banking.repository.BankRepository;
@@ -68,8 +69,6 @@ public class BankService {
         }
         transactionRepository.save(userTransaction); //거래내역 db 업데이트
 
-
-
         log.info("certificationKey: {}", certificationKey);
         return certificationKey.toString();
     }
@@ -122,14 +121,57 @@ public class BankService {
     }
 
 
-    public void transferMoney(TransferRequestDto transferRequestDto){
+    /**
+     * 이체 구현 메서드
+     * */
+    public TransferResponseDto transferMoney(TransferRequestDto transferRequestDto){
         //1. 내계좌 거래내역 구현
-        // 내 계좌 데이터 불러오기 -> 거래 가능 여부 확인
-        Bank myBank = bankRepository.findByAccountNumber(transferRequestDto.getMyAccountNumber());
-        myBank.setAccountBalance(myBank.getAccountBalance()-transferRequestDto.getDepositAmount());
+        String myAccount = transferRequestDto.getMyAccountNumber(); //내계좌
+
+        // 내 계좌 데이터 불러오기 -> 잔액 업데이트
+        Bank myBank = bankRepository.findByAccountNumber(myAccount);
+        int myAccountBalance = myBank.getAccountBalance(); //내 계좌 잔액
+        int depositMoney = transferRequestDto.getDepositAmount(); //이체 희망 금액
+        myBank.setAccountBalance(myAccountBalance - depositMoney);
+
         // 내 거래내역 데이터 불러오기 -> 거래내역 추가
+        TransactionHistory newTransaction = new TransactionHistory();
+        newTransaction.setAccountBalance(myAccountBalance-depositMoney);
+        newTransaction.setAccountNumber(myAccount);
+        newTransaction.setDepositAmount(0); //입금금액
+        newTransaction.setDivision(2); //출금
+        newTransaction.setMyMsg(transferRequestDto.getMyMsg()); //내계좌메모
+        newTransaction.setTransactionDatetime(Timestamp.valueOf(LocalDateTime.now())); //거래일자
+        newTransaction.setWithdrawalAmount(depositMoney); //출금금액
+
 
         //상대계좌 거래내역 구현
+        //계좌 업데이트
+        String opponentAccount = transferRequestDto.getOpponentAccountNumber();
+        Bank opponentBank = bankRepository.findByAccountNumber(opponentAccount);
+        opponentBank.setAccountBalance(opponentBank.getAccountBalance()+depositMoney);
+
+        //거래내역 업데이트
+        TransactionHistory opponentTransaction = new TransactionHistory();
+        opponentTransaction.setAccountBalance(opponentBank.getAccountBalance()+depositMoney);
+        opponentTransaction.setDepositAmount(depositMoney); //입금된 금액
+        opponentTransaction.setDivision(1); //입금
+        opponentTransaction.setTransactionDatetime(Timestamp.valueOf(LocalDateTime.now())); //거래일자
+        opponentTransaction.setTransactionMsg(transferRequestDto.getTransactionMsg());
+
+        transactionRepository.save(newTransaction);
+        transactionRepository.save(opponentTransaction);
+
+        TransferResponseDto responseDto = new TransferResponseDto(
+                myAccount, //내계좌
+                transferRequestDto.getMyMsg(), //내계좌표시(출금메모)
+                transferRequestDto.getOppenentBankCode(), //상대계좌은행코드
+                opponentAccount,//상대계좌
+                transferRequestDto.getTransactionMsg(),//상대계좌표시
+                depositMoney,
+                myAccountBalance - depositMoney
+        );
+        return responseDto;
     }
 
 

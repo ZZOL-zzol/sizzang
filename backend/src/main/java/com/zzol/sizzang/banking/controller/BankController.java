@@ -7,6 +7,7 @@ import com.zzol.sizzang.banking.dto.Request.TransferRequestDto;
 import com.zzol.sizzang.banking.dto.Request.Won1TransferRequestDto;
 import com.zzol.sizzang.banking.dto.Response.BalanceDetailResponseDto;
 import com.zzol.sizzang.banking.dto.Response.SearchTransactionResponseDto;
+import com.zzol.sizzang.banking.dto.Response.TransferResponseDto;
 import com.zzol.sizzang.banking.entity.Bank;
 import com.zzol.sizzang.banking.service.BankService;
 import com.zzol.sizzang.user.entity.User;
@@ -72,7 +73,8 @@ public class BankController {
             return new ResponseEntity<>("잔액이 부족합니다", HttpStatus.METHOD_NOT_ALLOWED);
         }
 
-        return new ResponseEntity<>("", HttpStatus.OK);
+        TransferResponseDto responseDto = bankService.transferMoney(transferRequestDto);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
 
