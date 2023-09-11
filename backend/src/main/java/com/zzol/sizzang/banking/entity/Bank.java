@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @ToString
@@ -17,8 +18,8 @@ public class Bank {
 
     private String accountName;//계좌명
 
-//    @OneToMany(mappedBy = "bank")
-//    private List<TransactionHistory> transactionHistoryList;
+    @OneToMany(mappedBy = "bank")
+    private List<TransactionHistory> transactionHistoryList = new ArrayList<TransactionHistory>();
 
     private String accountNumber; //계좌번호
     private String userId; // -> userCode 수정
