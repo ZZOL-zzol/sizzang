@@ -1,10 +1,7 @@
 package com.zzol.sizzang.banking.controller;
 
 
-import com.zzol.sizzang.banking.dto.Request.BalanceDetailRequestDto;
-import com.zzol.sizzang.banking.dto.Request.SearchTransactionRequestDto;
-import com.zzol.sizzang.banking.dto.Request.TransferRequestDto;
-import com.zzol.sizzang.banking.dto.Request.Won1TransferRequestDto;
+import com.zzol.sizzang.banking.dto.Request.*;
 import com.zzol.sizzang.banking.dto.Response.BalanceDetailResponseDto;
 import com.zzol.sizzang.banking.dto.Response.SearchTransactionResponseDto;
 import com.zzol.sizzang.banking.dto.Response.TransferResponseDto;
@@ -77,5 +74,13 @@ public class BankController {
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
-
+    @Operation(description = "계좌 등록 메서드")
+    @PostMapping("/v1/auth/saveaccount")
+    public ResponseEntity<?> registAccount(@RequestBody RegistAccountRequestDto registAccountRequestDto) {
+        log.info("registAccount 요청");
+        log.info("계좌확인 : {}", registAccountRequestDto.getAccountNumber());
+        log.info("id : {}", registAccountRequestDto.getUserId());
+        userService.updateUserAccount(registAccountRequestDto.getAccountNumber(), registAccountRequestDto.getUserId());
+        return new ResponseEntity<>("계좌등록성공", HttpStatus.OK);
+    }
 }
