@@ -9,6 +9,8 @@ public interface MarketSearchRes {
     String getMk_address();
     String getMk_toilet();
     String getMk_parking();
+    String getMk_phone();
+    String getMk_img();
     double getMk_latitude();
     double getMk_longtitude();
 
