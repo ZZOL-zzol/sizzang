@@ -1,6 +1,7 @@
 package com.zzol.sizzang.banking.service;
 
 import com.zzol.sizzang.banking.dto.Request.BalanceDetailRequestDto;
+import com.zzol.sizzang.banking.dto.Request.TransferRequestDto;
 import com.zzol.sizzang.banking.dto.Request.Won1TransferRequestDto;
 import com.zzol.sizzang.banking.dto.Response.BalanceDetailResponseDto;
 import com.zzol.sizzang.banking.dto.Response.SearchTransactionResponseDto;
@@ -109,6 +110,26 @@ public class BankService {
             certificationKey.append(characters.charAt(index));
         }
         return certificationKey.toString();
+    }
+
+    //이체가능 여부 판단하는 메서드
+    public boolean transferPossible(TransferRequestDto transferRequestDto){
+        Bank myBank = bankRepository.findByAccountNumber(transferRequestDto.getMyAccountNumber());
+        if(myBank.getAccountBalance() >= transferRequestDto.getDepositAmount()){ //출금가능
+            return true;
+        }
+        return false;
+    }
+
+
+    public void transferMoney(TransferRequestDto transferRequestDto){
+        //1. 내계좌 거래내역 구현
+        // 내 계좌 데이터 불러오기 -> 거래 가능 여부 확인
+        Bank myBank = bankRepository.findByAccountNumber(transferRequestDto.getMyAccountNumber());
+        myBank.setAccountBalance(myBank.getAccountBalance()-transferRequestDto.getDepositAmount());
+        // 내 거래내역 데이터 불러오기 -> 거래내역 추가
+
+        //상대계좌 거래내역 구현
     }
 
 
