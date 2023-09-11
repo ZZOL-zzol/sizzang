@@ -29,6 +29,8 @@ public class MarketEntity {
     private String mkParking;
     @Column(name = "mk_phone")
     private String mkPhone;
+    @Column(name = "mk_info")
+    private String mkInfo;
     @Column(name = "mk_latitude")
     private double mkLatitude;
     @Column(name = "mk_longtitude")
