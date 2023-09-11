@@ -3,6 +3,7 @@ package com.zzol.sizzang.banking.controller;
 
 import com.zzol.sizzang.banking.dto.Request.BalanceDetailRequestDto;
 import com.zzol.sizzang.banking.dto.Request.SearchTransactionRequestDto;
+import com.zzol.sizzang.banking.dto.Request.TransferRequestDto;
 import com.zzol.sizzang.banking.dto.Request.Won1TransferRequestDto;
 import com.zzol.sizzang.banking.dto.Response.BalanceDetailResponseDto;
 import com.zzol.sizzang.banking.dto.Response.SearchTransactionResponseDto;
@@ -58,6 +59,15 @@ public class BankController {
         log.info("계좌확인 : {}", balanceDetailRequestDto.getAccountNumber());
         BalanceDetailResponseDto responseDto = bankService.balanceDetail(balanceDetailRequestDto.getAccountNumber());
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
+    }
+
+    @Operation(description = "이체 메서드")
+    @PostMapping("/v1/transfer/krw")
+    public ResponseEntity<?> transfer(@RequestBody TransferRequestDto transferRequestDto) {
+        log.info("transfer 요청");
+        log.info("내 계좌확인 : {}", transferRequestDto.getMyAccountNumber());
+        log.info("상대계좌 확인: {}", transferRequestDto.getOpponentAccountNumber());
+        return new ResponseEntity<>("", HttpStatus.OK);
     }
 
 
