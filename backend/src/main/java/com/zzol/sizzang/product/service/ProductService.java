@@ -1,5 +1,6 @@
 package com.zzol.sizzang.product.service;
 
+import com.zzol.sizzang.common.model.BaIResult;
 import com.zzol.sizzang.product.dto.request.ProductModifyPutReq;
 import com.zzol.sizzang.product.dto.request.ProductRegistInsertReq;
 import com.zzol.sizzang.product.dto.response.ProductFindRes;
@@ -15,5 +16,5 @@ public interface ProductService {
 
     boolean modifyProduct(ProductModifyPutReq modifyInfo);
 
-    Boolean deleteProduct(Long stCode);
+    BaIResult deleteProduct(Long stCode);
 }
