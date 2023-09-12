@@ -34,4 +34,8 @@ public class PrTagEntity {
 
     @Column(name = "tag_cost", nullable = false)
     private int tagCost;
+
+    public void modifyTagCost(int tagCost){
+        this.tagCost = tagCost;
+    }
 }

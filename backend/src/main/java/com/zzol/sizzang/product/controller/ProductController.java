@@ -10,16 +10,11 @@ import com.zzol.sizzang.product.dto.request.ProductRegistInsertReq;
 import com.zzol.sizzang.product.dto.response.ProductFindRes;
 import com.zzol.sizzang.product.entity.ProductEntity;
 import com.zzol.sizzang.product.service.ProductService;
-import com.zzol.sizzang.store.dto.request.StoreModifyPutReq;
-import com.zzol.sizzang.store.dto.request.StoreRegistInsertReq;
-import com.zzol.sizzang.store.dto.response.StoreFindRes;
-import com.zzol.sizzang.store.entity.StoreEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -52,6 +47,8 @@ public class ProductController {
 //        }
         log.info("ProductController_regist_start: " + registInfo.toString());
         ProductEntity productEntity = productService.registProduct(registInfo);
+
+
         if (productEntity != null) {  // regist 성공하면 success
             log.info("ProductController_regist_end: success");
             return CommonResponse.success(SUCCESS);

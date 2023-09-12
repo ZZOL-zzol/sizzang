@@ -4,27 +4,21 @@ import com.zzol.sizzang.common.exception.Template.NoDataException;
 import com.zzol.sizzang.common.exception.Template.StoreNotFoundException;
 import com.zzol.sizzang.product.dto.request.ProductModifyPutReq;
 import com.zzol.sizzang.product.dto.request.ProductRegistInsertReq;
-//import com.zzol.sizzang.product.dto.response.ProductFindRes;
 import com.zzol.sizzang.product.dto.response.ProductFindRes;
-import com.zzol.sizzang.product.entity.PdCategoryEntity;
 import com.zzol.sizzang.product.entity.PrTagEntity;
 import com.zzol.sizzang.product.entity.ProductEntity;
 import com.zzol.sizzang.product.repository.PdCategoryRepository;
 import com.zzol.sizzang.product.repository.PrTagRepository;
 import com.zzol.sizzang.product.repository.ProductRepository;
 import com.zzol.sizzang.s3.service.S3Service;
-import com.zzol.sizzang.store.dto.request.StoreModifyPutReq;
-import com.zzol.sizzang.store.entity.StCategoryEntity;
 import com.zzol.sizzang.store.entity.StoreEntity;
 import com.zzol.sizzang.store.repository.StoreRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -125,7 +119,7 @@ public class ProductServiceImpl implements ProductService{
      */
     @Override
     public boolean modifyProduct(ProductModifyPutReq modifyInfo) {
-
+        log.info("ProductService_modifyProduct_start: ");
         ProductEntity productEntity = productRepository.findById(modifyInfo.getPdCode())
                 .orElseThrow(StoreNotFoundException::new);
         // 현재 로그인 유저의 id와 글쓴이의 id가 일치할 때
