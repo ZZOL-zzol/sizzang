@@ -5,7 +5,6 @@ server.ssl.enabled: false
 spring:
   profiles:
     active: secret
-
   jpa:
     show-sql: true
     hibernate:

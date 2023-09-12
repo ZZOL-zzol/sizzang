@@ -10,4 +10,6 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
 
     List<ProductEntity> findByStoreEntity_StCode(Long stCode);
+
+    List<ProductEntity> findByPrTagEntity_TagCode(int tagCode);
 }

@@ -4,22 +4,19 @@ import com.zzol.sizzang.common.exception.Template.FileIOException;
 import com.zzol.sizzang.common.exception.Template.StorePossessionFailException;
 import com.zzol.sizzang.common.exception.Template.TemplateNoResultException;
 import com.zzol.sizzang.common.exception.Template.TemplatePossessionFailException;
+import com.zzol.sizzang.common.model.BaIResult;
 import com.zzol.sizzang.common.model.CommonResponse;
 import com.zzol.sizzang.product.dto.request.ProductModifyPutReq;
 import com.zzol.sizzang.product.dto.request.ProductRegistInsertReq;
 import com.zzol.sizzang.product.dto.response.ProductFindRes;
 import com.zzol.sizzang.product.entity.ProductEntity;
+import com.zzol.sizzang.product.service.PrTagService;
 import com.zzol.sizzang.product.service.ProductService;
-import com.zzol.sizzang.store.dto.request.StoreModifyPutReq;
-import com.zzol.sizzang.store.dto.request.StoreRegistInsertReq;
-import com.zzol.sizzang.store.dto.response.StoreFindRes;
-import com.zzol.sizzang.store.entity.StoreEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,9 +29,12 @@ public class ProductController {
 
     private final ProductService productService;
 
+    private final PrTagService prTagService;
+
     @Autowired
-    public ProductController(ProductService productService) {
+    public ProductController(ProductService productService, PrTagService prTagService) {
         this.productService = productService;
+        this.prTagService = prTagService;
     }
 
     /**
@@ -44,14 +44,12 @@ public class ProductController {
     @PostMapping
     public CommonResponse<?> insertProduct(@RequestPart ProductRegistInsertReq registInfo) {
 
-//        if (file != null) { // 게시물에 파일 있으면
-//            log.info("ProductController_regist_start: " + registInfo.toString() + ", "
-//                    + file);
-//        } else {
-//            log.info("ProductController_regist_start: " + registInfo.toString());
-//        }
         log.info("ProductController_regist_start: " + registInfo.toString());
         ProductEntity productEntity = productService.registProduct(registInfo);
+
+        //TODO : TAGCOST조정
+        prTagService.modifyTagCost(registInfo.getTagCode());
+
         if (productEntity != null) {  // regist 성공하면 success
             log.info("ProductController_regist_end: success");
             return CommonResponse.success(SUCCESS);
@@ -72,7 +70,7 @@ public class ProductController {
 
         Optional<List<ProductFindRes>> findRes = Optional.ofNullable(
                 productService.selectAllProduct(stCode));
-
+        //TODO : 평균가 같이 보내주기
         log.info("TemplateController_findAll_end: " + findRes);
         return CommonResponse.success(findRes.orElseThrow(TemplateNoResultException::new));
     }
@@ -87,6 +85,8 @@ public class ProductController {
 
         boolean isModified = productService.modifyProduct(modifyInfo);
 
+        //TODO : TAGCOST조정
+        prTagService.modifyTagCost(modifyInfo.getTagCode());
         if (isModified) {   // 수정 성공하면 success
             log.info("ArticleController_modify_end: success");
             return CommonResponse.success(SUCCESS);
@@ -104,9 +104,11 @@ public class ProductController {
 
         log.info("ProductController_delete_start: " + pdCode);
 
-        boolean isDeleted = productService.deleteProduct(pdCode);
+        BaIResult isDeleted = productService.deleteProduct(pdCode);
 
-        if (isDeleted) {    // 삭제 성공하면 success
+        //TODO : TAGCOST조정
+        prTagService.modifyTagCost(isDeleted.getIntValue());
+        if (isDeleted.isBooleanValue()) {    // 삭제 성공하면 success
             log.info("ProductController_delete_end: success");
             return CommonResponse.success(SUCCESS);
         } else {    // 삭제 실패하면 Exception

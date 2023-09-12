@@ -54,11 +54,12 @@ public class ProductEntity {
         this.deletedAt = LocalDateTime.now();
     }
 
-    public void modifyProduct(StoreEntity storeEntity, PrTagEntity prTagEntity, String pdName, String pdIntro, int pdCost){
+    public int modifyProduct(StoreEntity storeEntity, PrTagEntity prTagEntity, String pdName, String pdIntro, int pdCost){
         this.storeEntity = storeEntity;
         this.prTagEntity =prTagEntity;
         this.pdName = pdName;
         this.pdCost = pdCost;
         this.pdIntro = pdIntro;
+        return this.getPrTagEntity().getTagCode();
     }
 }

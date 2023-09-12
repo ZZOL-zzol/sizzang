@@ -5,14 +5,9 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ProductFindRes {
+public class PrTagFindRes {
 
-    Long pdCode;
     int tagCode;
-    Long stCode;
-    String pdName;
     int pdCost;
-    String pdIntro;
-    int tagCost;
-//    String pdImg;
+
 }

@@ -2,29 +2,24 @@ package com.zzol.sizzang.product.service;
 
 import com.zzol.sizzang.common.exception.Template.NoDataException;
 import com.zzol.sizzang.common.exception.Template.StoreNotFoundException;
+import com.zzol.sizzang.common.model.BaIResult;
 import com.zzol.sizzang.product.dto.request.ProductModifyPutReq;
 import com.zzol.sizzang.product.dto.request.ProductRegistInsertReq;
-//import com.zzol.sizzang.product.dto.response.ProductFindRes;
 import com.zzol.sizzang.product.dto.response.ProductFindRes;
-import com.zzol.sizzang.product.entity.PdCategoryEntity;
 import com.zzol.sizzang.product.entity.PrTagEntity;
 import com.zzol.sizzang.product.entity.ProductEntity;
 import com.zzol.sizzang.product.repository.PdCategoryRepository;
 import com.zzol.sizzang.product.repository.PrTagRepository;
 import com.zzol.sizzang.product.repository.ProductRepository;
 import com.zzol.sizzang.s3.service.S3Service;
-import com.zzol.sizzang.store.dto.request.StoreModifyPutReq;
-import com.zzol.sizzang.store.entity.StCategoryEntity;
 import com.zzol.sizzang.store.entity.StoreEntity;
 import com.zzol.sizzang.store.repository.StoreRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -104,6 +99,7 @@ public class ProductServiceImpl implements ProductService{
     public List<ProductFindRes> selectAllProduct(Long stCode) {
 
         log.info("ProductService_findAll_start: ");
+        //TODO : TAGCOST추가
 
         List<ProductFindRes> res = productRepository.findByStoreEntity_StCode(stCode)
                 .stream().map(m -> ProductFindRes.builder()
@@ -125,7 +121,7 @@ public class ProductServiceImpl implements ProductService{
      */
     @Override
     public boolean modifyProduct(ProductModifyPutReq modifyInfo) {
-
+        log.info("ProductService_modifyProduct_start: ");
         ProductEntity productEntity = productRepository.findById(modifyInfo.getPdCode())
                 .orElseThrow(StoreNotFoundException::new);
         // 현재 로그인 유저의 id와 글쓴이의 id가 일치할 때
@@ -147,17 +143,16 @@ public class ProductServiceImpl implements ProductService{
      * 물품 삭제 (Soft Delete) API 에 대한 서비스
      */
     @Override
-    public Boolean deleteProduct(Long pdCode) {
+    public BaIResult deleteProduct(Long pdCode) {
 
         log.info("ProductService_deleteProduct_start: ");
 
         ProductEntity productEntity = productRepository.findById(pdCode)
                 .orElseThrow(NoDataException::new);
-
         // 실제 서비스에서는 article을 작성한 유저와 삭제 요청을 한 유저를 비교해서 둘이 같을 경우에만 삭제가 되도록.
         // 둘을 비교해서 두 유저 정보가 다를 경우 false 를 리턴하면 됨
         productEntity.deleteTemplate();
         log.info("ProductService_deleteProduct_end: true");
-        return true;
+        return new BaIResult(true,productEntity.getPrTagEntity().getTagCode() );
     }
 }
