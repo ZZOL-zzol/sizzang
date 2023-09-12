@@ -2,6 +2,7 @@ package com.zzol.sizzang.global.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.zzol.sizzang.user.entity.User;
 import com.zzol.sizzang.user.repository.UserRepository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -102,6 +103,7 @@ public class JwtService {
         response.setStatus(HttpServletResponse.SC_OK);
         setAccessTokenHeader(response, accessToken);
         setRefreshTokenHeader(response, refreshToken);
+
         log.info("Access Token, Refresh Token 헤더 설정 완료");
     }
 
