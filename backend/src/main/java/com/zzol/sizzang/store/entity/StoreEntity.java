@@ -38,9 +38,9 @@ public class StoreEntity {
 
     @Column(name = "st_img",columnDefinition = "VARCHAR(200)")
     private String stImg;
-    @Column(name = "st_account",columnDefinition = "VARCHAR(5)")
+    @Column(name = "st_account",columnDefinition = "VARCHAR(40)")
     private String stAccount;
-    @Column(name = "st_account_holder",columnDefinition = "VARCHAR(40)")
+    @Column(name = "st_account_holder",columnDefinition = "VARCHAR(10)")
     private String stAccountHolder;
     @Column(name = "st_intro",columnDefinition = "TEXT")
     private String stIntro;

@@ -99,6 +99,7 @@ public class ProductServiceImpl implements ProductService{
     public List<ProductFindRes> selectAllProduct(Long stCode) {
 
         log.info("ProductService_findAll_start: ");
+        //TODO : TAGCOST추가
 
         List<ProductFindRes> res = productRepository.findByStoreEntity_StCode(stCode)
                 .stream().map(m -> ProductFindRes.builder()
