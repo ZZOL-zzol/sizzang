@@ -21,6 +21,8 @@ public class MarketPriceEntity {
     private String productName;
     private String itemName;
     private String unit;
+    private int direction;
+    private double value;
     private int dpr1;
     private int dpr2;
     private int dpr3;

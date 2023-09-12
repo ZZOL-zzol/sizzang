@@ -8,12 +8,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.util.List;
 
 
 @Service
@@ -28,6 +30,7 @@ public class MarketPriceServiceImpl implements MarketPriceService {
 
 
     @Override
+    @Scheduled(cron = "0 0 0/12 1/1 * ?")
     public void getWholesalePrice(){
 
         marketPriceRepository.deleteAllInBatch();
@@ -86,11 +89,13 @@ public class MarketPriceServiceImpl implements MarketPriceService {
             String unitStr = priceRes.getPrice().get(i).getUnit().replaceAll("\\d", "");
             int unitInt = Integer.parseInt(priceRes.getPrice().get(i).getUnit().replaceAll("\\D", ""));
             item.setUnit(unitStr);
-//            try{
-//                item.setDpr1(Integer.parseInt(""+priceRes.getPrice().get(i).getDpr1().toString().replaceAll(",","")) / unitInt);
-//            }catch(Exception e){
-//                item.setDpr1(0);
-//            };
+            item.setDirection(Integer.parseInt(priceRes.getPrice().get(i).getDirection().toString()));
+            item.setValue(Double.parseDouble(priceRes.getPrice().get(i).getValue().toString()));
+            try{
+                item.setDpr1(Integer.parseInt(""+priceRes.getPrice().get(i).getDpr1().toString().replaceAll(",","")) / unitInt);
+            }catch(Exception e){
+                item.setDpr1(0);
+            };
             try{
                 item.setDpr2(Integer.parseInt(""+priceRes.getPrice().get(i).getDpr2().toString().replaceAll(",","")) / unitInt);
             }catch(Exception e){
@@ -112,7 +117,11 @@ public class MarketPriceServiceImpl implements MarketPriceService {
 
     }
 
-
+    @Override
+    public List<MarketPriceEntity> findCheaperItem(int direction){
+        List<MarketPriceEntity> items = marketPriceRepository.findByDirectionOrderByValueDesc(0);
+        return items;
+    }
 
 
 }
