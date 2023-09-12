@@ -47,10 +47,10 @@ public class StoreEntity {
     @Column(name = "st_time",columnDefinition = "VARCHAR(100)")
     private String stTime;
 
-    @Column(name = "st_latitude", columnDefinition = "double")
-    private double stLatitude;
-    @Column(name = "st_longtitude", columnDefinition = "double")
-    private double stLongtitude;
+    @Column(name = "st_latitude", columnDefinition = "VARCHAR(20)")
+    private String stLatitude;
+    @Column(name = "st_longtitude", columnDefinition = "VARCHAR(20)")
+    private String stLongtitude;
 
     @Column // 기본값 null
     private LocalDateTime deletedAt;
@@ -62,7 +62,7 @@ public class StoreEntity {
         this.deletedAt = LocalDateTime.now();
     }
 
-    public void modifyStore(StCategoryEntity stCategoryEntity, String stName, String stPhone, String stImg, String stIntro, String stTime, double stLatitude, double stLongtitude){
+    public void modifyStore(StCategoryEntity stCategoryEntity, String stName, String stPhone, String stImg, String stIntro, String stTime, String stLatitude, String stLongtitude){
         this.stCategoryEntity = stCategoryEntity;
         this.stName = stName;
         this.stPhone = stPhone;

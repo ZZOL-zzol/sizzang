@@ -14,6 +14,6 @@ public class StoreRegistInsertReq {
     private String stAccountHolder;
     private String stIntro;
     private String stTime;
-    private double stLatitude;
-    private double stLongtitude;
+    private String stLatitude;
+    private String stLongtitude;
 }

@@ -34,11 +34,14 @@ public class QStoreRepositoryImpl implements QStoreRepository{
 
         log.info("QTemplateArticleRepositoryImpl_findByConditionTemplate_start: "
                 + findByConditionGetReq.toString());
-
+        System.out.println(findByConditionGetReq.getKeyword());
         return queryFactory
                 .select(Projections.constructor(StoreFindRes.class,
+                        storeEntity.stCode.as("stCode"),
                         storeEntity.stName.as("stName"),
                         storeEntity.stImg.as("stImg"),
+                        storeEntity.stLatitude.as("stLatitude"),
+                        storeEntity.stLongtitude.as("stLongtitude"),
                         storeEntity.stIntro.as("stIntro")))
                 .from(storeEntity)
                 .where(keywordSearch(findByConditionGetReq.getKeyword()))

@@ -118,7 +118,7 @@ public class StoreController {
      */
     @PutMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public CommonResponse<?> modify(@RequestPart StoreModifyPutReq modifyInfo,
-                                    @RequestPart(value = "files", required = false) MultipartFile fileList) {
+                                    @RequestPart(value = "file", required = false) MultipartFile fileList) {
 
         if (fileList != null) {
             log.info("StoreController_modify_start: " + modifyInfo.toString() + ", "

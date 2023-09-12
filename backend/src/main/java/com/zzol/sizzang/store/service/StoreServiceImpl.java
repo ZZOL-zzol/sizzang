@@ -64,8 +64,8 @@ public class StoreServiceImpl implements StoreService{
         String stAccountHolder = registInfo.getStAccountHolder();
         String stIntro = registInfo.getStIntro();
         String stTime = registInfo.getStTime();
-        double stLatitude = registInfo.getStLatitude();
-        double stLongtitude = registInfo.getStLongtitude();
+        String stLatitude = registInfo.getStLatitude();
+        String stLongtitude = registInfo.getStLongtitude();
 
         StCategoryEntity stCategoryEntity = stCategoryRepository.findById(scCode)
                 .orElseThrow(NullPointerException::new);
