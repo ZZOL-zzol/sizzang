@@ -59,12 +59,14 @@ const ConsumerMyPage = () => {
                 innerText="소비관리"
                 image="./market.svg"
                 type="mypage"
+                route='/history'
               />
               <Button
                 color="bg-primary-container"
                 innerText="스탬프"
                 image="./market.svg"
                 type="mypage"
+                route= '/stamp'
               />
             </div>
           </div>

@@ -53,12 +53,12 @@ const ProductCard = (props) => {
       <input type="checkbox" />
       <div className="collapse-title p-0 pt-2 ">
         <div
-          class="card card-side bg-base-100 rounded-none border-b-2"
+          className="card card-side bg-base-100 rounded-none border-b-2"
           onClick={props.setSelectedPdCode}
         >
-          <div class="card-body p-3 justify-between">
+          <div className="card-body p-3 justify-between">
             <div className="gap-0 flex justify-between">
-              <div class="card-title text-base">{props.product.pdName}</div>
+              <div className="card-title text-base">{props.product.pdName}</div>
               <span className="text-sm text-left">{props.product.pdCost}</span>
             </div>
 
@@ -66,7 +66,7 @@ const ProductCard = (props) => {
           </div>
         </div>
       </div>
-      <div className="collapse-content">{storeList.map(store=><MarketStoreCard store={store}/>)}</div>
+      <div className="collapse-content">{storeList.map((store,index)=><MarketStoreCard store={store} key={index}/>)}</div>
     </div>
   );
 };

@@ -43,8 +43,8 @@ const ProductSearchPage = () => {
           </div>
           <Carousel></Carousel>
         </div>
-        {productList.map((product) => (
-          <ProductCard product={product} setSelectedPdCode={()=>setSelectedPdCode(product.pdCode)}/>
+        {productList.map((product, index) => (
+          <ProductCard product={product} key={index} setSelectedPdCode={()=>setSelectedPdCode(product.pdCode)}/>
         ))}
       </div>
       <Navbar />
