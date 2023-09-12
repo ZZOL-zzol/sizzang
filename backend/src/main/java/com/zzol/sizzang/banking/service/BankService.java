@@ -1,6 +1,7 @@
 package com.zzol.sizzang.banking.service;
 
 import com.zzol.sizzang.banking.dto.Request.BalanceDetailRequestDto;
+import com.zzol.sizzang.banking.dto.Request.RegistAccountRequestDto;
 import com.zzol.sizzang.banking.dto.Request.TransferRequestDto;
 import com.zzol.sizzang.banking.dto.Request.Won1TransferRequestDto;
 import com.zzol.sizzang.banking.dto.Response.BalanceDetailResponseDto;
@@ -172,6 +173,12 @@ public class BankService {
                 myAccountBalance - depositMoney
         );
         return responseDto;
+    }
+
+
+
+    public void registUserAccount(RegistAccountRequestDto registAccountRequestDto){
+
     }
 
 
