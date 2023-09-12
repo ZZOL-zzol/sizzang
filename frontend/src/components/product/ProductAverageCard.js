@@ -45,7 +45,7 @@ const storeList = [
   },
 ];
 
-const ProductCard = (props) => {
+const ProductAverageCard = (props) => {
 
 
   return (
@@ -62,7 +62,7 @@ const ProductCard = (props) => {
               <span className="text-sm text-left">{props.product.pdCost}</span>
             </div>
 
-            <div className="text-right text-sm text-myerror">▲1000</div>
+            {/* <div className="text-right text-sm text-myerror">▲1000</div> */}
           </div>
         </div>
       </div>
@@ -71,4 +71,4 @@ const ProductCard = (props) => {
   );
 };
 
-export default ProductCard;
+export default ProductAverageCard;

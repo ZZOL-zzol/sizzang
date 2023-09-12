@@ -20,25 +20,25 @@ const EntrancePage = () => {
 
 
   const onLoginClick = () => {
+    console.log('싫애')
     axios
-      .get(
-        `${API_URL}/user/login`,
+      .post(
+        `${API_URL}/login`,
         JSON.stringify({ userId: userId, userPassword: userPassword }),
         {
           headers: { "Content-Type": "application/json" },
         }
       )
       .then((res) => {
-        if (res.data) {
-          window.localStorage.setItem('Access_Token',res.data.ownJwtAccessToken);
-          window.localStorage.setItem('Refresh_Token',res.data.ownJwtRefreshToken);
-          // window.localStorage.setItem()
-          
+
+        if (res.headers['authorization']) {
+          window.localStorage.setItem('Access_Token',res.headers['authorization']);
+          window.localStorage.setItem('Refresh_Token',res.headers['authorization-refresh']);
+          navigate('/main')
+
         }
       })
-      .then(
-        navigate('/main')
-      );
+      .catch(err => console.log(err))
   };
 
   return (
@@ -54,13 +54,11 @@ const EntrancePage = () => {
           <TextInput placeholder="PASSWORD" onChangeEvent={onUserPasswordChange} value={userPassword}/>
         </div>
         <div className="flex flex-col gap-2 w-full items-center px-9">
-          {/* <Link to={"/main"} className="w-full"> */}
             <Button
               innerText="로그인"
               color="bg-blue-200"
-              onClick={() => onLoginClick}
+              onClick={onLoginClick}
             />
-          {/* </Link> */}
           <Link to={"/signup"} className="w-full">
             <Button innerText="회원가입" color="bg-blue-500" />
           </Link>

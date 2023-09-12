@@ -98,7 +98,7 @@ const MarketDetailPage = () => {
 
         {/* <div className={scrollY !==undefined && scrollY > 314? 'sticky top-[56px]': 'w-full'}> */}
         <div className="w-full">
-          <Tabs type='market'/>
+          <Tabs type='market' tab1='점포 목록' tab2='리뷰' onTabClick={null}/>
         </div>
       </div>
       <div className="flex flex-col w-full h-[350px] overflow-auto">

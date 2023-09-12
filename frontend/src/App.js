@@ -16,6 +16,7 @@ import StampPage from "./views/StampPage";
 const isLogedin = true;
 
 const App = () => {
+
   return (
     <div className="App h-screen flex w-screen">
       <Routes>
