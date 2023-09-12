@@ -13,8 +13,7 @@ public class MarketPriceEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long mpCode;
-    @Column(name = "condition", nullable = true)
-    private String condition;
+    private String conditionStr;
     private String productClsCode;
     private String productClsName;
     private String categoryName;
@@ -26,6 +25,5 @@ public class MarketPriceEntity {
     private int dpr2;
     private int dpr3;
     private int dpr4;
-
 
 }

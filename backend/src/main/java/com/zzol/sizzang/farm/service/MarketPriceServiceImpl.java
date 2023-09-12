@@ -1,6 +1,9 @@
 package com.zzol.sizzang.farm.service;
 
+import com.zzol.sizzang.farm.entity.MarketPriceEntity;
 import com.zzol.sizzang.farm.dto.response.PriceRes;
+import com.zzol.sizzang.farm.repository.MarketPriceRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -16,9 +19,19 @@ import java.io.IOException;
 @Service
 public class MarketPriceServiceImpl implements MarketPriceService {
 
+    private MarketPriceRepository marketPriceRepository;
+
+    @Autowired
+    public MarketPriceServiceImpl(MarketPriceRepository marketPriceRepository){
+        this.marketPriceRepository = marketPriceRepository;
+    }
+
+
     @Override
-    public ResponseEntity<String> getWholesalePrice(){
-        
+    public void getWholesalePrice(){
+
+        marketPriceRepository.deleteAllInBatch();
+
         //요청해서 응답받기
         RestTemplate restTemplate = new RestTemplate();
 
@@ -26,7 +39,7 @@ public class MarketPriceServiceImpl implements MarketPriceService {
         headers.add("Content-type","application/json; charset=UTF-8");
         //headers.add("Content-type","application/x-www-form-urlencoded;charset=utf-8");
 
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("http://www.kamis.or.kr/service/price/xml.do")
+        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl("https://www.kamis.or.kr/service/price/xml.do")
 //                .queryParam("action", "dailyPriceByCategoryList")
 //                .queryParam("p_product_cls_code", "02")
 //                .queryParam("p_regday", "2023-09-12")
@@ -56,13 +69,48 @@ public class MarketPriceServiceImpl implements MarketPriceService {
             throw new RuntimeException(e);
         }
 
+
         //prices 돌면서 저장하기
+        for(int i = 0; i<priceRes.getPrice().size(); i++){
 
-        return priceRes.getPrices().get();
+            MarketPriceEntity item = new MarketPriceEntity();
 
+            item.setConditionStr(""+priceRes.getCondition().toString());
+            item.setProductClsCode(""+priceRes.getPrice().get(i).getProduct_cls_code().toString());
+            item.setProductClsName(""+priceRes.getPrice().get(i).getProduct_cls_name().toString());
+            item.setCategoryName(""+priceRes.getPrice().get(i).getCategory_name().toString());
+            item.setLastestDay(""+priceRes.getPrice().get(i).getLastest_day().toString());
+            String[] part = priceRes.getPrice().get(i).getProductName().toString().split("/");
+            item.setProductName(""+part[0]);
+            item.setItemName(""+priceRes.getPrice().get(i).getItem_name().toString());
+            String unitStr = priceRes.getPrice().get(i).getUnit().replaceAll("\\d", "");
+            int unitInt = Integer.parseInt(priceRes.getPrice().get(i).getUnit().replaceAll("\\D", ""));
+            item.setUnit(unitStr);
+//            try{
+//                item.setDpr1(Integer.parseInt(""+priceRes.getPrice().get(i).getDpr1().toString().replaceAll(",","")) / unitInt);
+//            }catch(Exception e){
+//                item.setDpr1(0);
+//            };
+            try{
+                item.setDpr2(Integer.parseInt(""+priceRes.getPrice().get(i).getDpr2().toString().replaceAll(",","")) / unitInt);
+            }catch(Exception e){
+                item.setDpr2(0);
+            };
+            try{
+                item.setDpr3(Integer.parseInt(""+priceRes.getPrice().get(i).getDpr3().toString().replaceAll(",","")) / unitInt);
+            }catch(Exception e){
+                item.setDpr3(0);
+            };
+            try{
+                item.setDpr4(Integer.parseInt(priceRes.getPrice().get(i).getDpr4().toString().replaceAll(",","")) / unitInt);
+            }catch(Exception e){
+                item.setDpr4(0);
+            };
+
+            marketPriceRepository.save(item);
+        }
 
     }
-
 
 
 

@@ -1,5 +1,7 @@
 package com.zzol.sizzang.farm.controller;
 
+import com.zzol.sizzang.common.model.CommonResponse;
+import com.zzol.sizzang.farm.dto.response.PriceRes;
 import com.zzol.sizzang.farm.service.MarketPriceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,9 +23,11 @@ public class MarketPriceController {
 
 
     @GetMapping("/get/wholesale")
-    public ResponseEntity marketPrice(){
-        return marketPriceService.getWholesalePrice();
+    public CommonResponse<?> marketPrice(){
+        marketPriceService.getWholesalePrice();
 //        List<MarketPrice> marketPriceList = marketPriceService.getMarketPriceData();
 //        marketPriceService.getMarketPriceData();
+        return CommonResponse.success("OK");
+
     }
 }
