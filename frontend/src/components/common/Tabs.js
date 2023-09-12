@@ -2,13 +2,16 @@ import { useState } from "react";
 
 const Tabs = (props) => {
   const [currentInfoTab, setCurrentInfoTab] = useState(0);
-
+  // console.log(props.onTabClick)
   const setTabInfo = (value) => {
     setCurrentInfoTab(value);
+    if (props.setCurrentCategory) {
+      props.setCurrentCategory("all");
+    }
     if (value === 0) {
-      props.setCurrentTab("products");
+      props.onTabClick(0);
     } else {
-      props.setCurrentTab("reviews");
+      props.onTabClick(1);
     }
   };
 
@@ -22,7 +25,7 @@ const Tabs = (props) => {
         }
         onClick={() => setTabInfo(0)}
       >
-        {props.type === "market" ? "점포 목록" : "상품 목록"}
+        {props.tab1}
       </div>
       <div
         className={
@@ -32,7 +35,7 @@ const Tabs = (props) => {
         }
         onClick={() => setTabInfo(1)}
       >
-        리뷰
+        {props.tab2}
       </div>
     </div>
   );

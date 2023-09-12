@@ -104,7 +104,7 @@ const StoreDetailPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   // const stCode = location.pathname.split("/")[2];
-  const [currentTab, setCurrentTab] = useState("products");
+  const [currentTab, setCurrentTab] = useState(0);
 
   return (
     <div className="flex flex-col w-full h-full bg-white outline outline-1">
@@ -129,10 +129,10 @@ const StoreDetailPage = () => {
 
         {/* <div className={scrollY !==undefined && scrollY > 314? 'sticky top-[56px]': 'w-full'}> */}
         <div className="w-full">
-          <Tabs type="store" setCurrentTab={setCurrentTab} />
+          <Tabs type="store" tab1='상품 목록' tab2='리뷰' onTabClick={setCurrentTab} />
         </div>
       </div>
-      {currentTab === "products" ? (
+      {currentTab === 0 ? (
         <div className="flex flex-col w-full h-[350px] overflow-auto">
           {productList.map((product) => (
             <ProductCard product={product} store={store} />

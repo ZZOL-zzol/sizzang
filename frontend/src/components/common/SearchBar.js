@@ -5,12 +5,15 @@ const SearchBar = (props) => {
       type="text"
       placeholder={props.placeholder}
       className="input input-bordered w-full border-myprimary h-10 rounded-full"
+      value={props.keyword}
+      onChange = {props.onChangeEvent}
     >
       
     </input>
     <button
     type="submit"
     className="absolute right-3 top-[35%] flex bg-transparent px-2 rounded-md text-lg w-16 justify-center items-center"
+    onClick={props.onClickEvent}
 
   >
     <svg

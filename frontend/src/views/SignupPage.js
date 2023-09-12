@@ -38,8 +38,8 @@ const SignupPage = () => {
   const signUpClick = () => {
 
     axios
-      .get(
-        `${API_URL}/user/signup`,
+      .post(
+        `${API_URL}/users/signup`,
         JSON.stringify({userName : userName,
         userId : userId,        
         userNickname : userNickname, 
@@ -50,16 +50,11 @@ const SignupPage = () => {
         }
       )
       .then((res) => {
-        if (res.data.status===200) {
-          console.log(res.data.userName);
+          console.log(res);
           // window.localStorage.setItem()
-          
-        }else{
-          console.log(res.data.message);
-        }
-      })
-      .then(
-        navigate('/main')
+          navigate('/')
+        })
+      .catch(err=> console.log(err)
       );
   };
 
