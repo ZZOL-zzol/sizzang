@@ -2,6 +2,9 @@ package com.zzol.sizzang.store.service;
 
 import com.zzol.sizzang.common.exception.Template.NoDataException;
 import com.zzol.sizzang.common.exception.Template.StoreNotFoundException;
+import com.zzol.sizzang.market.entity.MarketEntity;
+import com.zzol.sizzang.market.repository.MarketRepository;
+import com.zzol.sizzang.review.repository.ReviewRepository;
 import com.zzol.sizzang.s3.service.S3Service;
 import com.zzol.sizzang.store.dto.request.FindByConditionGetReq;
 import com.zzol.sizzang.store.dto.request.StoreModifyPutReq;
@@ -12,6 +15,8 @@ import com.zzol.sizzang.store.entity.StCategoryEntity;
 import com.zzol.sizzang.store.entity.StoreEntity;
 import com.zzol.sizzang.store.repository.StCategoryRepository;
 import com.zzol.sizzang.store.repository.StoreRepository;
+import com.zzol.sizzang.user.entity.User;
+import com.zzol.sizzang.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,13 +34,19 @@ public class StoreServiceImpl implements StoreService{
 
     private final StCategoryRepository stCategoryRepository;
     private final StoreRepository storeRepository;
+    private final ReviewRepository reviewRepository;
+    private final MarketRepository marketRepository;
+    private final UserRepository userRepository;
 
     private S3Service s3Service;
 
     @Autowired
-    public StoreServiceImpl(StCategoryRepository stCategoryRepository, StoreRepository storeRepository) {
+    public StoreServiceImpl(StCategoryRepository stCategoryRepository, StoreRepository storeRepository, ReviewRepository reviewRepository, MarketRepository marketRepository, UserRepository userRepository) {
         this.stCategoryRepository = stCategoryRepository;
         this.storeRepository = storeRepository;
+        this.reviewRepository = reviewRepository;
+        this.marketRepository = marketRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -53,19 +64,22 @@ public class StoreServiceImpl implements StoreService{
             log.info("ArticleService_registArticle_start: " + registInfo.toString());
         }
         //TODO 작성자 정보 가져오기
-//        User user = userRepository.findById(registInfo.getUserId())
-//                .orElseThrow(UserNotFoundException::new);
+        User user = userRepository.findById(registInfo.getUserCode())
+                .orElseThrow(NullPointerException::new);
+        MarketEntity marketEntity = marketRepository.findById(registInfo.getMkCode())
+                .orElseThrow(NullPointerException::new);
 
         int scCode = registInfo.getScCode();
         String stName = registInfo.getStName();
         String stPhone = registInfo.getStPhone();
         String stImg = "";
-        String stAccount = registInfo.getStAccount();
-        String stAccountHolder = registInfo.getStAccountHolder();
+        String stAccount = user.getUserAccount();
+        String stAccountHolder = user.getUserName();
         String stIntro = registInfo.getStIntro();
         String stTime = registInfo.getStTime();
         String stLatitude = registInfo.getStLatitude();
         String stLongtitude = registInfo.getStLongtitude();
+        int mkCode = registInfo.getMkCode();
 
         StCategoryEntity stCategoryEntity = stCategoryRepository.findById(scCode)
                 .orElseThrow(NullPointerException::new);
@@ -79,6 +93,8 @@ public class StoreServiceImpl implements StoreService{
 
         StoreEntity storeEntity = StoreEntity.builder()
                 .stCategoryEntity(stCategoryEntity)
+                .user(user)
+                .marketEntity(marketEntity)
                 .stName(stName)
                 .stPhone(stPhone)
                 .stImg(stImg)

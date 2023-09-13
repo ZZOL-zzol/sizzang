@@ -4,8 +4,6 @@ import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
-
-import java.util.UUID;
 @ToString
 @Getter
 @Setter
@@ -17,6 +15,7 @@ import java.util.UUID;
 public class User {
 
     @Id
+    @Column(name = "user_code")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userCode;
 

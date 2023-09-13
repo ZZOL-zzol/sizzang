@@ -1,7 +1,6 @@
 package com.zzol.sizzang.user.controller;
 
 
-import com.zzol.sizzang.global.jwt.JwtService;
 import com.zzol.sizzang.user.dto.UserSignUpDto;
 import com.zzol.sizzang.user.entity.User;
 import com.zzol.sizzang.user.service.UserService;
@@ -74,7 +73,7 @@ import java.util.List;
      */
     @Operation(description = "특정 유저 제거 메서드입니다.")
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable("id") String id) {
+    public ResponseEntity<Long> deleteUser(@PathVariable("id") Long id) {
         userService.deleteUser(id);
         return new ResponseEntity<>(id, HttpStatus.OK);
     }

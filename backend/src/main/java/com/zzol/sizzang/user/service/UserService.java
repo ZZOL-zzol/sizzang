@@ -1,19 +1,16 @@
 package com.zzol.sizzang.user.service;
 
-import com.zzol.sizzang.banking.dto.Request.RegistAccountRequestDto;
 import com.zzol.sizzang.global.jwt.JwtService;
 import com.zzol.sizzang.user.dto.UserSignUpDto;
 import com.zzol.sizzang.user.entity.User;
 import com.zzol.sizzang.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Slf4j
 @Service
@@ -46,7 +43,7 @@ public class UserService {
      * Id에 해당하는 User 삭제
      * @param id
      */
-    public void deleteUser(String id) {
+    public void deleteUser(Long id) {
         userRepository.deleteById(id);
     }
 

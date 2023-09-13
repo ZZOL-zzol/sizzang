@@ -6,6 +6,8 @@ import lombok.Data;
 public class StoreModifyPutReq {
 
     private int scCode;
+    private int mkCode;
+    private Long userCode;
 
     private Long stCode;
     private String stName;
