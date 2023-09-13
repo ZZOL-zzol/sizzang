@@ -73,6 +73,23 @@ public class StoreController {
     }
 
     /**
+     * 시장별 Store List 조회
+     *
+     * @return
+     */
+    @Operation(description = "점포 전체 조회 메서드입니다.")
+    @GetMapping("/market/{mkCode}")
+    public CommonResponse<List<StoreFindRes>> findAllByMkCode(@PathVariable int mkCode) {
+        log.info("TemplateController_findAll_start: ");
+
+        Optional<List<StoreFindRes>> findRes = Optional.ofNullable(
+                storeService.selectAllStoreByMarket(mkCode));
+
+        log.info("TemplateController_findAll_end: " + findRes);
+        return CommonResponse.success(findRes.orElseThrow(TemplateNoResultException::new));
+    }
+
+    /**
      *  게시글 검색어로 검색하여 조회 API
      */
     @GetMapping("/search")
