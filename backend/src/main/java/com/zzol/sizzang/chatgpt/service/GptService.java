@@ -3,12 +3,8 @@ package com.zzol.sizzang.chatgpt.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.theokanning.openai.completion.chat.ChatMessage;
-import com.zzol.sizzang.chatgpt.model.RequestQuestionVo;
-import com.zzol.sizzang.chatgpt.model.RequestRecommFoodVo;
-import com.zzol.sizzang.chatgpt.model.ResponseVo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
