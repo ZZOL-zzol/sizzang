@@ -6,11 +6,13 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.zzol.sizzang.review.repository.ReviewRepository;
 import com.zzol.sizzang.store.dto.request.FindByConditionGetReq;
 import com.zzol.sizzang.store.dto.response.StoreFindRes;
+import com.zzol.sizzang.store.entity.StoreEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 import static com.zzol.sizzang.store.entity.QStoreEntity.storeEntity;
 
@@ -50,6 +52,7 @@ public class QStoreRepositoryImpl implements QStoreRepository{
                 .where(keywordSearch(findByConditionGetReq.getKeyword()))
                 .fetch();
     }
+
 
     /**
      * keyword 로 제목 검색

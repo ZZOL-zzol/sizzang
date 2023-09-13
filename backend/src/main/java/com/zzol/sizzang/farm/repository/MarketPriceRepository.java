@@ -13,4 +13,5 @@ public interface MarketPriceRepository extends JpaRepository<MarketPriceEntity, 
     void deleteAllInBatch();
 
     List<MarketPriceEntity> findByDirectionOrderByValueDesc(int direction);
+
 }

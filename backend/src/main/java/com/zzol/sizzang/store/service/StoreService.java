@@ -23,4 +23,6 @@ public interface StoreService {
     List<StoreFindRes> findByCondition(FindByConditionGetReq findByConditionGetReq);
 
     Boolean deleteStore(Long stCode);
+
+    double getStoreScore(long stCode);
 }

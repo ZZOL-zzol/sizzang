@@ -13,4 +13,7 @@ public interface MarketService {
 
     //시장 검색
     List<MarketSearchRes> searchMarket(String mkName, int limit, int offset);
+
+//    double getMarketScore(int mkCode);
+
 }

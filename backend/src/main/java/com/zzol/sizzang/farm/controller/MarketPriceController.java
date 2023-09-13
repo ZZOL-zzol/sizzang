@@ -28,8 +28,6 @@ public class MarketPriceController {
     @GetMapping("/get/wholesale")
     public CommonResponse<?> marketPrice(){
         marketPriceService.getWholesalePrice();
-//        List<MarketPrice> marketPriceList = marketPriceService.getMarketPriceData();
-//        marketPriceService.getMarketPriceData();
         List<MarketPriceEntity> items = marketPriceService.findCheaperItem(0);
         return CommonResponse.success(items);
     }

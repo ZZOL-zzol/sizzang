@@ -4,22 +4,9 @@ import Tabs from "../components/common/Tabs";
 import Navbar from "../components/common/Navbar";
 import { useLocation, useNavigate } from "react-router-dom";
 import MarketStoreCard from "../components/common/MarketStoreCard";
-
-const MarketExample = {
-  mkCode: 1,
-  regionCode: 1,
-  mkName: "중앙시장",
-  mkAddress: "관악구 봉천동 466",
-  mkArea: "자치구... 관악구?",
-  mkImg: "../chacha2.jpg",
-  mkToilet: "1",
-  mkParking: "1",
-  mkPhone: "010-6664-9510",
-  mkLatitude: "",
-  mklongtitude: "",
-  mkIntro : "시장 소개이에이이에이이이"
-};
-
+import { API_URL } from "../lib/constants";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const storeList = [
   {
@@ -67,33 +54,47 @@ const storeList = [
 ];
 
 const MarketDetailPage = () => {
+  const [marketInfo, setMarketInfo] = useState({});
   const location = useLocation();
   const navigate = useNavigate();
 
   const mkCode = location.pathname.split("/")[2];
-  console.log(mkCode);
 
+  useEffect(() => {
+    axios
+      .get(`${API_URL}/market/info/${mkCode}`)
+      .then((res) => {
+        setMarketInfo(res.data.data);
+        // console.log(marketInfo);
+      })
+      .catch((err) => console.log(err));
+
+    
+  }, []);
   
 
+
+  
   return (
     <div className="flex flex-col w-full h-full bg-white outline outline-1">
       <Header title='시장 상세' backButton/>
       <div className="relative w-full overflow-auto items-center">
         <div className="absolute top-[200px] w-full">
-          <DetailInfoCard market={MarketExample} />
+          <DetailInfoCard market={marketInfo} />
         </div>
         <div className="w-full h-[260px]">
-          <img
-            src={MarketExample.mkImg ? MarketExample.mkImg : "../Logo.png"}
+          {marketInfo.mkImg?<img
+            src={marketInfo.mkImg ? marketInfo.mkImg : "../Logo.png"}
             alt="배경사진"
             className="w-full h-[260px]"
-          />
+          />: null }
+          
         </div>
 
         {/* 내 소개 */}
         <div className="mt-20 mb-2">
-          <div>{MarketExample.mkAddress}</div>
-          <div>{MarketExample.mkPhone}</div>
+          <div>{marketInfo.mkAddress}</div>
+          <div>{marketInfo.mkPhone}</div>
         </div>
 
         {/* <div className={scrollY !==undefined && scrollY > 314? 'sticky top-[56px]': 'w-full'}> */}
