@@ -1,13 +1,13 @@
 import React from 'react';
 import PageTitle from '../../../components/common/PageTitle';
 import ProfileSection from '../../../components/mypage/ProfileSection';
-import AccountSection from '../../../components/mypage/AccountSection';
+import AccountSection from '../../../components/mypage/account/AccountSection';
 import MenuSection from '../../../components/mypage/MenuSection';
 
 
 const SellerMyPage = () => {
     return (
-        <div className="SellerMyPage  bg-whitegray font-spoqa">
+        <div className="SellerMyPage bg-whitegray">
             <ProfileSection />
             <AccountSection
               imageUrl="../chacha2.jpg"

@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PageTitle from "../../../components/common/PageTitle";
 import ProfileSection from "../../../components/mypage/ProfileSection";
-import AccountCard from "../../../components/mypage/AccountCard";
+import AccountCard from "../../../components/mypage/account/AccountCard";
 import ProfileEditCard from "../../../components/mypage/ProfileEditCard";
 import ConsumptionDetail from "./ConsumptionDetail";
 import Button from "../../common/Button";
-import AccountListCard from "../AccountListCard";
+import AccountListCard from "../account/AccountListCard";
+import { useNavigate } from "react-router-dom";
+import { API_URL } from "../../../lib/constants";
+import axios from "axios";
 
 const accountList = [
   {
@@ -24,24 +27,55 @@ const accountList = [
   },
 ];
 
-const ConsumerMyPage = () => {
+const ConsumerMyPage = (props) => {
+  const navigate = useNavigate();
   const [openProfileEdit, setOpenProfileEdit] = useState(false);
   const [openAddAccount, setOpenAddAccount] = useState(false);
-
+  const user = JSON.parse(window.localStorage.getItem("User"));
   // const [isDetailButtonClicked, setIsDetailButtonClicked] = useState(false);
 
+  const onAccountCardClick = (value) => {
+    navigate("/history", { state: { accountNumber: value } });
+  };
+
+  useEffect(() => {
+    axios.get(
+      `${API_URL}/bank/v1/search/registedAccounts`,
+      JSON.stringify({ userId: user.userId }),
+      { headers: { "Content-Type": "application/json" } }
+    )
+    .then(res=>console.log(res))
+    .catch(err=>console.log(err));
+  }, []);
+
   return (
-    <div className="w-full bg-white p-5">
+    <div className="w-full h-full bg-white p-5">
       {openProfileEdit ? (
-        <ProfileEditCard setOpenProfileEdit={setOpenProfileEdit}/>
-      ) : openAddAccount? <AccountListCard setOpenAddAccount={setOpenAddAccount}/>:(
+        <ProfileEditCard
+          setOpenProfileEdit={setOpenProfileEdit}
+          user={props.user}
+        />
+      ) : openAddAccount ? (
+        <AccountListCard setOpenAddAccount={setOpenAddAccount} />
+      ) : (
         <div className="flex flex-col gap-3">
-          <ProfileSection setOpenProfileEdit={setOpenProfileEdit} />
+          <ProfileSection
+            setOpenProfileEdit={setOpenProfileEdit}
+            user={props.user}
+          />
           <div className="flex flex-col gap-5">
             {accountList.map((account, index) => (
-              <AccountCard account={account}  key={index}/>
+              <AccountCard
+                account={account}
+                key={index}
+                onClickEvent={onAccountCardClick}
+                type="history"
+              />
             ))}
-            <div className="flex justify-center items-center gap-2 text-outline" onClick={()=>setOpenAddAccount(true)}>
+            <div
+              className="flex justify-center items-center gap-2 text-outline"
+              onClick={() => setOpenAddAccount(true)}
+            >
               <svg
                 className="fill-outline"
                 xmlns="http://www.w3.org/2000/svg"
@@ -54,19 +88,19 @@ const ConsumerMyPage = () => {
             </div>
             <div></div>
             <div>
-              <Button
+              {/* <Button
                 color="bg-secondary-container"
                 innerText="소비관리"
                 image="./market.svg"
                 type="mypage"
                 route='/history'
-              />
+              /> */}
               <Button
                 color="bg-primary-container"
                 innerText="스탬프"
                 image="./market.svg"
                 type="mypage"
-                route= '/stamp'
+                route="/stamp"
               />
             </div>
           </div>

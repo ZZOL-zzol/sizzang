@@ -2,15 +2,20 @@ import { useState } from "react";
 import Rating from "./Rating";
 import TextArea from "./TextArea";
 import ImageUpload from "./ImageUpload";
+import {API_URL} from "../../lib/constants"
+import axios from "axios";
 
-const ReviewForm = () => {
+const ReviewForm = (props) => {
+  const user = JSON.parse(window.localStorage.getItem('User'))
   const [reviewContent, setReviewContent] = useState("");
+  const [imageList, setImageList] = useState([]);
+  const [reviewScore, setReviewScore] = useState(0);
   const onRegistButtonClick = () => {
-    
+    axios.post(`${API_URL}/review/add`,JSON.stringify({"userCode":user.userCode, "stCode" : props.history.stCode, "puCode" : props.history.puCode, "reContent" : reviewContent , "reImg": imageList[0].url}))
   }
   return (
     <div className="flex flex-col items-center p-5 gap-3">
-      <Rating />
+      <Rating setReviewScore={setReviewScore}/>
 
       <div className="flex flex-col w-full">
         <label className="self-start mb-1 flex items-center gap-1">
@@ -41,7 +46,7 @@ const ReviewForm = () => {
           </svg>
           이미지 업로드
         </label>
-        <ImageUpload />
+        <ImageUpload imageList={imageList} setImageList={setImageList}/>
       </div>
 
       <div className="fixed w-full flex flex-col bg-white bottom-0 items-center justify-center px-5 py-7 gap-2">

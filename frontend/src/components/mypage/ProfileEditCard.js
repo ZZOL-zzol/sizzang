@@ -20,14 +20,10 @@ const UserInfo = ({ marketName, userName, setOpenProfileEdit }) => {
   );
 };
 
-const user = {
-  userNickname: "차차아버님",
-};
-
 const ProfileEditCard = (props) => {
   const navigate = useNavigate();
-  const [nickname, setNickname] = useState(user.userNickname);
-  const [imageList, setImageList] = useState(user.profileImage);
+  const [nickname, setNickname] = useState(props.user.userNickname);
+  const [imageList, setImageList] = useState(props.user.profileImage);
   const onInputChange = (e) => {
     setNickname(e.target.value);
   };
@@ -63,9 +59,12 @@ const ProfileEditCard = (props) => {
         <div>
           <input
             className="bg-background-fill rounded-lg px-2 py-1 focus:outline-myprimary w-32 font-bold text-lg"
-            value={nickname}
+            value={props.user.userNickname}
             onChange={onInputChange}
           />
+          <div>{props.user.userName}</div>
+          <div>{props.user.role}</div>
+          <div>{props.user.role}</div>
         </div>
 
         <div className="w-full flex flex-col bg-white bottom-0 items-center justify-center px-5 gap-2">

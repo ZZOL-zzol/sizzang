@@ -19,7 +19,7 @@ const [history, setHistory] = useState(
         <div className="w-full">
         <Header title='리뷰 쓰기' backButton/>
         <ReviewCard history={history} type='writing'/>
-        <ReviewForm/>
+        <ReviewForm history={history}/>
         </div>
     )
 }

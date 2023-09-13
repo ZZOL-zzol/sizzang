@@ -12,12 +12,23 @@ const ProfileImage = ({ imageUrl, altText }) => {
 
 
 /* 유저 정보 */
-const UserInfo = ({ marketName, userName, setOpenProfileEdit }) => {
+const SellerInfo = ({ marketName, userName, setOpenProfileEdit }) => {
   return (
     <div>
       <div className="text-left text-lg font-bold">{marketName}</div>
       <div className="text-left text-xl font-bold">{userName}</div>
       <div className="text-left text-sm text-outline" onClick={()=>setOpenProfileEdit(true)}>내 정보 수정 &gt;</div>
+    </div>
+  );
+}
+
+const ConsumerInfo = (props) => {
+  return (
+    <div>
+      
+      <div className="text-left text-xl font-bold">{props.userName}님</div>
+      <div className="text-left text-lg font-bold">안녕하세요!</div>
+      <div className="text-left text-sm text-outline" onClick={()=>props.setOpenProfileEdit(true)}>내 정보 보기 &gt;</div>
     </div>
   );
 }
@@ -31,11 +42,15 @@ const ProfileSection = (props) => {
           imageUrl="../chacha2.jpg"
           altText="대체문구"
         />
-        <UserInfo 
-          marketName="경동시장"
-          userName="할머니냉면"
+        {props.user.role === 'CUSTOMER'?<ConsumerInfo 
+          userName={props.user.userName}
           setOpenProfileEdit = {props.setOpenProfileEdit}
-        />
+        />:<SellerInfo 
+        marketName='뿡빵뿡시장'
+        userName={props.user.userName}
+        setOpenProfileEdit = {props.setOpenProfileEdit}
+      />}
+        
       </div>
     </div>
   );
