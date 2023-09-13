@@ -239,4 +239,9 @@ public class StoreServiceImpl implements StoreService{
         return true;
     }
 
+    @Override
+    public double getStoreScore(long stCode) {
+        return reviewRepository.getReviewScore(stCode);
+    }
+
 }

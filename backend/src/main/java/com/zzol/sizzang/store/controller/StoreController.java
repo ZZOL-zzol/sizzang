@@ -61,7 +61,7 @@ public class StoreController {
      * @return
      */
     @Operation(description = "점포 전체 조회 메서드입니다.")
-    @GetMapping
+    @GetMapping()
     public CommonResponse<List<StoreFindRes>> findAll() {
         log.info("TemplateController_findAll_start: ");
 
@@ -153,6 +153,15 @@ public class StoreController {
             throw new TemplatePossessionFailException();
         }
     }
+
+    @GetMapping("/score/{stCode}")
+    public CommonResponse<?> getStoreScore(@PathVariable long stCode) {
+
+        double data = storeService.getStoreScore(stCode);
+
+        return CommonResponse.success(data);
+
+        }
 
 
 }

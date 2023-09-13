@@ -5,6 +5,8 @@ import com.zzol.sizzang.review.entity.ReviewEntity;
 import com.zzol.sizzang.review.repository.ReviewRepository;
 import com.zzol.sizzang.s3.service.FileService;
 import com.zzol.sizzang.s3.service.S3Service;
+import com.zzol.sizzang.store.entity.StoreEntity;
+import com.zzol.sizzang.store.repository.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,13 +17,15 @@ import java.util.List;
 public class ReviewServiceImpl implements ReviewService{
 
     private final ReviewRepository reviewRepository;
+    private final StoreRepository storeRepository;
 
     private FileService s3Service;
 
     @Autowired
-    public ReviewServiceImpl(ReviewRepository reviewRepository, FileService s3Service){
+    public ReviewServiceImpl(ReviewRepository reviewRepository, FileService s3Service, StoreRepository storeRepository){
         this.reviewRepository = reviewRepository;
         this.s3Service = s3Service;
+        this.storeRepository = storeRepository;
     }
 
     //리뷰전체 불러오기(점포별)
@@ -45,6 +49,7 @@ public class ReviewServiceImpl implements ReviewService{
         review.setReScore(reviewAddReq.getReScore());
 
         reviewRepository.save(review);
+
     }
 
     @Override

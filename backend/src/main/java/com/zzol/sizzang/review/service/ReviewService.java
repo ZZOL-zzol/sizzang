@@ -13,5 +13,5 @@ public interface ReviewService {
     void addReview(ReviewAddReq reviewAddReq);  //리뷰 등록하기
 
     String addReviewImg(MultipartFile file);
-    
+
 }

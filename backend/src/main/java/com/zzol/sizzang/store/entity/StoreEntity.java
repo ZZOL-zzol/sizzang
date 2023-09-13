@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 
 @ToString
 @Getter
+@Setter
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
