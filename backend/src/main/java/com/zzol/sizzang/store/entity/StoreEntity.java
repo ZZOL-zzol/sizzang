@@ -1,5 +1,7 @@
 package com.zzol.sizzang.store.entity;
 
+import com.zzol.sizzang.market.entity.MarketEntity;
+import com.zzol.sizzang.user.entity.User;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicInsert;
@@ -23,8 +25,13 @@ public class StoreEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long stCode;
 
-    //TODO : 점포주인 필요
-    //user user
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name="st_owner", referencedColumnName = "user_code")
+    User user;
+
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name="mk_code", referencedColumnName = "mk_code")
+    MarketEntity marketEntity;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name="sc_code", referencedColumnName = "sc_code")

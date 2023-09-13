@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface MarketRepository extends JpaRepository<MarketEntity, Long> {
+public interface MarketRepository extends JpaRepository<MarketEntity, Integer> {
 
     //시장 상세
     Optional<MarketEntity> findByMkCode(int mkCode);

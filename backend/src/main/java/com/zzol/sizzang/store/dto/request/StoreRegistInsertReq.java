@@ -6,7 +6,8 @@ import lombok.Data;
 public class StoreRegistInsertReq {
 
     private int scCode;
-
+    private int mkCode;
+    private Long userCode;
     private String stName;
     private String stPhone;
     private String stImg;
