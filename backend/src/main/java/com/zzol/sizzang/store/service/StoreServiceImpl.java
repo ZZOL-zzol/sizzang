@@ -123,6 +123,9 @@ public class StoreServiceImpl implements StoreService{
 
         List<StoreFindRes> res = storeRepository.findAll()
                 .stream().map(m -> StoreFindRes.builder()
+                        .mkCode(m.getMarketEntity().getMkCode())
+                        .reCnt(reviewRepository.findByStCode(m.getStCode()).size())
+                        .reScore((reviewRepository.findByStCode(m.getStCode()).size()==0)?0:reviewRepository.getReviewScore(m.getStCode()))
                         .stCode(m.getStCode())
                         .stImg(m.getStImg())
                         .stName(m.getStName())
