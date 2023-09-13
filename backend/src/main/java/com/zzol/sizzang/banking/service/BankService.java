@@ -3,10 +3,11 @@ package com.zzol.sizzang.banking.service;
 import com.zzol.sizzang.banking.dto.Request.BalanceDetailRequestDto;
 import com.zzol.sizzang.banking.dto.Request.RegistAccountRequestDto;
 import com.zzol.sizzang.banking.dto.Request.SearchAllAccountRequestDto;
+import com.zzol.sizzang.banking.dto.Request.SearchRegistedAccountRequestDto;
 import com.zzol.sizzang.banking.dto.Request.TransferRequestDto;
 import com.zzol.sizzang.banking.dto.Request.Won1TransferRequestDto;
 import com.zzol.sizzang.banking.dto.Response.BalanceDetailResponseDto;
-import com.zzol.sizzang.banking.dto.Response.SearchAllAccountResponseDto;
+import com.zzol.sizzang.banking.dto.Response.SearchAccountResponseDto;
 import com.zzol.sizzang.banking.dto.Response.SearchTransactionResponseDto;
 import com.zzol.sizzang.banking.dto.Response.TransferResponseDto;
 import com.zzol.sizzang.banking.entity.Bank;
@@ -180,11 +181,31 @@ public class BankService {
         return responseDto;
     }
 
-    public List<SearchAllAccountResponseDto> searchAccountByUserId(SearchAllAccountRequestDto searchAllAccountRequestDto){
+    /**
+     * 전체 계좌 검색 메서드
+     * */
+    public List<SearchAccountResponseDto> searchAccountByUserId(SearchAllAccountRequestDto searchAllAccountRequestDto){
         List<Bank> bankList = bankRepository.findByUserId(searchAllAccountRequestDto.getUserId());
-        List<SearchAllAccountResponseDto> responseDtoList = new ArrayList<>();
+        List<SearchAccountResponseDto> responseDtoList = new ArrayList<>();
         for (Bank bank : bankList) {
-            SearchAllAccountResponseDto responseDto = new SearchAllAccountResponseDto();
+            SearchAccountResponseDto responseDto = new SearchAccountResponseDto();
+            List<Bank> accountList = new ArrayList<>();
+            accountList.add(bank);
+            responseDto.setAccountList(accountList);
+            responseDtoList.add(responseDto);
+        }
+        return responseDtoList;
+    }
+
+    /**
+     * 이미 등록된 계좌 검색 메서드
+     * */
+    public List<SearchAccountResponseDto> searchRegistedAccounts(
+        SearchRegistedAccountRequestDto requestDto){
+        List<Bank> bankList = bankRepository.findRegistedAccountsByUserId(requestDto.getUserId());
+        List<SearchAccountResponseDto> responseDtoList = new ArrayList<>();
+        for (Bank bank : bankList) {
+            SearchAccountResponseDto responseDto = new SearchAccountResponseDto();
             List<Bank> accountList = new ArrayList<>();
             accountList.add(bank);
             responseDto.setAccountList(accountList);

@@ -28,4 +28,5 @@ public class Bank {
     private String accountNumber; //계좌번호
     private String userId; // -> userCode 수정
     private int accountBalance; //잔액
+    private boolean registed; //계좌 앱에 등록 여부, true:등록, false: 미등록
 }

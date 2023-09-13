@@ -11,6 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 @Getter
-public class SearchAllAccountResponseDto {
+public class SearchAccountResponseDto {
     private List<Bank> accountList;
 }

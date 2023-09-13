@@ -7,12 +7,18 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.persistence.EntityManager;
 import java.util.Optional;
+import org.springframework.data.jpa.repository.Query;
 
 public interface BankRepository extends JpaRepository<Bank, String> {
 
     Bank findByAccountNumber(String accountNumber);
 
     List<Bank> findByUserId(String userId);
+
+    @Query(value = " SELECT * " +
+        " FROM bank WHERE registed = TRUE "
+        + " AND user_id =?1" , nativeQuery = true)
+    List<Bank> findRegistedAccountsByUserId(String userId);
 
 //    Optional<Bank> findByUserCode(String userCode);
 
