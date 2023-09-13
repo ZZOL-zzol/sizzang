@@ -148,6 +148,10 @@ public class StoreServiceImpl implements StoreService{
         log.info("StoreService_findByCondition_start: " + findByConditionGetReq.toString());
 
         List<StoreFindRes> res = storeRepository.findByCondition(findByConditionGetReq);
+        for(StoreFindRes sr : res){
+            sr.setReCnt(reviewRepository.findByStCode(sr.getStCode()).size());
+            sr.setReScore((reviewRepository.findByStCode(sr.getStCode()).size()==0)?0:reviewRepository.getReviewScore(sr.getStCode()));
+        }
 
         log.info("StoreService_findByConditionTemplate_end: success");
         return res;

@@ -30,7 +30,7 @@ public class StoreFindRes {
         this.stLatitude = stLatitude;
         this.stLongtitude = stLongtitude;
         this.mkCode = mkCode;
-        this.reScore = reScore;
         this.reCnt = reCnt;
+        this.reScore = reScore;
     }
 }
