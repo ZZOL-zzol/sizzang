@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 import static javax.persistence.FetchType.LAZY;
 
 @Setter
-@ToString
+//@ToString
 @Getter
 @Entity
 @Table(name = "transaction_history")

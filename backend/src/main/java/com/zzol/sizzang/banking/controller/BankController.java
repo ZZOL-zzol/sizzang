@@ -3,6 +3,7 @@ package com.zzol.sizzang.banking.controller;
 
 import com.zzol.sizzang.banking.dto.Request.*;
 import com.zzol.sizzang.banking.dto.Response.BalanceDetailResponseDto;
+import com.zzol.sizzang.banking.dto.Response.SearchAccountResponseDto;
 import com.zzol.sizzang.banking.dto.Response.SearchTransactionResponseDto;
 import com.zzol.sizzang.banking.dto.Response.TransferResponseDto;
 import com.zzol.sizzang.banking.entity.Bank;
@@ -10,6 +11,7 @@ import com.zzol.sizzang.banking.service.BankService;
 import com.zzol.sizzang.user.entity.User;
 import com.zzol.sizzang.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -83,4 +85,23 @@ public class BankController {
         userService.updateUserAccount(registAccountRequestDto.getAccountNumber(), registAccountRequestDto.getUserId());
         return new ResponseEntity<>("계좌등록성공", HttpStatus.OK);
     }
+
+    @Operation(description = "전체 계좌 조회 메서드")
+    @PostMapping("/v1/search/allAccounts")
+    public ResponseEntity<?> searchAllAccounts(@RequestBody SearchAllAccountRequestDto searchAllAccountRequestDto) {
+        log.info("searchAllAccounts 요청");
+        log.info("계좌조회 요청 id : {}", searchAllAccountRequestDto.getUserId());
+        List<SearchAccountResponseDto> accountList = bankService.searchAccountByUserId(searchAllAccountRequestDto);
+        return new ResponseEntity<>(accountList, HttpStatus.OK);
+    }
+
+    @Operation(description = "앱에 등록된 계좌 조회 메서드")
+    @PostMapping("/v1/search/registedAccounts")
+    public ResponseEntity<?> searchRegistedAccounts(@RequestBody SearchRegistedAccountRequestDto searchRegistedAccountRequestDto) {
+        log.info("searchAllAccounts 요청");
+        log.info("계좌조회 요청 id : {}", searchRegistedAccountRequestDto.getUserId());
+        List<SearchAccountResponseDto> accountList = bankService.searchRegistedAccounts(searchRegistedAccountRequestDto);
+        return new ResponseEntity<>(accountList, HttpStatus.OK);
+    }
+
 }
