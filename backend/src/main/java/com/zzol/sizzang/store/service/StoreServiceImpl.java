@@ -239,4 +239,28 @@ public class StoreServiceImpl implements StoreService{
         return true;
     }
 
+    /**
+     *  점포 전체 조회 API에 대한 서비스
+     */
+    @Override
+    public List<StoreFindRes> selectAllStoreByMarket(int mkCode) {
+
+        log.info("StoreService_findAllByMarket_start: ");
+
+        List<StoreFindRes> res = storeRepository.findByMarketEntity_MkCode(mkCode)
+                .stream().map(m -> StoreFindRes.builder()
+//                        .mkCode(m.getMarketEntity().getMkCode())
+                        .reCnt(reviewRepository.findByStCode(m.getStCode()).size())
+                        .reScore((reviewRepository.findByStCode(m.getStCode()).size()==0)?0:reviewRepository.getReviewScore(m.getStCode()))
+                        .stCode(m.getStCode())
+                        .stImg(m.getStImg())
+                        .stName(m.getStName())
+                        .stLatitude(m.getStLatitude())
+                        .stLongtitude(m.getStLongtitude())
+                        .build()
+                ).collect(Collectors.toList());
+
+        log.info("StoreService_findAllByMarket_end: success");
+        return res;
+    }
 }
