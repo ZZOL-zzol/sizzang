@@ -90,7 +90,7 @@ public class BankController {
     @PostMapping("/v1/search/allAccounts")
     public ResponseEntity<?> searchAllAccounts(@RequestBody SearchAllAccountRequestDto searchAllAccountRequestDto) {
         log.info("searchAllAccounts 요청");
-        log.info("id : {}", searchAllAccountRequestDto.getUserId());
+        log.info("계좌조회 요청 id : {}", searchAllAccountRequestDto.getUserId());
         List<SearchAllAccountResponseDto> accountList = bankService.searchAccountByUserId(searchAllAccountRequestDto);
         return new ResponseEntity<>(accountList, HttpStatus.OK);
     }
