@@ -12,8 +12,9 @@ import java.util.Optional;
 
 @Repository
 public interface StoreRepository extends JpaRepository<StoreEntity, Long>, QStoreRepository {
-    List<StoreFindRes> findByMarketEntity_MkCode(int mkCode);
 
+    List<StoreFindRes> findByMarketEntity_MkCode(int mkCode);
     Optional<StoreEntity> findByStCode(long stCode);
+
 
 }
