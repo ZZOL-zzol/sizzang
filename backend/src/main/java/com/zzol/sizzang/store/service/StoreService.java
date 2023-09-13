@@ -25,4 +25,6 @@ public interface StoreService {
     Boolean deleteStore(Long stCode);
 
     double getStoreScore(long stCode);
+
+    List<StoreFindRes> selectAllStoreByMarket(int mkCode);
 }
