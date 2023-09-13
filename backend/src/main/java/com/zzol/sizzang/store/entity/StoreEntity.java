@@ -55,6 +55,9 @@ public class StoreEntity {
     @Column(name = "st_time",columnDefinition = "VARCHAR(100)")
     private String stTime;
 
+    @Column(name = "st_score")
+    private Double stScore;
+
     @Column(name = "st_latitude", columnDefinition = "VARCHAR(20)")
     private String stLatitude;
     @Column(name = "st_longtitude", columnDefinition = "VARCHAR(20)")

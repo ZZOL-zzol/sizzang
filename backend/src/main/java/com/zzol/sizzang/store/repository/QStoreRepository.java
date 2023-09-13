@@ -12,4 +12,5 @@ public interface QStoreRepository {
     List<StoreFindRes> findByCondition(FindByConditionGetReq findByConditionGetReq);
 
 
+
 }

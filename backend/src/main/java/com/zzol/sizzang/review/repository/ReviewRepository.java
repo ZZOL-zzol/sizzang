@@ -15,6 +15,6 @@ public interface ReviewRepository extends JpaRepository<ReviewEntity, Long> {
     @Query(value = "SELECT AVG(re.reScore) " +
             "FROM ReviewEntity re " +
             "WHERE re.stCode = :stCode")
-    double getReviewScore(@Param("stCode") Long stCode);
+    double getReviewScore(@Param("stCode") long stCode);
 
 }

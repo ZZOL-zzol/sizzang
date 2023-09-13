@@ -50,6 +50,12 @@ public class ReviewServiceImpl implements ReviewService{
 
         reviewRepository.save(review);
 
+        double stScore = reviewRepository.getReviewScore(reviewAddReq.getStCode());
+        StoreEntity storeUpdateTarget = storeRepository.findByStCode(reviewAddReq.getStCode()).get();
+        storeUpdateTarget.setStScore(stScore);
+
+        storeRepository.save(storeUpdateTarget);
+
     }
 
     @Override

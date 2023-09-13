@@ -255,6 +255,8 @@ public class StoreServiceImpl implements StoreService{
         List<StoreFindRes> res = storeRepository.findByMarketEntity_MkCode(mkCode)
                 .stream().map(m -> StoreFindRes.builder()
 //                        .mkCode(m.getMarketEntity().getMkCode())
+//                                .mkCode(mkCode)
+//                                .stIntro(m.getStIntro())
                                 .reCnt(reviewRepository.findByStCode(m.getStCode()).size())
                                 .reScore((reviewRepository.findByStCode(m.getStCode()).size()==0)?0:reviewRepository.getReviewScore(m.getStCode()))
                                 .stCode(m.getStCode())
@@ -268,5 +270,6 @@ public class StoreServiceImpl implements StoreService{
         log.info("StoreService_findAllByMarket_end: success");
         return res;
     }
+
 
 }
