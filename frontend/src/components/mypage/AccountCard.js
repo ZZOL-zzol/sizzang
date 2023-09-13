@@ -1,35 +1,20 @@
-const AccountCard = (props) => {
-  return (
-    <div
-      className="card shadow-none bg-background-fill flex-row p-5 w-full gap-3"
-      onClick={props.type==='addAccount'? null : props.type==='pay'?() => props.setShowAccount(false): null}
-    >
-      <figure>
-        <img src="./chacha2.jpg" alt="Shoes" className="rounded-xl w-10 h-10" />
-      </figure>
-      <div className="card-body flex-row items-center text-center p-0 justify-between">
-        <div className="flex flex-col items-start">
-          <div className="text-lg font-bold">{props.account.accountName}</div>
-          <div>{props.account.accountNumber}</div>
+import React from 'react';
+
+function AccountCard({ accountName, accountNumber, balance, imageUrl }) {
+    return (
+        <div className="AccountCard">
+            <div className="bg-white rounded-lg shadow-lg mx-4 my-2 p-4">
+                <div className="flex justify-start items-center">
+                    <img src={imageUrl} alt="계좌로고" className="w-[50px] h-[50px] rounded-full overflow-hidden mr-2" />
+                    <div>
+                        <p className="text-lg font-bold">{accountName}</p>
+                        <p className="text-sm">{accountNumber}</p>
+                    </div>
+                    <p className="self-center text-xl font-bold text-right flex-1">{balance}</p>
+                </div>
+            </div>
         </div>
-        <div className="card-actions items-center">
-          <div>{props.account.accountBalance}</div>
-          {props.type === "addAccount" ? (
-            <button>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="1.5em"
-                viewBox="0 0 448 512"
-                className="fill-myprimary"
-              >
-                <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
-              </svg>
-            </button>
-          ) : null}
-        </div>
-      </div>
-    </div>
-  );
-};
+    );
+}
 
 export default AccountCard;

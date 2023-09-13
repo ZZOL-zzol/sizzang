@@ -10,14 +10,12 @@ import javax.persistence.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "St_Category")
+@Table(name = "st_Category")
 @Entity
 public class StCategoryEntity {
     @Id
-    @Column(name = "sc_code")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int stCode;
+    private Long stCode;
 
-    @Column(name = "sc_name", nullable = false, columnDefinition = "VARCHAR(40)")
     private String stName;
 }

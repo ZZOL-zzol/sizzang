@@ -1,6 +1,6 @@
 import React from 'react';
 
-const StoreInfo = () => {
+function StoreInfo() {
     return (
         <div className="StoreInfo bg-white p-4">
             {/* 조건문 걸어서 시장/ 점포 정보 구분 */}
