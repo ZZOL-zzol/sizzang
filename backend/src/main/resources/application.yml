@@ -1,1 +1,24 @@
+server.port: 8080
+server.ssl.enabled: false
+
+# sizzang
+spring:
+  profiles:
+    active: secret
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql : true
+
+jwt:
+  secretKey: ${secretKey}
+  access:
+    expiration: 180000000 #00 붙임
+    header: Authorization
+  refresh:
+    expiration: 1209600000
+    header: Authorization-refresh
 

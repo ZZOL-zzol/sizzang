@@ -1,34 +1,30 @@
 package com.zzol.sizzang.store.service;
 
+import com.zzol.sizzang.store.dto.request.FindByConditionGetReq;
+import com.zzol.sizzang.store.dto.request.StoreModifyPutReq;
+import com.zzol.sizzang.store.dto.request.StoreRegistInsertReq;
+import com.zzol.sizzang.store.dto.response.StoreFindRes;
+import com.zzol.sizzang.store.dto.response.StoreSelectRes;
 import com.zzol.sizzang.store.entity.StoreEntity;
-import com.zzol.sizzang.store.repository.StCategoryRepository;
-import com.zzol.sizzang.store.repository.StoreRepositoty;
-import com.zzol.sizzang.user.entity.UserEntity;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
-@Slf4j
-@Service
-//@Transactional
-@RequiredArgsConstructor
-public class StoreService {
-    private final StoreRepositoty storeRepositoty;
-    private final StCategoryRepository stCategoryRepository;
-    /**
-     * Store 등록
-     */
-    public void insertStore(){
-        final StoreEntity storeEntity = StoreEntity.builder().build();
-//        storeRepositoty.save(storeEntity);
-    }
+public interface StoreService {
 
-    /**
-     * Store List 조회
-     */
-    public List<StoreEntity> getStores() {
-        return storeRepositoty.findAll();
-    }
+    StoreEntity registStore(StoreRegistInsertReq insertInfo, MultipartFile file);
+
+    List<StoreFindRes> selectAllStore();
+
+    boolean modifyStore(StoreModifyPutReq modifyInfo, MultipartFile file);
+
+    StoreSelectRes selectStore(Long stCode);
+
+    List<StoreFindRes> findByCondition(FindByConditionGetReq findByConditionGetReq);
+
+    Boolean deleteStore(Long stCode);
+
+    double getStoreScore(long stCode);
+
+    List<StoreFindRes> selectAllStoreByMarket(int mkCode);
 }
