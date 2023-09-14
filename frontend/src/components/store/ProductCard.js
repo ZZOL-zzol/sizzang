@@ -75,10 +75,12 @@ const ProductCard = (props) => {
       <div className="flex justify-end items-center">
         <div className="mr-2">{props.product.pdCost}원</div>
         {props.type === "basket" ? null : (
-          <div className="text-sm text-myerror">▲1000</div>
+          <div className={`text-sm ${props.product.pdCost > props.product.tagCost ? "text-myerror" : "text-myprimary"}`}>
+            {props.product.pdCost > props.product.tagCost ? `▲${props.product.pdCost-props.product.tagCost}` : `▼${props.product.tagCost-props.product.pdCost}`} 
+          </div>
         )}
+        </div>
       </div>
-    </div>
   );
 };
 

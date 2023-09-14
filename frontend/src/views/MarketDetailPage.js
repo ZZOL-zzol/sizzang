@@ -30,7 +30,8 @@ const MarketDetailPage = () => {
       .catch((err) => console.log(err));
 
     axios
-      .get(`${API_URL}/store/market/${mkCode}`)
+      // .get(`${API_URL}/store/market/${mkCode}`)
+      .get(`http://localhost:8080/store/market/${mkCode}`)
       .then((res) => {
         setStoreList(res.data.data);
       })

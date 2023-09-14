@@ -135,7 +135,7 @@ public class StoreServiceImpl implements StoreService{
                         .stLatitude(m.getStLatitude())
                         .stLongtitude(m.getStLongtitude())
                         .stAddress(m.getStAddress())
-                        .scName(m.getStCategoryEntity().getScName())
+                        .scName(stCategoryRepository.findByScCode(m.getStCategoryEntity().getScCode()).get().getScName())
                         .build()
                 ).collect(Collectors.toList());
 
@@ -220,7 +220,7 @@ public class StoreServiceImpl implements StoreService{
                 .stLatitude(storeEntity.getStLatitude())
                 .stLongtitude(storeEntity.getStLongtitude())
                 .stAddress(storeEntity.getStAddress())
-                .scName(storeEntity.getStCategoryEntity().getScName())
+                .scName(stCategoryRepository.findByScCode(storeEntity.getStCategoryEntity().getScCode()).get().getScName())
                 .build();
 
         // 게시글 상세 정보 조회 결과
@@ -271,6 +271,7 @@ public class StoreServiceImpl implements StoreService{
                                 .stLatitude(m.getStLatitude())
                                 .stLongtitude(m.getStLongtitude())
                                 .stAddress(m.getStAddress())
+                                .scName(stCategoryRepository.findByScCode(m.getStCategoryEntity().getScCode()).get().getScName())
                                 .build()
                 ).collect(Collectors.toList());
 
@@ -296,7 +297,7 @@ public class StoreServiceImpl implements StoreService{
                         .mkName(m.getMarketEntity().getMkName())
                         .mkAddress(m.getMarketEntity().getMkAddress())
                         .stAddress(m.getStAddress())
-                        .scName(m.getStCategoryEntity().getScName())
+                        .scName(stCategoryRepository.findByScCode(m.getStCategoryEntity().getScCode()).get().getScName())
                         .stPhone(m.getStPhone())
                         .stTime(m.getStTime())
                         .stIntro(m.getStIntro())

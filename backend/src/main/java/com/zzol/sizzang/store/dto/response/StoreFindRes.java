@@ -12,6 +12,7 @@ public class StoreFindRes {
     private String stLatitude;
     private String stLongtitude;
     private String stIntro;
+
 //    시장코드 넣어야함
     private int mkCode;
     //별점, 리뷰
