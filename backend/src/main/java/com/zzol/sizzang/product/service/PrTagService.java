@@ -12,7 +12,7 @@ public interface PrTagService {
     boolean modifyTagCost (int tagCode);
 
     /*
-     * 물품에 변경이 생길때 tag_cost값으 변경
+     * pcCode로 taglist 찾기
      * */
     List<PrTagFindRes> findTagByCategory (int pcCode);
 }
