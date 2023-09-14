@@ -11,8 +11,5 @@
         <module name="com.zzol.sizzang.main~2" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="com.zzol.sizzang.main~1" target="17" />
-    </bytecodeTargetLevel>
   </component>
 </project>

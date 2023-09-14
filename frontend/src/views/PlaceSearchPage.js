@@ -3,6 +3,7 @@ import Navbar from '../components/common/Navbar';
 import KakaoMap from '../components/common/KakaoMap';
 import MapExample from '../components/common/MapExample';
 import MarketStoreCard from '../components/common/MarketStoreCard';
+import MapPractice from '../components/common/MapPractice';
 
 
 const MarketListExample = [{
@@ -48,10 +49,12 @@ const PlaceSearchPage = () => {
 
 
   return (
+    
     <div className="App flex flex-col text-3xl h-full w-full bg-background-fill">
       <Header title='장소 찾기' button={true}/>
       <div className='flex flex-col'>
-        <MapExample/>
+        {/* <MapExample/> */}
+        <MapPractice/>
       </div>
       <div>
         {MarketListExample.map(market => <MarketStoreCard market={market}/>)}

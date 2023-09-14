@@ -1,15 +1,13 @@
 package com.zzol.sizzang.chatgpt.controller;
 
-import com.zzol.sizzang.chatgpt.model.ChatGptResponseDto;
-import com.zzol.sizzang.chatgpt.model.RequestQuestionVo;
-import com.zzol.sizzang.chatgpt.model.RequestRecommFoodVo;
-import com.zzol.sizzang.chatgpt.model.ResponseVo;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.zzol.sizzang.chatgpt.model.ChatGptRequestDto;
 import com.zzol.sizzang.chatgpt.service.GptService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RequestMapping("/chatgpt")
@@ -19,10 +17,15 @@ public class GptController {
     @Autowired
     GptService gptService;
 
+    //    @PostMapping("/recommendMenu")
+//    public String recommendMenu(@RequestBody String ingredient) throws JsonProcessingException {
+//        String text = gptService.recommendMenu(ingredient);
+//        return text;
+//    }
     @PostMapping("/recommendMenu")
-    public String recommendMenu(@RequestBody String ingredient){
-        String text = gptService.recommendMenu(ingredient);
-        return text;
-    }
+    public List<String> recommendMenu(@RequestBody ChatGptRequestDto chatGptRequestDto) throws JsonProcessingException {
 
+        List<String> ingredients = gptService.recommendMenu(chatGptRequestDto);
+        return ingredients;
+    }
 }
