@@ -7,7 +7,7 @@ const ProductCard = (props) => {
   const currentPage = location.pathname.split("/")[1];
 
   const addBasket = () => {
-    window.localStorage.setItem("basket", {
+    window.localStorage.setItem("basket", JSON.stringify({
       stCode: props.store.stCode,
       stName: props.store.stName,
       stAddress: props.store.stAddress,
@@ -22,7 +22,7 @@ const ProductCard = (props) => {
           count: 1,
         },
       ],
-    });
+    }));
   };
 
   const setProductCount = (pdCode, type) => {

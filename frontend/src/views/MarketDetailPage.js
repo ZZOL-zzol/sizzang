@@ -4,6 +4,7 @@ import Tabs from "../components/common/Tabs";
 import Navbar from "../components/common/Navbar";
 import { useLocation, useNavigate } from "react-router-dom";
 import MarketStoreCard from "../components/common/MarketStoreCard";
+import ReviewCard from "../components/review/ReviewCard"
 import { API_URL } from "../lib/constants";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -75,10 +76,23 @@ const MarketDetailPage = () => {
       .get(`${API_URL}/store/market/${mkCode}`)
       .then((res) => {
         setStoreList(res.data.data);
+      })
+      .catch((err) => console.log(err));
+
+    axios
+      .post(
+        `${API_URL}/review/get/market`,
+        JSON.stringify({mkCode : mkCode,}),
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      )
+      .then((res) => {
+        setReviewList(res.data.data);
         console.log(res.data.data);
       })
       .catch((err) => console.log(err));
-    
+
   }, []);
 
 
@@ -116,9 +130,9 @@ const MarketDetailPage = () => {
       </div>
       ) : (
         <div className="flex flex-col w-full h-[350px] overflow-auto gap-2 bg-background-fill">
-          {/* {reviewList.map((review) => (
-            <ReviewCard review={review} />
-          ))} */}
+          {reviewList.map((review) => (
+            <ReviewCard key={review.reCode} review={review} />
+          ))} 
         </div>
       )} 
 
