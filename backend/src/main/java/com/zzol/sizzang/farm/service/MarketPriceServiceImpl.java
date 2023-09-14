@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -120,7 +121,12 @@ public class MarketPriceServiceImpl implements MarketPriceService {
     @Override
     public List<MarketPriceEntity> findCheaperItem(int direction){
         List<MarketPriceEntity> items = marketPriceRepository.findByDirectionOrderByValueDesc(direction);
-        return items;
+
+        List<MarketPriceEntity> resultItems = new ArrayList<>();
+        for(int i= 0; i<5; i++) {
+            resultItems.add(items.get(i));
+        }
+        return resultItems;
     }
 
 
