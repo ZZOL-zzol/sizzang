@@ -135,6 +135,7 @@ public class StoreServiceImpl implements StoreService{
                         .stLatitude(m.getStLatitude())
                         .stLongtitude(m.getStLongtitude())
                         .stAddress(m.getStAddress())
+                        .scName(m.getStCategoryEntity().getScName())
                         .build()
                 ).collect(Collectors.toList());
 
@@ -207,8 +208,7 @@ public class StoreServiceImpl implements StoreService{
         StoreSelectRes storeSelectRes = StoreSelectRes.builder()
                 .stCode(stCode)
                 //TODO : user 연동
-//                .userId(article.getUser().getId())
-//                .author(article.getUser().getNickname())
+                .stOwner(storeEntity.getUser().getUserName())
                 .stName(storeEntity.getStName())
                 .stPhone(storeEntity.getStPhone())
                 .stImg(storeEntity.getStImg())
@@ -220,6 +220,7 @@ public class StoreServiceImpl implements StoreService{
                 .stLatitude(storeEntity.getStLatitude())
                 .stLongtitude(storeEntity.getStLongtitude())
                 .stAddress(storeEntity.getStAddress())
+                .scName(storeEntity.getStCategoryEntity().getScName())
                 .build();
 
         // 게시글 상세 정보 조회 결과
@@ -283,7 +284,6 @@ public class StoreServiceImpl implements StoreService{
     @Override
     public List<StoreFindByUserRes> findByStoreByUser(Long userCode) {
         log.info("StoreService_findByStoreByUser_start: ");
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         List<StoreEntity> r = storeRepository.findByUser_UserCode(userCode);
         System.out.println(r.size());
         for(StoreEntity p : r){
@@ -296,7 +296,7 @@ public class StoreServiceImpl implements StoreService{
                         .mkName(m.getMarketEntity().getMkName())
                         .mkAddress(m.getMarketEntity().getMkAddress())
                         .stAddress(m.getStAddress())
-                        .scName(m.getStCategoryEntity().getStName())
+                        .scName(m.getStCategoryEntity().getScName())
                         .stPhone(m.getStPhone())
                         .stTime(m.getStTime())
                         .stIntro(m.getStIntro())

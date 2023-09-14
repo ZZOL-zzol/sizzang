@@ -47,7 +47,8 @@ public class QStoreRepositoryImpl implements QStoreRepository{
                         storeEntity.stLatitude.as("stLatitude"),
                         storeEntity.stLongtitude.as("stLongtitude"),
                         storeEntity.stIntro.as("stIntro"),
-                        storeEntity.marketEntity.as("mkCode")))
+                        storeEntity.marketEntity.as("mkCode"),
+                        storeEntity.stCategoryEntity.as("pcName")))
                 .from(storeEntity)
                 .where(keywordSearch(findByConditionGetReq.getKeyword()))
                 .fetch();
