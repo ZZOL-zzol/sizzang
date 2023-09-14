@@ -144,4 +144,27 @@ public class ProductServiceImpl implements ProductService{
         log.info("ProductService_deleteProduct_end: true");
         return new BaIResult(true,productEntity.getPrTagEntity().getTagCode() );
     }
+
+    /**
+     * tag를 통한 물품검색 API 서비스
+     */
+    @Override
+    public List<ProductFindRes> findProductByTag(int tagCode) {
+        log.info("ProductService_findProductByTag_start: ");
+
+        List<ProductFindRes> res = productRepository.findByPrTagEntity_TagCode(tagCode)
+                .stream().map(m -> ProductFindRes.builder()
+                        .pdCost(m.getPdCost())
+                        .tagCost(m.getPrTagEntity().getTagCost())
+                        .pdIntro(m.getPdIntro())
+                        .pdName(m.getPdName())
+                        .stCode(m.getStoreEntity().getStCode())
+                        .pdCode(m.getPdCode())
+                        .tagCode(m.getPrTagEntity().getTagCode())
+                        .build()
+                ).collect(Collectors.toList());
+
+        log.info("ProductService_findProductByTag_end: true");
+        return res;
+    }
 }
