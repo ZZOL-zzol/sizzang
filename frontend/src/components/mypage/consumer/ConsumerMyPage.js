@@ -33,18 +33,20 @@ const ConsumerMyPage = (props) => {
   const [openAddAccount, setOpenAddAccount] = useState(false);
   const user = JSON.parse(window.localStorage.getItem("User"));
   // const [isDetailButtonClicked, setIsDetailButtonClicked] = useState(false);
+  const [accountList, setAccountList] = useState([]);
 
   const onAccountCardClick = (value) => {
     navigate("/history", { state: { accountNumber: value } });
   };
 
   useEffect(() => {
-    axios.get(
+    console.log(user.userId)
+    axios.post(
       `${API_URL}/bank/v1/search/registedAccounts`,
       JSON.stringify({ userId: user.userId }),
       { headers: { "Content-Type": "application/json" } }
     )
-    .then(res=>console.log(res))
+    .then(res=>console.log(res) )
     .catch(err=>console.log(err));
   }, []);
 

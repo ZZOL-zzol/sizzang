@@ -9,6 +9,7 @@ import SellerMyPage from "../components/mypage/seller/SellerMyPage";
 
 const ProfilePage = () => {
   const user = JSON.parse(window.localStorage.getItem('User'))
+  console.log(user)
 
   return (
     <div className="w-full bg-background-fill">

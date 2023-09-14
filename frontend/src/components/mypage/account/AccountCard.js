@@ -3,18 +3,17 @@ import { API_URL } from "../../../lib/constants";
 
 const AccountCard = (props) => {
   const user = JSON.parse(window.localStorage.getItem("User"));
-  console.log(props.account.accountNumber)
+  // console.log(props.account.accountNumber)
 
   const onRegistButtonClick = () => {
-    // axios.post(
-    //   `${API_URL}/bank/v1/auth/saveaccount`,
-    //   JSON.stringify({
-    //     accountNumber: props.account.accountNumber,
-    //     userId: user.userId,
-    //   })
-    //   .then(res => console.log(res))
-    //   .catch(err => console.log(err))
-    // );
+    axios.post(
+      `${API_URL}/bank/v1/auth/saveaccount`,
+      JSON.stringify({
+        accountNumber: props.account.accountNumber,
+        userId: user.userId,
+      }), {headers:{"Content-Type": "application/json"}})
+      .then(res => console.log(res))
+      .catch(err => console.log(err))
   };
 
   return (
