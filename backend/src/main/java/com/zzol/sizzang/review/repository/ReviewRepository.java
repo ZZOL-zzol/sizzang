@@ -12,6 +12,7 @@ import java.util.List;
 public interface ReviewRepository extends JpaRepository<ReviewEntity, Long> {
     List<ReviewEntity> findByStCode(long stCode);
 
+
     @Query(value = "SELECT AVG(re.reScore) " +
             "FROM ReviewEntity re " +
             "WHERE re.stCode = :stCode")

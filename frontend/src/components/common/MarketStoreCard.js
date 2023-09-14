@@ -34,7 +34,7 @@ const MarketStoreCard = (props) => {
         <div className="flex w-full">
           <div className="card-body p-3 justify-between">
             <div className="gap-0 flex flex-col">
-              <div className="flex w-full justify-between"><div className="card-title text-base">{props.store.reScore}</div><div className="text-base">별점</div></div>
+              <div className="flex w-full justify-between"><div className="card-title text-base">{props.store.stScore}</div><div className="text-base"></div></div>
               <span className="text-sm text-left">{props.store.stName}</span>
             </div>
 
