@@ -44,66 +44,10 @@ const MarketExample = {
   mklongtitude: "",
 };
 
-// const store = {
-//   stCode: 1,
-//   mkCode: 1,
-//   stOwner: "차차아버님",
-//   stName: "네네치킨",
-//   stPhone: "010-6664-9510",
-//   stImg: "../chacha2.jpg",
-//   stAccount: "",
-//   stAccountHolder: "정재웅",
-//   stIntro: "파닭은 네네가 제일 맛있는듯",
-//   stTime: "",
-//   stAddress: "관악구 봉천로 466",
-//   scName: "음식점",
-//   stScore: 9,
-// };
-
-const productList = [
-  {
-    pdCode: 1,
-    pcCode: 1,
-    stCode: "",
-    mkCode: "",
-    scCode: "",
-    pdName: "옛날통닭",
-    pdCost: 50000,
-    pdIntro: "파닭파닭",
-  },
-  {
-    pdCode: 1,
-    pcCode: 1,
-    stCode: "",
-    mkCode: "",
-    scCode: "",
-    pdName: "옛날통닭",
-    pdCost: 50000,
-    pdIntro: "배고프닭",
-  },
-  {
-    pdCode: 1,
-    pcCode: 1,
-    stCode: "",
-    mkCode: "",
-    scCode: "",
-    pdName: "옛날통닭",
-    pdCost: 50000,
-    pdIntro: "너무배고프닭",
-  },
-  {
-    pdCode: 1,
-    pcCode: 1,
-    stCode: "",
-    mkCode: "",
-    scCode: "",
-    pdName: "옛날통닭",
-    pdCost: 50000,
-  },
-];
 
 const StoreDetailPage = () => {
   const [store, setStore] = useState({});
+  const [productList, setProductList] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
   const stCode = location.pathname.split("/")[2];
@@ -114,6 +58,14 @@ const StoreDetailPage = () => {
       .get(`${API_URL}/store/${stCode}`)
       .then((res) => {
         setStore(res.data.data);
+      })
+      .catch((err) => console.log(err));
+
+    axios
+      //.get(`${API_URL}/store/${stCode}`)
+      .get(`http://localhost:8080/product/1`)
+      .then((res) => {
+        setProductList(res.data.data);
       })
       .catch((err) => console.log(err));
 

@@ -10,7 +10,6 @@ public class StoreSelectRes {
 //    Long mkCode;
     private String stOwner;
     private String scName;
-
     private Long stCode;
     private String stName;
     private String stPhone;
