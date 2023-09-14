@@ -212,6 +212,7 @@ public class StoreServiceImpl implements StoreService{
                 .stAccountHolder(storeEntity.getStAccountHolder())
                 .stIntro(storeEntity.getStIntro())
                 .stTime(storeEntity.getStTime())
+                .stScore(storeEntity.getStScore())
                 .stLatitude(storeEntity.getStLatitude())
                 .stLongtitude(storeEntity.getStLongtitude())
                 .build();

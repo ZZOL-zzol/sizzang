@@ -55,6 +55,7 @@ public class StoreEntity {
     @Column(name = "st_time",columnDefinition = "VARCHAR(100)")
     private String stTime;
 
+
     @Column(name = "st_score")
     private Double stScore;
 
