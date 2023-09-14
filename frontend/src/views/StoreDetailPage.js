@@ -5,9 +5,11 @@ import Navbar from "../components/common/Navbar";
 import { useLocation, useNavigate } from "react-router-dom";
 import MarketStoreCard from "../components/common/MarketStoreCard";
 import ProductCard from "../components/store/ProductCard";
-import { useState } from "react";
 import HistoryCard from "../components/history/HistoryCard";
 import ReviewCard from "../components/store/ReviewCard";
+import { API_URL } from "../lib/constants";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const reviewList = [
   {
@@ -42,21 +44,21 @@ const MarketExample = {
   mklongtitude: "",
 };
 
-const store = {
-  stCode: 1,
-  mkCode: 1,
-  stOwner: "차차아버님",
-  stName: "네네치킨",
-  stPhone: "010-6664-9510",
-  stImg: "../chacha2.jpg",
-  stAccount: "",
-  stAccountHolder: "정재웅",
-  stIntro: "파닭은 네네가 제일 맛있는듯",
-  stTime: "",
-  stAddress: "관악구 봉천로 466",
-  scName: "음식점",
-  stScore: 9,
-};
+// const store = {
+//   stCode: 1,
+//   mkCode: 1,
+//   stOwner: "차차아버님",
+//   stName: "네네치킨",
+//   stPhone: "010-6664-9510",
+//   stImg: "../chacha2.jpg",
+//   stAccount: "",
+//   stAccountHolder: "정재웅",
+//   stIntro: "파닭은 네네가 제일 맛있는듯",
+//   stTime: "",
+//   stAddress: "관악구 봉천로 466",
+//   scName: "음식점",
+//   stScore: 9,
+// };
 
 const productList = [
   {
@@ -101,10 +103,22 @@ const productList = [
 ];
 
 const StoreDetailPage = () => {
+  const [store, setStore] = useState({});
   const location = useLocation();
   const navigate = useNavigate();
-  // const stCode = location.pathname.split("/")[2];
+  const stCode = location.pathname.split("/")[2];
   const [currentTab, setCurrentTab] = useState(0);
+
+  useEffect(() => {
+    axios
+      .get(`${API_URL}/store/${stCode}`)
+      .then((res) => {
+        setStore(res.data.data);
+      })
+      .catch((err) => console.log(err));
+
+    }, []);
+
 
   return (
     <div className="flex flex-col w-full h-full bg-white outline outline-1">
