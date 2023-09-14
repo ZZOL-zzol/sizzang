@@ -1,6 +1,6 @@
 package com.zzol.sizzang.market.service;
 
-import com.zzol.sizzang.market.dto.response.MarketSearchRes;
+import com.zzol.sizzang.market.dto.request.MarketGetReq;
 import com.zzol.sizzang.market.entity.MarketEntity;
 
 import java.util.List;
@@ -12,8 +12,9 @@ public interface MarketService {
     Optional<MarketEntity> getMarketDetails(int mkCode);
 
     //시장 검색
-    List<MarketSearchRes> searchMarket(String mkName, int limit, int offset);
+    List<MarketEntity> searchMarket(MarketGetReq marketGetReq);
 
-//    double getMarketScore(int mkCode);
+    List<MarketEntity> getAllMarket(MarketGetReq marketGetReq);
+
 
 }

@@ -2,16 +2,13 @@ package com.zzol.sizzang.market.controller;
 
 
 import com.zzol.sizzang.common.model.CommonResponse;
-import com.zzol.sizzang.market.dto.response.MarketSearchRes;
+import com.zzol.sizzang.market.dto.request.MarketGetReq;
 import com.zzol.sizzang.market.entity.MarketEntity;
 import com.zzol.sizzang.market.service.MarketService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,11 +25,20 @@ public class MarketController {
         this.marketService = marketService;
     }
 
+    //시장 전체 불러오기
+    @PostMapping("/getAll")
+    @Operation(summary = "시장 전체 불러오기", description = "시장 전체 불러오기")
+    public CommonResponse<?> getAllMarket(@RequestBody MarketGetReq marketGetReq) {
+        List<MarketEntity> data = marketService.getAllMarket(marketGetReq);
+
+        return CommonResponse.success(data);
+    }
+
     //시장검색
-    @GetMapping("/search/{mkName}/{limit}/{offset}")
+    @PostMapping("/search")
     @Operation(summary = "시장 검색", description = "시장이름으로 검색")
-    public CommonResponse<?> searchMarket(@PathVariable String mkName, @PathVariable int limit, @PathVariable int offset) {
-        List<MarketSearchRes> data = marketService.searchMarket(mkName, limit, offset);
+    public CommonResponse<?> searchMarket(@RequestBody MarketGetReq marketGetReq) {
+        List<MarketEntity> data = marketService.searchMarket(marketGetReq);
 
         return CommonResponse.success(data);
     }
