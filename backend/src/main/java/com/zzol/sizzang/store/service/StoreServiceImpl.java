@@ -9,6 +9,7 @@ import com.zzol.sizzang.s3.service.S3Service;
 import com.zzol.sizzang.store.dto.request.FindByConditionGetReq;
 import com.zzol.sizzang.store.dto.request.StoreModifyPutReq;
 import com.zzol.sizzang.store.dto.request.StoreRegistInsertReq;
+import com.zzol.sizzang.store.dto.response.StoreFindByUserRes;
 import com.zzol.sizzang.store.dto.response.StoreFindRes;
 import com.zzol.sizzang.store.dto.response.StoreSelectRes;
 import com.zzol.sizzang.store.entity.StCategoryEntity;
@@ -272,5 +273,34 @@ public class StoreServiceImpl implements StoreService{
         return res;
     }
 
+    /**
+     *  유저별 점포 조회 API에 대한 서비스
+     */
+    @Override
+    public List<StoreFindByUserRes> findByStoreByUser(Long userCode) {
+        log.info("StoreService_findByStoreByUser_start: ");
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        List<StoreEntity> r = storeRepository.findByUser_UserCode(userCode);
+        System.out.println(r.size());
+        for(StoreEntity p : r){
+            System.out.println(p.getStName());
+        }
+
+        List<StoreFindByUserRes> res = storeRepository.findByUser_UserCode(userCode)
+                .stream().map(m -> StoreFindByUserRes.builder()
+                        .stName(m.getStName())
+                        .mkName(m.getMarketEntity().getMkName())
+                        .mkAddress(m.getMarketEntity().getMkAddress())
+                        .stAddress(m.getStAddress())
+                        .scName(m.getStCategoryEntity().getStName())
+                        .stPhone(m.getStPhone())
+                        .stTime(m.getStTime())
+                        .stIntro(m.getStIntro())
+                        .build()
+                ).collect(Collectors.toList());
+
+        log.info("StoreService_findByStoreByUser_end: success");
+        return res;
+    }
 
 }

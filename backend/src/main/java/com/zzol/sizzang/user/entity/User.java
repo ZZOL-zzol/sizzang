@@ -1,15 +1,19 @@
 package com.zzol.sizzang.user.entity;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.Where;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 @ToString
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@DynamicInsert
 @Table(name = "User") // 테이블과 클래스명이 같을 경우 생략 가능
 @Entity
 public class User {
