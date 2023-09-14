@@ -21,4 +21,5 @@ public class StoreSelectRes {
     private String stLatitude;
     private String stLongtitude;
     private double stScore;
+    private String stAddress;
 }
