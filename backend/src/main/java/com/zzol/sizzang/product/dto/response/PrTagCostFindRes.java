@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 @Builder
-public class PrTagFindRes {
-    String tagName;
+public class PrTagCostFindRes {
+
     int tagCode;
-    String tagUnit;
-    int tagCost;
+    int pdCost;
+
 }
