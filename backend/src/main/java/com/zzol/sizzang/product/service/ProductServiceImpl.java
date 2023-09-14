@@ -95,6 +95,7 @@ public class ProductServiceImpl implements ProductService{
                         .pdCost(m.getPdCost())
                         .pdIntro(m.getPdIntro())
                         .pdName(m.getPdName())
+                        .tagCost(m.getPrTagEntity().getTagCost())
                         .build()
                 ).collect(Collectors.toList());
 
