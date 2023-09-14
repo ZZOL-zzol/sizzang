@@ -49,34 +49,22 @@ public class ProductServiceImpl implements ProductService{
      */
     @Override
     public ProductEntity registProduct(ProductRegistInsertReq registInfo){
-//        if (file != null) {
-//            log.info("ProductService_registProduct_start: " + registInfo.toString() + ", "
-//                    + file);
-//        } else {
-//            log.info("ArticleService_registArticle_start: " + registInfo.toString());
-//        }
+
         log.info("ArticleService_registArticle_start: " + registInfo.toString());
         //TODO 작성자 정보 가져오기
 //        User user = userRepository.findById(registInfo.getUserId())
 //                .orElseThrow(UserNotFoundException::new);
 
-        int pcCode = registInfo.getTagCode();
+        int tagCode = registInfo.getTagCode();
         Long stCode = registInfo.getStCode();
         int pdCost = registInfo.getPdCost();
         String pdName = registInfo.getPdName();
         String pdIntro = registInfo.getPdIntro();
-//        String pdImg = "";
 
-        PrTagEntity prTagEntity = prTagRepository.findById(pcCode)
+        PrTagEntity prTagEntity = prTagRepository.findById(tagCode)
                 .orElseThrow(NullPointerException::new);
         StoreEntity storeEntity = storeRepository.findById(stCode)
                 .orElseThrow(NullPointerException::new);
-
-//        //파일 저장
-//        if (!Objects.isNull(file) && file.getSize() > 0) {
-//            String imgPath = s3Service.saveFile(file);
-//            pdImg = "https://d3brc3t3x7lzht.cloudfront.net/"+imgPath;
-//        }
 
         ProductEntity productEntity = ProductEntity.builder()
                 .prTagEntity(prTagEntity)
@@ -84,7 +72,6 @@ public class ProductServiceImpl implements ProductService{
                 .pdCost(pdCost)
                 .pdName(pdName)
                 .storeEntity(storeEntity)
-//                .pdImg(pdImg)
                 .build();
         productRepository.save(productEntity);
 
@@ -103,10 +90,12 @@ public class ProductServiceImpl implements ProductService{
 
         List<ProductFindRes> res = productRepository.findByStoreEntity_StCode(stCode)
                 .stream().map(m -> ProductFindRes.builder()
+                                .stCode(stCode)
                         .pdCode(m.getPdCode())
                         .pdCost(m.getPdCost())
-//                        .pdImg(m.getPdImg())
+                        .pdIntro(m.getPdIntro())
                         .pdName(m.getPdName())
+                        .tagCost(m.getPrTagEntity().getTagCost())
                         .build()
                 ).collect(Collectors.toList());
 

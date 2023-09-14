@@ -64,7 +64,7 @@ public class ProductController {
      * @return
      */
     @Operation(description = "물품 전체 조회 메서드입니다.")
-    @GetMapping
+    @GetMapping("/{stCode}")
     public CommonResponse<List<ProductFindRes>> findAll(@PathVariable Long stCode) {
         log.info("ProductController_findAll_start: ");
 

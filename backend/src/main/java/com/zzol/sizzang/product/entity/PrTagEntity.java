@@ -3,7 +3,6 @@ package com.zzol.sizzang.product.entity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 
@@ -14,7 +13,6 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @DynamicInsert
 @Table(name = "Pr_Tag")
-@Where(clause = "deleted_at is null")
 @Entity
 public class PrTagEntity {
     @Id

@@ -46,8 +46,8 @@ public class PrTagServiceImpl implements PrTagService {
         int tagCost = 0;
         for(PrTagFindRes p : res){
             tagCost += p.getPdCost();
-            tagCost /= res.size();
         }
+        tagCost /= res.size();
 
         prTagEntity.modifyTagCost(tagCost);
 
