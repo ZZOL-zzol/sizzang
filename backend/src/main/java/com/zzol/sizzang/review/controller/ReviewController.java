@@ -27,11 +27,20 @@ public class ReviewController {
         this.reviewService = reviewService;
     }
 
-    //시장검색
-    @PostMapping("/getAll")
+    //전체 리뷰 불러오기
+    @PostMapping("/get/market")
+    @Operation(summary = "시장별 리뷰 불러오기")
+    public CommonResponse<?> getAllReviewsByMarket(@RequestBody ReviewGetReq reviewGetReq) {
+        List<ReviewEntity> data = reviewService.getAllReviewsByMarket(reviewGetReq.getMkCode());
+
+        return CommonResponse.success(data);
+    }
+
+    //점포별 리뷰 불러오기
+    @PostMapping("/get/store")
     @Operation(summary = "점포별 리뷰 불러오기")
-    public CommonResponse<?> getAllReviews(@RequestBody ReviewGetReq reviewGetReq) {
-        List<ReviewEntity> data = reviewService.getAllReviews(reviewGetReq.getStCode());
+    public CommonResponse<?> getAllReviewsByStore(@RequestBody ReviewGetReq reviewGetReq) {
+        List<ReviewEntity> data = reviewService.getAllReviewsByStore(reviewGetReq.getStCode());
 
         return CommonResponse.success(data);
     }

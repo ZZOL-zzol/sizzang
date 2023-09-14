@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,9 +33,24 @@ public class ReviewServiceImpl implements ReviewService{
         this.marketRepository = marketRepository;
     }
 
+    //리뷰전체 불러오기(시장별)
+    @Override
+    public List<ReviewEntity> getAllReviewsByMarket(int mkCode){
+        List<StoreEntity> storeList = storeRepository.findByMarketEntity_MkCode(mkCode);
+        List<ReviewEntity> result = new ArrayList<>();
+        for(StoreEntity store : storeList) {
+            List<ReviewEntity> reviewList = reviewRepository.findByStCode(store.getStCode());
+            for(ReviewEntity r : reviewList) {
+                result.add(r);
+            }
+        }
+
+        return result;
+    }
+
     //리뷰전체 불러오기(점포별)
     @Override
-    public List<ReviewEntity> getAllReviews(long stCode){
+    public List<ReviewEntity> getAllReviewsByStore(long stCode){
         return reviewRepository.findByStCode(stCode);
     }
 

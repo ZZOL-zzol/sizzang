@@ -4,58 +4,61 @@ import Tabs from "../components/common/Tabs";
 import Navbar from "../components/common/Navbar";
 import { useLocation, useNavigate } from "react-router-dom";
 import MarketStoreCard from "../components/common/MarketStoreCard";
+import ReviewCard from "../components/review/ReviewCard"
 import { API_URL } from "../lib/constants";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const storeList = [
-  {
-    stCode: 1,
-    mkCode: 1,
-    stOwner: "차차아버님",
-    stName: "네네치킨",
-    stPhone: "010-6664-9510",
-    stImg: "../chacha2.jpg",
-    stAccount: "",
-    stAccountHolder: "정재웅",
-    stIntro: "파닭은 네네가 제일 맛있는듯",
-    stTime: "",
-    stAddress : '관악구 봉천로 466',
-    scName : '음식점'
-  },
-  {
-    stCode: 1,
-    mkCode: 1,
-    stOwner: "차차아버님",
-    stName: "네네치킨",
-    stPhone: "010-6664-9510",
-    stImg: "../chacha2.jpg",
-    stAccount: "",
-    stAccountHolder: "정재웅",
-    stIntro: "파닭은 네네가 제일 맛있는듯",
-    stTime: "",
-    stAddress : '관악구 봉천로 466',
-    scName : '음식점'
-  },
-  {
-    stCode: 1,
-    mkCode: 1,
-    stOwner: "차차아버님",
-    stName: "네네치킨",
-    stPhone: "010-6664-9510",
-    stImg: "../chacha2.jpg",
-    stAccount: "",
-    stAccountHolder: "정재웅",
-    stIntro: "파닭은 네네가 제일 맛있는듯",
-    stTime: "",
-    stAddress : '관악구 봉천로 466',
-    scName : '음식점'
-  },
-];
+// const storeList = [
+//   {
+//     stCode: 1,
+//     mkCode: 1,
+//     stOwner: "차차아버님",
+//     stName: "네네치킨",
+//     stPhone: "010-6664-9510",
+//     stImg: "../chacha2.jpg",
+//     stAccount: "",
+//     stAccountHolder: "정재웅",
+//     stIntro: "파닭은 네네가 제일 맛있는듯",
+//     stTime: "",
+//     stAddress : '관악구 봉천로 466',
+//     scName : '음식점'
+//   },
+//   {
+//     stCode: 1,
+//     mkCode: 1,
+//     stOwner: "차차아버님",
+//     stName: "네네치킨",
+//     stPhone: "010-6664-9510",
+//     stImg: "../chacha2.jpg",
+//     stAccount: "",
+//     stAccountHolder: "정재웅",
+//     stIntro: "파닭은 네네가 제일 맛있는듯",
+//     stTime: "",
+//     stAddress : '관악구 봉천로 466',
+//     scName : '음식점'
+//   },
+//   {
+//     stCode: 1,
+//     mkCode: 1,
+//     stOwner: "차차아버님",
+//     stName: "네네치킨",
+//     stPhone: "010-6664-9510",
+//     stImg: "../chacha2.jpg",
+//     stAccount: "",
+//     stAccountHolder: "정재웅",
+//     stIntro: "파닭은 네네가 제일 맛있는듯",
+//     stTime: "",
+//     stAddress : '관악구 봉천로 466',
+//     scName : '음식점'
+//   },
+// ];
 
 const MarketDetailPage = () => {
   const [marketInfo, setMarketInfo] = useState({});
-  // const [storeList, setStoreList] = useState([]);
+  const [storeList, setStoreList] = useState([]);
+  const [reviewList, setReviewList] = useState([]);
+  const [currentTab, setCurrentTab] = useState(0);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -69,17 +72,29 @@ const MarketDetailPage = () => {
       })
       .catch((err) => console.log(err));
 
-      // axios
-      // .get(`${API_URL}/store`)
-      // // .get(`${API_URL}/store/market/${mkCode}`)
-      // .then((res) => {
-      //   setStoreList([res.data.data, ...storeList]);
-      // })
-      // .catch((err) => console.log(err));
-    
+    axios
+      .get(`${API_URL}/store/market/${mkCode}`)
+      .then((res) => {
+        setStoreList(res.data.data);
+      })
+      .catch((err) => console.log(err));
+
+    axios
+      .post(
+        `${API_URL}/review/get/market`,
+        JSON.stringify({mkCode : mkCode,}),
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      )
+      .then((res) => {
+        setReviewList(res.data.data);
+        console.log(res.data.data);
+      })
+      .catch((err) => console.log(err));
+
   }, []);
-  
-  
+
 
   return (
     <div className="flex flex-col w-full h-full bg-white outline outline-1">
@@ -104,14 +119,24 @@ const MarketDetailPage = () => {
         </div>
 
         {/* <div className={scrollY !==undefined && scrollY > 314? 'sticky top-[56px]': 'w-full'}> */}
-        {/* <div className="w-full">
-          <Tabs type='market' tab1='점포 목록' tab2='리뷰' onTabClick={null}/>
-        </div> */}
+        <div className="w-full">
+          <Tabs type="store" tab1='상품 목록' tab2='리뷰' onTabClick={setCurrentTab} />
+        </div>
       </div>
+
+      {currentTab === 0 ? (
       <div className="flex flex-col w-full h-[350px] overflow-auto">
-        {storeList.map(store => <MarketStoreCard store={store}/>)}
-      
+        {storeList.map(store => <MarketStoreCard key={store.stCode} store={store}/>)}
       </div>
+      ) : (
+        <div className="flex flex-col w-full h-[350px] overflow-auto gap-2 bg-background-fill">
+          {reviewList.map((review) => (
+            <ReviewCard key={review.reCode} review={review} />
+          ))} 
+        </div>
+      )} 
+
+
       <Navbar />
     </div>
   );
