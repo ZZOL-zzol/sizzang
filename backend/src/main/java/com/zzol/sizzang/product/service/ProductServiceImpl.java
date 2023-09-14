@@ -90,12 +90,13 @@ public class ProductServiceImpl implements ProductService{
 
         List<ProductFindRes> res = productRepository.findByStoreEntity_StCode(stCode)
                 .stream().map(m -> ProductFindRes.builder()
-                                .stCode(stCode)
+                        .stName(m.getStoreEntity().getStName())
                         .pdCode(m.getPdCode())
                         .pdCost(m.getPdCost())
                         .pdIntro(m.getPdIntro())
                         .pdName(m.getPdName())
                         .tagCost(m.getPrTagEntity().getTagCost())
+                        .tagName(m.getPrTagEntity().getTagName())
                         .build()
                 ).collect(Collectors.toList());
 
@@ -158,9 +159,9 @@ public class ProductServiceImpl implements ProductService{
                         .tagCost(m.getPrTagEntity().getTagCost())
                         .pdIntro(m.getPdIntro())
                         .pdName(m.getPdName())
-                        .stCode(m.getStoreEntity().getStCode())
+                        .stName(m.getStoreEntity().getStName())
                         .pdCode(m.getPdCode())
-                        .tagCode(m.getPrTagEntity().getTagCode())
+                        .tagName(m.getPrTagEntity().getTagName())
                         .build()
                 ).collect(Collectors.toList());
 
