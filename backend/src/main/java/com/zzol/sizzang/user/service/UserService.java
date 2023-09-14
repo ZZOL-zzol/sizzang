@@ -1,14 +1,23 @@
 package com.zzol.sizzang.user.service;
 
+import com.amazonaws.services.s3.AmazonS3;
 import com.zzol.sizzang.global.jwt.JwtService;
+import com.zzol.sizzang.review.repository.ReviewRepository;
+import com.zzol.sizzang.s3.service.FileService;
+import com.zzol.sizzang.s3.service.S3Service;
+import com.zzol.sizzang.store.repository.StoreRepository;
+import com.zzol.sizzang.user.dto.UploadUserimgRequestDto;
 import com.zzol.sizzang.user.dto.UserSignUpDto;
 import com.zzol.sizzang.user.entity.User;
 import com.zzol.sizzang.user.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -19,7 +28,10 @@ import java.util.List;
 public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-    private final JwtService jwtService;
+    private final S3Service s3Service;
+
+
+
     /**
      * User List 조회
      */
@@ -93,9 +105,29 @@ public class UserService {
 
     }
 
+    /**
+     * 유저 계좌 등록 메서드
+     * */
     @Transactional
     public void updateUserAccount(String userAccount, String userId){
         userRepository.registUserAccountByUserId(userAccount, userId);
+    }
+
+
+    /**
+     * 이미지 선택 메서드
+     * */
+    public String selectImg(MultipartFile file) {
+        String imgPath = s3Service.saveFile(file);
+        return "https://d3brc3t3x7lzht.cloudfront.net/"+imgPath;
+    }
+
+    /**
+     * 유저 이미지 등록 메서드
+     * */
+    @Transactional
+    public void uploadUserImg(UploadUserimgRequestDto uploadUserimgRequestDto) {
+        userRepository.registUserImgByUserId(uploadUserimgRequestDto.getUserImgUrl(), uploadUserimgRequestDto.getUserId());
     }
 
 }
