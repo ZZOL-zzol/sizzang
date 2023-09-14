@@ -3,7 +3,7 @@ package com.zzol.sizzang.review.controller;
 import com.zzol.sizzang.common.model.CommonResponse;
 import com.zzol.sizzang.review.dto.request.ReviewAddReq;
 import com.zzol.sizzang.review.dto.request.ReviewGetReq;
-import com.zzol.sizzang.review.entity.ReviewEntity;
+import com.zzol.sizzang.review.dto.response.ReviewRes;
 import com.zzol.sizzang.review.service.ReviewService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +31,7 @@ public class ReviewController {
     @PostMapping("/get/market")
     @Operation(summary = "시장별 리뷰 불러오기")
     public CommonResponse<?> getAllReviewsByMarket(@RequestBody ReviewGetReq reviewGetReq) {
-        List<ReviewEntity> data = reviewService.getAllReviewsByMarket(reviewGetReq.getMkCode());
+        List<ReviewRes> data = reviewService.getAllReviewsByMarket(reviewGetReq.getMkCode());
 
         return CommonResponse.success(data);
     }
@@ -40,7 +40,7 @@ public class ReviewController {
     @PostMapping("/get/store")
     @Operation(summary = "점포별 리뷰 불러오기")
     public CommonResponse<?> getAllReviewsByStore(@RequestBody ReviewGetReq reviewGetReq) {
-        List<ReviewEntity> data = reviewService.getAllReviewsByStore(reviewGetReq.getStCode());
+        List<ReviewRes> data = reviewService.getAllReviewsByStore(reviewGetReq.getStCode());
 
         return CommonResponse.success(data);
     }

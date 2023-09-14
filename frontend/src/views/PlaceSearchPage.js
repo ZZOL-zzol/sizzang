@@ -7,6 +7,11 @@ import { API_URL } from "../lib/constants";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+
+//처음 맵이랑 시장목록 나오는 화면.
+//인피니티스크롤 어떻게 적용함..?
+//검색기능적용해야함
+
 const PlaceSearchPage = () => {
 
   const [marketList, setMarketList] = useState([]);
@@ -14,8 +19,7 @@ const PlaceSearchPage = () => {
 
   useEffect(() => {
     axios
-      // .post(`${API_URL}/market/getAll`,
-      .post(`http://localhost:8080/market/getAll`,
+      .post(`${API_URL}/market/getAll`,
       JSON.stringify({limit : 10, offset:0,}),
         {
           headers: { "Content-Type": "application/json" },

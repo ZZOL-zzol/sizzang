@@ -7,6 +7,6 @@ import lombok.Data;
 public class ReviewGetReq {
 
     private int mkCode;
-    private int stCode;
-    private int reCode;
+    private Long stCode;
+    private Long reCode;
 }

@@ -6,9 +6,9 @@ import lombok.Data;
 @Data
 public class ReviewAddReq {
 
-    private int userCode;
+    private Long userCode;
     private Long stCode;
-    private int puCode;
+    private Long puCode;
     private String reTitle;
     private String reContent;
     private String reImg;
