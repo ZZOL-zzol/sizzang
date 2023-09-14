@@ -33,6 +33,7 @@ public class User {
     private String role;
     private String refreshToken;
     private boolean deleted; //회원탈퇴 여부 구분
+    private String userImg; //유저이미지url
 
     // 비밀번호 암호화 메소드
     // 비밀번호 암호화 메소드

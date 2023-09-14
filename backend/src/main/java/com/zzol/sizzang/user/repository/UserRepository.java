@@ -21,5 +21,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
             " WHERE user_id = ?2 " , nativeQuery = true)
     void registUserAccountByUserId(String userAccount, String userId);
 
+
+    @Modifying
+    @Query(value = " UPDATE user " +
+            " SET user_img = ?1 " +
+            " WHERE user_id = ?2 " , nativeQuery = true)
+    void registUserImgByUserId(String userImgUrl, String userId);
+
 }
 

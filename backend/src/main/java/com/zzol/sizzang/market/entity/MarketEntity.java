@@ -1,12 +1,14 @@
 package com.zzol.sizzang.market.entity;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
 
 @ToString
 @Getter
+@Setter
 @Entity
 @Table(name = "market")
 public class MarketEntity {
@@ -35,5 +37,7 @@ public class MarketEntity {
     private double mkLatitude;
     @Column(name = "mk_longtitude")
     private double mkLongtitude;
+    @Column(name = "mk_score")
+    private Double mkScore;
 
 }

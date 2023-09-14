@@ -11,7 +11,12 @@ import java.util.Optional;
 public interface StoreRepository extends JpaRepository<StoreEntity, Long>, QStoreRepository {
 
     List<StoreEntity> findByMarketEntity_MkCode(int mkCode);
-    Optional<StoreEntity> findByStCode(long stCode);
 
+    Optional<StoreEntity> findByStCode(Long stCode);
+
+    @Query(value = "SELECT AVG(st.stScore) " +
+            "FROM StoreEntity st " +
+            "WHERE st.marketEntity.mkCode = :mkCode")
+    double getReviewScore(@Param("mkCode") int mkCode);
 
 }

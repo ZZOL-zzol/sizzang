@@ -1,5 +1,7 @@
 package com.zzol.sizzang.review.service;
 
+import com.zzol.sizzang.market.entity.MarketEntity;
+import com.zzol.sizzang.market.repository.MarketRepository;
 import com.zzol.sizzang.review.dto.request.ReviewAddReq;
 import com.zzol.sizzang.review.entity.ReviewEntity;
 import com.zzol.sizzang.review.repository.ReviewRepository;
@@ -18,14 +20,16 @@ public class ReviewServiceImpl implements ReviewService{
 
     private final ReviewRepository reviewRepository;
     private final StoreRepository storeRepository;
+    private final MarketRepository marketRepository;
 
     private FileService s3Service;
 
     @Autowired
-    public ReviewServiceImpl(ReviewRepository reviewRepository, FileService s3Service, StoreRepository storeRepository){
+    public ReviewServiceImpl(ReviewRepository reviewRepository, FileService s3Service, StoreRepository storeRepository, MarketRepository marketRepository){
         this.reviewRepository = reviewRepository;
         this.s3Service = s3Service;
         this.storeRepository = storeRepository;
+        this.marketRepository = marketRepository;
     }
 
     //리뷰전체 불러오기(점포별)
@@ -55,6 +59,14 @@ public class ReviewServiceImpl implements ReviewService{
         storeUpdateTarget.setStScore(stScore);
 
         storeRepository.save(storeUpdateTarget);
+
+        int marketCode = storeRepository.findByStCode(reviewAddReq.getStCode()).get().getMarketEntity().getMkCode();
+        double mkScore = storeRepository.getReviewScore(marketCode);
+        MarketEntity mkScoreUpdateTarget = marketRepository.findByMkCode(marketCode).get();
+        mkScoreUpdateTarget.setMkScore(mkScore);
+
+        marketRepository.save(mkScoreUpdateTarget);
+
 
     }
 

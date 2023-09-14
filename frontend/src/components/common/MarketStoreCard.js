@@ -34,11 +34,11 @@ const MarketStoreCard = (props) => {
         <div className="flex w-full">
           <div className="card-body p-3 justify-between">
             <div className="gap-0 flex flex-col">
-              <div className="flex w-full justify-between"><div className="card-title text-base">{props.store.stName}</div><div className="text-base">별점</div></div>
-              <span className="text-sm text-left">{props.store.scName}</span>
+              <div className="flex w-full justify-between"><div className="card-title text-base">{props.store.reScore}</div><div className="text-base">별점</div></div>
+              <span className="text-sm text-left">{props.store.stName}</span>
             </div>
 
-            <div className="text-left text-sm">{props.store.stAddress}</div>
+            <div className="text-left text-sm">{props.store.stIntro}</div>
           </div>
           <figure className="m-3 rounded-lg w-24 h-24">
             <img className="w-full h-full" src={props.store.stImg} alt="storeImage" />
