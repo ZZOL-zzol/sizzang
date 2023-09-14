@@ -19,10 +19,12 @@ public class StoreFindRes {
     private double reScore;
     //카테고
     private String stAddress;
+
+    private String scName;
     public StoreFindRes() {
     }
 
-    public StoreFindRes(Long stCode, String stName, String stImg, String stIntro, String stLatitude, String stLongtitude, int mkCode, int reCnt, double reScore, String stAddress) {
+    public StoreFindRes(Long stCode, String stName, String stImg, String stIntro, String stLatitude, String stLongtitude, int mkCode, int reCnt, double reScore, String stAddress, String scName) {
         this.stCode = stCode;
         this.stName = stName;
         this.stImg = stImg;
@@ -33,5 +35,6 @@ public class StoreFindRes {
         this.reCnt = reCnt;
         this.reScore = reScore;
         this.stAddress = stAddress;
+        this.scName = scName;
     }
 }
