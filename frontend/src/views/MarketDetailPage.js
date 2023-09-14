@@ -55,6 +55,7 @@ const storeList = [
 
 const MarketDetailPage = () => {
   const [marketInfo, setMarketInfo] = useState({});
+  // const [storeList, setStoreList] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -65,16 +66,21 @@ const MarketDetailPage = () => {
       .get(`${API_URL}/market/info/${mkCode}`)
       .then((res) => {
         setMarketInfo(res.data.data);
-        // console.log(marketInfo);
       })
       .catch((err) => console.log(err));
 
+      // axios
+      // .get(`${API_URL}/store`)
+      // // .get(`${API_URL}/store/market/${mkCode}`)
+      // .then((res) => {
+      //   setStoreList([res.data.data, ...storeList]);
+      // })
+      // .catch((err) => console.log(err));
     
   }, []);
   
-
-
   
+
   return (
     <div className="flex flex-col w-full h-full bg-white outline outline-1">
       <Header title='시장 상세' backButton/>
@@ -98,9 +104,9 @@ const MarketDetailPage = () => {
         </div>
 
         {/* <div className={scrollY !==undefined && scrollY > 314? 'sticky top-[56px]': 'w-full'}> */}
-        <div className="w-full">
+        {/* <div className="w-full">
           <Tabs type='market' tab1='점포 목록' tab2='리뷰' onTabClick={null}/>
-        </div>
+        </div> */}
       </div>
       <div className="flex flex-col w-full h-[350px] overflow-auto">
         {storeList.map(store => <MarketStoreCard store={store}/>)}
