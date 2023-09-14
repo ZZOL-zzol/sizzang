@@ -1,8 +1,11 @@
 package com.zzol.sizzang.market.service;
 
+import com.zzol.sizzang.common.exception.Template.StoreNotFoundException;
 import com.zzol.sizzang.market.dto.request.MarketGetReq;
 import com.zzol.sizzang.market.entity.MarketEntity;
 import com.zzol.sizzang.market.repository.MarketRepository;
+import com.zzol.sizzang.store.dto.response.StoreSelectRes;
+import com.zzol.sizzang.store.entity.StoreEntity;
 import com.zzol.sizzang.store.repository.StoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -11,43 +11,29 @@ import { API_URL } from "../lib/constants";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const reviewList = [
-  {
-    reCode: 1,
-    userName: "차차아버님",
-    reContent: "배가 터질거같아요 책임지세요 윽",
-    reDate: "2023.09.10",
-    reImg: "../chacha2.jpg",
-    reScore: 9,
-  },
-  {
-    reCode: 1,
-    userName: "차차아버님",
-    reContent: "배가 터질거같아요 책임지세요 윽",
-    reDate: "2023.09.10",
-    reImg: "../chacha2.jpg",
-    reScore: 8,
-  },
-];
-
-const MarketExample = {
-  mkCode: 1,
-  regionCode: 1,
-  mkName: "중앙시장",
-  mkAddress: "관악구 봉천동 466",
-  mkArea: "자치구... 관악구?",
-  mkImg: "../chacha2.jpg",
-  mkToilet: "1",
-  mkParking: "1",
-  mkPhone: "010-6664-9510",
-  mkLatitude: "",
-  mklongtitude: "",
-};
-
+// const reviewList = [
+//   {
+//     reCode: 1,
+//     userName: "차차아버님",
+//     reContent: "배가 터질거같아요 책임지세요 윽",
+//     reDate: "2023.09.10",
+//     reImg: "../chacha2.jpg",
+//     reScore: 9,
+//   },
+//   {
+//     reCode: 1,
+//     userName: "차차아버님",
+//     reContent: "배가 터질거같아요 책임지세요 윽",
+//     reDate: "2023.09.10",
+//     reImg: "../chacha2.jpg",
+//     reScore: 8,
+//   },
+// ];
 
 const StoreDetailPage = () => {
   const [store, setStore] = useState({});
   const [productList, setProductList] = useState([]);
+  const [reviewList, setReviewList] = useState([]);
   const location = useLocation();
   const navigate = useNavigate();
   const stCode = location.pathname.split("/")[2];
@@ -62,10 +48,22 @@ const StoreDetailPage = () => {
       .catch((err) => console.log(err));
 
     axios
-      //.get(`${API_URL}/store/${stCode}`)
-      .get(`http://localhost:8080/product/1`)
+      .get(`${API_URL}/product/${stCode}`)
       .then((res) => {
         setProductList(res.data.data);
+      })
+      .catch((err) => console.log(err));
+
+      axios
+      .post(
+        `${API_URL}/review/get/store`,
+        JSON.stringify({stCode : stCode,}),
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      )
+      .then((res) => {
+        setReviewList(res.data.data);
       })
       .catch((err) => console.log(err));
 
@@ -77,7 +75,7 @@ const StoreDetailPage = () => {
       <Header title="점포 상세" backButton basketButton />
       <div className="relative w-full overflow-auto items-center">
         <div className="absolute top-[200px] w-full">
-          <DetailInfoCard store={store} />
+          <DetailInfoCard store={store} storeReCnt={reviewList.length}/>
         </div>
         <div className="w-full h-[260px]">
           <img
@@ -101,13 +99,13 @@ const StoreDetailPage = () => {
       {currentTab === 0 ? (
         <div className="flex flex-col w-full h-[350px] overflow-auto">
           {productList.map((product) => (
-            <ProductCard product={product} store={store} />
+            <ProductCard key={product.pdCode} product={product} store={store} />
           ))}
         </div>
       ) : (
         <div className="flex flex-col w-full h-[350px] overflow-auto gap-2 bg-background-fill">
           {reviewList.map((review) => (
-            <ReviewCard review={review} />
+            <ReviewCard key={review.reCode} review={review} />
           ))}
         </div>
       )}
