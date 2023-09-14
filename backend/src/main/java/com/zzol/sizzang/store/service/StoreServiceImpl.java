@@ -81,6 +81,7 @@ public class StoreServiceImpl implements StoreService{
         String stLatitude = registInfo.getStLatitude();
         String stLongtitude = registInfo.getStLongtitude();
         int mkCode = registInfo.getMkCode();
+        String stAddress = registInfo.getStAddress();
 
         StCategoryEntity stCategoryEntity = stCategoryRepository.findById(scCode)
                 .orElseThrow(NullPointerException::new);
@@ -105,6 +106,7 @@ public class StoreServiceImpl implements StoreService{
                 .stTime(stTime)
                 .stLatitude(stLatitude)
                 .stLongtitude(stLongtitude)
+                .stAddress(stAddress)
                 .build();
 
         storeRepository.save(storeEntity);
@@ -132,6 +134,7 @@ public class StoreServiceImpl implements StoreService{
                         .stName(m.getStName())
                         .stLatitude(m.getStLatitude())
                         .stLongtitude(m.getStLongtitude())
+                        .stAddress(m.getStAddress())
                         .build()
                 ).collect(Collectors.toList());
 
@@ -216,6 +219,7 @@ public class StoreServiceImpl implements StoreService{
                 .stScore(storeEntity.getStScore())
                 .stLatitude(storeEntity.getStLatitude())
                 .stLongtitude(storeEntity.getStLongtitude())
+                .stAddress(storeEntity.getStAddress())
                 .build();
 
         // 게시글 상세 정보 조회 결과
@@ -256,8 +260,7 @@ public class StoreServiceImpl implements StoreService{
 
         List<StoreFindRes> res = storeRepository.findByMarketEntity_MkCode(mkCode)
                 .stream().map(m -> StoreFindRes.builder()
-//                        .mkCode(m.getMarketEntity().getMkCode())
-//                                .mkCode(mkCode)
+//                                .mkCode(m.getMarketEntity().getMkCode())
                                 .stIntro(m.getStIntro())
                                 .reCnt(reviewRepository.findByStCode(m.getStCode()).size())
                                 .reScore((reviewRepository.findByStCode(m.getStCode()).size()==0)?0:reviewRepository.getReviewScore(m.getStCode()))
@@ -266,6 +269,7 @@ public class StoreServiceImpl implements StoreService{
                                 .stName(m.getStName())
                                 .stLatitude(m.getStLatitude())
                                 .stLongtitude(m.getStLongtitude())
+                                .stAddress(m.getStAddress())
                                 .build()
                 ).collect(Collectors.toList());
 
