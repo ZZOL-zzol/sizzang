@@ -8,23 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../../lib/constants";
 import axios from "axios";
 
-// const accountList = [
-//   {
-//     accountCode: 1,
-//     accountHolder: "차차아버님",
-//     accountNumber: "123-456-789",
-//     accountName: "차차야그만방해해계좌",
-//     accountBalance: 200000,
-//   },
-//   {
-//     accountCode: 1,
-//     accountHolder: "차차아버님",
-//     accountNumber: "123-456-789",
-//     accountName: "차차야그만방해해계좌",
-//     accountBalance: 200000,
-//   },
-// ];
-
 const ConsumerMyPage = (props) => {
   const navigate = useNavigate();
   const [openProfileEdit, setOpenProfileEdit] = useState(false);

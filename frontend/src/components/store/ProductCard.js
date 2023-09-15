@@ -1,71 +1,93 @@
 import MarketStoreCard from "../common/MarketStoreCard";
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import { useDispatch } from "react-redux";
+import { setBasketCount } from "../../store";
 import { useLocation } from "react-router-dom";
 import SmallButton from "../common/SmallButton";
 
 const ProductCard = (props) => {
   const location = useLocation();
   const currentPage = location.pathname.split("/")[1];
+  const basketCount = useSelector((state) => state.basketCount.value);
+  const dispatch = useDispatch();
 
+  // console.log(props.product)
   const addBasket = () => {
-    window.localStorage.setItem(
-      "basket",
-      JSON.stringify({
+    if (!window.localStorage.getItem("BasketProductList")) {
+      console.log("비어있음");
+      const basketStore = {
         stCode: props.store.stCode,
         stName: props.store.stName,
         stAddress: props.store.stAddress,
         stPhone: props.store.stPhone,
-        productList: [
-          {
-            pdCode: props.product.pdCode,
-            pcCode: props.product.pcCode,
-            pdName: props.product.pdName,
-            pdCost: props.product.pdCost,
-            pdIntro: props.product.pdIntro,
-            count: 1,
-          },
-        ],
+      };
+      const basketProduct = {
+        pdCode: props.product.pdCode,
+        pcCode: props.product.pcCode,
+        pdName: props.product.pdName,
+        pdCost: props.product.pdCost,
+        pdIntro: props.product.pdIntro,
+        count: 1,
+      };
+      dispatch(setBasketCount(1));
+      window.localStorage.setItem("BasketStore", JSON.stringify(basketStore));
+      window.localStorage.setItem(
+        "BasketProductList",
+        JSON.stringify([basketProduct])
+      );
+    } else {
+      dispatch(setBasketCount(basketCount + 1));
+      let tmpBasketProductList = JSON.parse(window.localStorage.getItem('BasketProductList'))
+      tmpBasketProductList.splice(tmpBasketProductList.length,1, {
+        pdCode: props.product.pdCode,
+        pcCode: props.product.pcCode,
+        pdName: props.product.pdName,
+        pdCost: props.product.pdCost,
+        pdIntro: props.product.pdIntro,
+        count: 1,
       })
-    );
+
+      window.localStorage.setItem(
+        "BasketProductList",
+        JSON.stringify(tmpBasketProductList)
+      );
+    }
   };
 
   const setProductCount = (pdCode, type) => {
-    // const basket = JSON.parse(window.localStorage.getItem("basket"));
-    // let basket = props.basket;
+    let basketProductList = JSON.parse(JSON.stringify(props.basketProductList));
     if (type === "plus") {
-      // props.basket.productList.map((product, index) =>
-      //   product.pdCode === pdCode
-      //     ? props.setBasket((prev) => ({
-      //         ...prev,
-      //         productList: prev.productList[index].count++,
-      //       }))
-      //     : null
-      // );
+      basketProductList.map((product, index) =>
+        product.pdCode === pdCode ? (product.count += 1) : null
+      );
     } else {
-      props.basket.productList.map((product, index) =>
+      basketProductList.map((product, index) =>
         product.pdCode === pdCode && product.count === 1
-          ? props.basket.productList.splice(index, 1)
+          ? basketProductList.splice(index, 1)
           : product.pdCode === pdCode && product.count > 1
           ? (product.count -= 1)
           : null
       );
     }
-    console.log(props.basket);
-    // props.setBasket(basket);
-    // if (type === "plus") {
-    //   basket.productList.map((product) =>
-    //     product.pdCode === pdCode ? (product.count += 1) : null
-    //   );
-    // } else {
-    //   basket.productList.map((product, index) =>
-    //     product.pdCode === pdCode && product.count === 1
-    //       ? basket.productList.splice(index, 1)
-    //       : product.pdCode === pdCode && product.count > 1
-    //       ? (product.count -= 1)
-    //       : null
-    //   );
-    // }
-    // window.localStorage.setItem("basket", JSON.stringify(basket));
+    props.setBasketProductList(basketProductList);
+    if (props.basketProductList.length === 0) {
+      props.setBasketStore({});
+      window.localStorage.setItem("BasketStore", "{}");
+    }
+    window.localStorage.setItem(
+      "BasketProductList",
+      JSON.stringify(basketProductList)
+    );
+
+    props.setBasketTotalCost(0);
+    for (let i = 0; i < basketProductList.length; i++) {
+      props.setBasketTotalCost(
+        (prev) =>
+          prev + basketProductList[i].pdCost * basketProductList[i].count
+      );
+    }
   };
+
   return (
     <div className="card-body p-3 justify-between border-b-2 bg-white border-outline-container">
       <div className="gap-0 flex justify-between">
@@ -101,7 +123,8 @@ const ProductCard = (props) => {
 
       <div className="flex justify-end items-center">
         <div className="mr-2">
-          {Number(props.product.pdCost).toLocaleString()}원
+          {props.product.count? Number(props.product.pdCost * props.product.count).toLocaleString(): props.product.pdCost}
+          원
         </div>
         {props.type === "basket" ? null : (
           <div
