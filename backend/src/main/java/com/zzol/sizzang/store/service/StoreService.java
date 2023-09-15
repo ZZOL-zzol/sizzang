@@ -3,6 +3,7 @@ package com.zzol.sizzang.store.service;
 import com.zzol.sizzang.store.dto.request.FindByConditionGetReq;
 import com.zzol.sizzang.store.dto.request.StoreModifyPutReq;
 import com.zzol.sizzang.store.dto.request.StoreRegistInsertReq;
+import com.zzol.sizzang.store.dto.response.StoreFindByUserRes;
 import com.zzol.sizzang.store.dto.response.StoreFindRes;
 import com.zzol.sizzang.store.dto.response.StoreSelectRes;
 import com.zzol.sizzang.store.entity.StoreEntity;
@@ -27,4 +28,6 @@ public interface StoreService {
     double getStoreScore(long stCode);
 
     List<StoreFindRes> selectAllStoreByMarket(int mkCode);
+
+    List<StoreFindByUserRes> findByStoreByUser(Long userCode);
 }

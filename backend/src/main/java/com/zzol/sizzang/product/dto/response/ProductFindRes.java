@@ -8,11 +8,10 @@ import lombok.Data;
 public class ProductFindRes {
 
     Long pdCode;
-    int tagCode;
-    Long stCode;
+    String tagName;
+    String stName;
     String pdName;
     int pdCost;
     String pdIntro;
     int tagCost;
-//    String pdImg;
 }

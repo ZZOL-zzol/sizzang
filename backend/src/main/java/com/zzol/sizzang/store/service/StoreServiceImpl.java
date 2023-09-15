@@ -9,6 +9,7 @@ import com.zzol.sizzang.s3.service.S3Service;
 import com.zzol.sizzang.store.dto.request.FindByConditionGetReq;
 import com.zzol.sizzang.store.dto.request.StoreModifyPutReq;
 import com.zzol.sizzang.store.dto.request.StoreRegistInsertReq;
+import com.zzol.sizzang.store.dto.response.StoreFindByUserRes;
 import com.zzol.sizzang.store.dto.response.StoreFindRes;
 import com.zzol.sizzang.store.dto.response.StoreSelectRes;
 import com.zzol.sizzang.store.entity.StCategoryEntity;
@@ -80,6 +81,7 @@ public class StoreServiceImpl implements StoreService{
         String stLatitude = registInfo.getStLatitude();
         String stLongtitude = registInfo.getStLongtitude();
         int mkCode = registInfo.getMkCode();
+        String stAddress = registInfo.getStAddress();
 
         StCategoryEntity stCategoryEntity = stCategoryRepository.findById(scCode)
                 .orElseThrow(NullPointerException::new);
@@ -104,6 +106,7 @@ public class StoreServiceImpl implements StoreService{
                 .stTime(stTime)
                 .stLatitude(stLatitude)
                 .stLongtitude(stLongtitude)
+                .stAddress(stAddress)
                 .build();
 
         storeRepository.save(storeEntity);
@@ -131,6 +134,8 @@ public class StoreServiceImpl implements StoreService{
                         .stName(m.getStName())
                         .stLatitude(m.getStLatitude())
                         .stLongtitude(m.getStLongtitude())
+                        .stAddress(m.getStAddress())
+                        .scName(stCategoryRepository.findByScCode(m.getStCategoryEntity().getScCode()).get().getScName())
                         .build()
                 ).collect(Collectors.toList());
 
@@ -203,8 +208,7 @@ public class StoreServiceImpl implements StoreService{
         StoreSelectRes storeSelectRes = StoreSelectRes.builder()
                 .stCode(stCode)
                 //TODO : user 연동
-//                .userId(article.getUser().getId())
-//                .author(article.getUser().getNickname())
+                .stOwner(storeEntity.getUser().getUserName())
                 .stName(storeEntity.getStName())
                 .stPhone(storeEntity.getStPhone())
                 .stImg(storeEntity.getStImg())
@@ -212,8 +216,11 @@ public class StoreServiceImpl implements StoreService{
                 .stAccountHolder(storeEntity.getStAccountHolder())
                 .stIntro(storeEntity.getStIntro())
                 .stTime(storeEntity.getStTime())
+                .stScore(storeEntity.getStScore())
                 .stLatitude(storeEntity.getStLatitude())
                 .stLongtitude(storeEntity.getStLongtitude())
+                .stAddress(storeEntity.getStAddress())
+                .scName(stCategoryRepository.findByScCode(storeEntity.getStCategoryEntity().getScCode()).get().getScName())
                 .build();
 
         // 게시글 상세 정보 조회 결과
@@ -254,9 +261,8 @@ public class StoreServiceImpl implements StoreService{
 
         List<StoreFindRes> res = storeRepository.findByMarketEntity_MkCode(mkCode)
                 .stream().map(m -> StoreFindRes.builder()
-//                        .mkCode(m.getMarketEntity().getMkCode())
-//                                .mkCode(mkCode)
-//                                .stIntro(m.getStIntro())
+//                                .mkCode(m.getMarketEntity().getMkCode())
+                                .stIntro(m.getStIntro())
                                 .reCnt(reviewRepository.findByStCode(m.getStCode()).size())
                                 .reScore((reviewRepository.findByStCode(m.getStCode()).size()==0)?0:reviewRepository.getReviewScore(m.getStCode()))
                                 .stCode(m.getStCode())
@@ -264,6 +270,8 @@ public class StoreServiceImpl implements StoreService{
                                 .stName(m.getStName())
                                 .stLatitude(m.getStLatitude())
                                 .stLongtitude(m.getStLongtitude())
+                                .stAddress(m.getStAddress())
+                                .scName(stCategoryRepository.findByScCode(m.getStCategoryEntity().getScCode()).get().getScName())
                                 .build()
                 ).collect(Collectors.toList());
 
@@ -271,5 +279,33 @@ public class StoreServiceImpl implements StoreService{
         return res;
     }
 
+    /**
+     *  유저별 점포 조회 API에 대한 서비스
+     */
+    @Override
+    public List<StoreFindByUserRes> findByStoreByUser(Long userCode) {
+        log.info("StoreService_findByStoreByUser_start: ");
+        List<StoreEntity> r = storeRepository.findByUser_UserCode(userCode);
+        System.out.println(r.size());
+        for(StoreEntity p : r){
+            System.out.println(p.getStName());
+        }
+
+        List<StoreFindByUserRes> res = storeRepository.findByUser_UserCode(userCode)
+                .stream().map(m -> StoreFindByUserRes.builder()
+                        .stName(m.getStName())
+                        .mkName(m.getMarketEntity().getMkName())
+                        .mkAddress(m.getMarketEntity().getMkAddress())
+                        .stAddress(m.getStAddress())
+                        .scName(stCategoryRepository.findByScCode(m.getStCategoryEntity().getScCode()).get().getScName())
+                        .stPhone(m.getStPhone())
+                        .stTime(m.getStTime())
+                        .stIntro(m.getStIntro())
+                        .build()
+                ).collect(Collectors.toList());
+
+        log.info("StoreService_findByStoreByUser_end: success");
+        return res;
+    }
 
 }

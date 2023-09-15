@@ -8,8 +8,8 @@ import lombok.Data;
 public class StoreSelectRes {
 //    시장코드 넣어야함
 //    Long mkCode;
-    private int scCode;
-
+    private String stOwner;
+    private String scName;
     private Long stCode;
     private String stName;
     private String stPhone;
@@ -20,4 +20,6 @@ public class StoreSelectRes {
     private String stTime;
     private String stLatitude;
     private String stLongtitude;
+    private double stScore;
+    private String stAddress;
 }

@@ -116,4 +116,23 @@ public class ProductController {
         }
     }
 
+
+    /**
+     * tag별 물품 List 조회
+     *
+     * @return
+     */
+    @Operation(description = "태그별 물품 조회 메서드입니다.")
+    @GetMapping("/prtag/{tagCode}")
+    public CommonResponse<List<ProductFindRes>> findAll(@PathVariable int tagCode) {
+        log.info("ProductController_findAll_start: ");
+
+        Optional<List<ProductFindRes>> findRes = Optional.ofNullable(
+                productService.findProductByTag(tagCode));
+
+        log.info("ProductController_findAll_end: " + findRes);
+        return CommonResponse.success(findRes.orElseThrow(TemplateNoResultException::new));
+    }
+
+
 }

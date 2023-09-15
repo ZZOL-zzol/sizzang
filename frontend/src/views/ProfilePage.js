@@ -7,12 +7,15 @@ import SellerMyPage from "../components/mypage/seller/SellerMyPage";
 
 
 
-const ProfilePage = ({ userType }) => {
+const ProfilePage = () => {
+  const user = JSON.parse(window.localStorage.getItem('User'))
+  console.log(user)
+
   return (
     <div className="w-full bg-background-fill">
       <Header title='마이페이지'/>
-      <div className="w-full">
-      {userType === "seller" ? <SellerMyPage /> : <ConsumerMyPage />}
+      <div className="w-full h-full">
+      {user.role === "SELLER" ? <SellerMyPage user={user}/> : <ConsumerMyPage user={user}/>}
       </div>
       <Navbar/>
     </div>

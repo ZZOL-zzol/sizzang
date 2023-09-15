@@ -17,4 +17,6 @@ public interface ProductService {
     boolean modifyProduct(ProductModifyPutReq modifyInfo);
 
     BaIResult deleteProduct(Long stCode);
+
+    List<ProductFindRes> findProductByTag (int tagCode);
 }

@@ -21,4 +21,6 @@ public interface StoreRepository extends JpaRepository<StoreEntity, Long>, QStor
             "WHERE st.marketEntity.mkCode = :mkCode")
     double getReviewScore(@Param("mkCode") int mkCode);
 
+    List<StoreEntity> findByUser_UserCode(Long userCode);
+
 }
