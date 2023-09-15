@@ -50,7 +50,6 @@ const MarketDetailPage = () => {
       )
       .then((res) => {
         setReviewList(res.data.data);
-        console.log(res.data.data);
       })
       .catch((err) => console.log(err));
 
@@ -59,7 +58,7 @@ const MarketDetailPage = () => {
 
   return (
     <div className="flex flex-col w-full h-full bg-white outline outline-1">
-      <Header title='시장 상세' backButton/>
+      <Header title='시장 상세' backButton route="/place"/>
       <div className="relative w-full overflow-auto items-center">
         <div className="absolute top-[200px] w-full">
           <DetailInfoCard market={marketInfo} marketReCnt={reviewList.length} />
@@ -86,11 +85,11 @@ const MarketDetailPage = () => {
       </div>
 
       {currentTab === 0 ? (
-      <div className="flex flex-col w-full h-[350px] overflow-auto">
+      <div className="flex flex-col w-full h-full overflow-auto">
         {storeList.map(store => <MarketStoreCard key={store.stCode} store={store}/>)}
       </div>
       ) : (
-        <div className="flex flex-col w-full h-[350px] overflow-auto gap-2 bg-background-fill">
+        <div className="flex flex-col w-full h-full overflow-auto gap-2 bg-background-fill">
           {reviewList.map((review) => (
             <ReviewCard key={review.reCode} review={review} />
           ))} 
