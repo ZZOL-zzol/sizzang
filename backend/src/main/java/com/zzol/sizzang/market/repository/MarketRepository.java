@@ -22,7 +22,7 @@ public interface MarketRepository extends JpaRepository<MarketEntity, Integer> {
 //                    "ELSE 1 END DESC LIMIT ?2 OFFSET ?3", nativeQuery = true)
 
     @Query(value = "SELECT * " +
-                    "FROM market WHERE mk_name LIKE '%'|| ?1 || '%' " +
+                    "FROM market WHERE (mk_name LIKE %?1%) OR (mk_address LIKE %?1%)"+
                     "ORDER BY (CASE WHEN mk_name LIKE %?1% THEN 2 " +
                     "ELSE 1 END) " +
                     "DESC LIMIT ?2 OFFSET ?3", nativeQuery = true)

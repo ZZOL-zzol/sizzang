@@ -1,28 +1,44 @@
 import Header from "../components/common/Header";
 import Navbar from "../components/common/Navbar";
 import Carousel from "../components/stamp/Carousel";
-
-const stampCardList = [{}, {}, {}, {}];
+import { API_URL } from "../lib/constants";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const StampPage = () => {
+  const user = JSON.parse(window.localStorage.getItem("User"));
+  const [stampCardList, setStampCardList] = useState([]);
+  
+  useEffect(() => {
+    axios
+        .post(
+          `${API_URL}/stamp/getAll`,
+          JSON.stringify({userCode : user.userCode,}),
+          {
+            headers: { "Content-Type": "application/json" },
+          }
+        )
+        .then((res) => {
+          setStampCardList(res.data.data);
+        })
+        .catch((err) => console.log(err));
+
+  }, []);
+
+
+
   return (
     <div className="w-full bg-background-fill">
       <Header title="내 스탬프" backButton route="/profile" />
       <div className="flex flex-col h-full pb-[60px] overflow-auto bg-background-fill">
         <div>
-          <div className="text-xl font-bold">서울시</div>
-          <div className="text-base text-outline">1/10</div>
-          <Carousel stampCardList={stampCardList} />
+          <Carousel region={"서울특별시"} stampCardList={stampCardList} />
         </div>
         <div>
-          <div className="text-xl font-bold">부산시</div>
-          <div className="text-base text-outline">1/10</div>
-          <Carousel stampCardList={stampCardList} />
+          <Carousel region={"부산광역시"} stampCardList={stampCardList} />
         </div>
         <div>
-          <div className="text-xl font-bold">경기도</div>
-          <div className="text-base text-outline">1/10</div>
-          <Carousel stampCardList={stampCardList} />
+          <Carousel region={"강원특별자치도"} stampCardList={stampCardList} />
         </div>
       </div>
       <Navbar />
