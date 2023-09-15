@@ -3,17 +3,23 @@ import { API_URL } from "../../../lib/constants";
 
 const AccountCard = (props) => {
   const user = JSON.parse(window.localStorage.getItem("User"));
-  // console.log(props.account.accountNumber)
+  const account = props.account.accountList[0];
+  console.log(account.accountList);
 
   const onRegistButtonClick = () => {
-    axios.post(
-      `${API_URL}/bank/v1/auth/saveaccount`,
-      JSON.stringify({
-        accountNumber: props.account.accountNumber,
-        userId: user.userId,
-      }), {headers:{"Content-Type": "application/json"}})
-      .then(res => console.log(res))
-      .catch(err => console.log(err))
+    console.log(user.userId);
+    console.log(account.accountNumber);
+    axios
+      .post(
+        `${API_URL}/bank/v1/auth/saveaccount`,
+        JSON.stringify({
+          accountNumber: account.accountNumber,
+          userId: user.userId,
+        }),
+        { headers: { "Content-Type": "application/json" } }
+      )
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -21,7 +27,7 @@ const AccountCard = (props) => {
       className="card shadow-none bg-background-fill flex-row p-5 w-full gap-3"
       onClick={
         props.type === "history"
-          ? ()=>props.onClickEvent(props.account.accountNumber)
+          ? () => props.onClickEvent(account.accountNumber)
           : props.type === "pay"
           ? () => props.setShowAccount(false)
           : null
@@ -32,14 +38,12 @@ const AccountCard = (props) => {
       </figure>
       <div className="card-body flex-row items-center text-center p-0 justify-between">
         <div className="flex flex-col items-start">
-          <div className="text-base font-bold">{props.account.accountName}</div>
-          <div className="text-sm text-outline">
-            {props.account.accountNumber}
-          </div>
+          <div className="text-base font-bold">{account.accountName}</div>
+          <div className="text-sm text-outline">{account.accountNumber}</div>
         </div>
         <div className="card-actions items-center gap-2">
           <div className="text-lg font-bold">
-            {props.account.accountBalance.toLocaleString()}원
+            {Number(account.accountBalance).toLocaleString()}원
           </div>
           {props.type === "addAccount" ? (
             <button onClick={onRegistButtonClick}>

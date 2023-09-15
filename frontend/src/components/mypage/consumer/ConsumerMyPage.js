@@ -1,31 +1,29 @@
 import React, { useEffect, useState } from "react";
-import PageTitle from "../../../components/common/PageTitle";
 import ProfileSection from "../../../components/mypage/ProfileSection";
 import AccountCard from "../../../components/mypage/account/AccountCard";
 import ProfileEditCard from "../../../components/mypage/ProfileEditCard";
-import ConsumptionDetail from "./ConsumptionDetail";
 import Button from "../../common/Button";
 import AccountListCard from "../account/AccountListCard";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../../../lib/constants";
 import axios from "axios";
 
-const accountList = [
-  {
-    accountCode: 1,
-    accountHolder: "차차아버님",
-    accountNumber: "123-456-789",
-    accountName: "차차야그만방해해계좌",
-    accountBalance: 200000,
-  },
-  {
-    accountCode: 1,
-    accountHolder: "차차아버님",
-    accountNumber: "123-456-789",
-    accountName: "차차야그만방해해계좌",
-    accountBalance: 200000,
-  },
-];
+// const accountList = [
+//   {
+//     accountCode: 1,
+//     accountHolder: "차차아버님",
+//     accountNumber: "123-456-789",
+//     accountName: "차차야그만방해해계좌",
+//     accountBalance: 200000,
+//   },
+//   {
+//     accountCode: 1,
+//     accountHolder: "차차아버님",
+//     accountNumber: "123-456-789",
+//     accountName: "차차야그만방해해계좌",
+//     accountBalance: 200000,
+//   },
+// ];
 
 const ConsumerMyPage = (props) => {
   const navigate = useNavigate();
@@ -40,14 +38,26 @@ const ConsumerMyPage = (props) => {
   };
 
   useEffect(() => {
-    console.log(user.userId)
-    axios.post(
-      `${API_URL}/bank/v1/search/registedAccounts`,
-      JSON.stringify({ userId: user.userId }),
-      { headers: { "Content-Type": "application/json" } }
-    )
-    .then(res=>console.log(res) )
-    .catch(err=>console.log(err));
+    axios
+      .post(
+        `${API_URL}/bank/v1/search/registedAccounts`,
+        JSON.stringify({ userId: user.userId }),
+        { headers: { "Content-Type": "application/json" } }
+      )
+      .then((res) => setAccountList(res.data))
+      .catch((err) => console.log(err));
+
+    axios
+      .post(
+        `${API_URL}/bank/v1/search/registedAccounts`,
+        JSON.stringify({ userId: user.userId }),
+        { headers: { "Content-Type": "application/json" } }
+      )
+      .then((res) => {
+        console.log(res);
+        // setAccountList(res.data[0].accountList);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   return (

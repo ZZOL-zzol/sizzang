@@ -16,7 +16,7 @@ const ProductEditCard = (props) => {
 
   return (
     <div>
-      <div className="flex flex-col items-center gap-3 px-5">
+      <div className="flex flex-col items-center gap-3">
         <div className="flex w-full justify-between">
           <button
             className="btn btn-ghost normal-case text-xl font-environmentR"
@@ -36,11 +36,14 @@ const ProductEditCard = (props) => {
           <EditProductCard product={product} />
         ))}
         {openAddForm ? (
-          <ProductAddForm setOpenAddForm={setOpenAddForm}/>
+          <ProductAddForm
+            setOpenAddForm={setOpenAddForm}
+            setProductList={setProductList}
+          />
         ) : (
           <div
             className="w-full h-[60px] bg-myprimary rounded-lg flex items-center justify-center"
-            onClick={()=>setOpenAddForm(true)}
+            onClick={() => setOpenAddForm(true)}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

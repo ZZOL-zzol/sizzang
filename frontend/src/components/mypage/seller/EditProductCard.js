@@ -5,13 +5,15 @@ const EditProductCard = (props) => {
       <div className="flex justify-between items-center">
         <div className="flex flex-col items-start">
           <div className="flex gap-2 items-end">
-            <div>{props.product.pdName}</div>
+            <div className="">{props.product.pdName}</div>
             <div className="text-outline text-sm">{props.product.tagName}</div>
           </div>
-          <div>{props.product.pdCost}원</div>
+          <div>{Number(props.product.pdCost).toLocaleString()}원</div>
         </div>
         <div className="flex gap-5">
-          <div className="text-outline">{props.product.pdIntro}</div>
+          <div className="text-outline text-right text-sm w-[100px]">
+            {props.product.pdIntro}
+          </div>
           <button>
             <svg
               xmlns="http://www.w3.org/2000/svg"

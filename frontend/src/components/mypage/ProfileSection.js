@@ -67,13 +67,16 @@ const ConsumerInfo = (props) => {
 };
 
 const ProfileSection = (props) => {
-  console.log(props.store);
   return (
     <div className="w-full">
       <div className="flex items-center gap-3">
         <ProfileImage
-          imageUrl={props.store.stImg ? props.store.stImg : "./chacha2.jpg"}
-          altText="대체문구"
+          imageUrl={
+            props.store && props.store.stImg
+              ? props.store.stImg
+              : "./chacha2.jpg"
+          }
+          altText="profileImg"
         />
         {props.user.role === "CUSTOMER" ? (
           <ConsumerInfo
