@@ -7,40 +7,64 @@ const ProductCard = (props) => {
   const currentPage = location.pathname.split("/")[1];
 
   const addBasket = () => {
-    window.localStorage.setItem("basket", JSON.stringify({
-      stCode: props.store.stCode,
-      stName: props.store.stName,
-      stAddress: props.store.stAddress,
-      stPhone: props.store.stPhone,
-      productList: [
-        {
-          pdCode: props.product.pdCode,
-          pcCode: props.product.pcCode,
-          pdName: props.product.pdName,
-          pdCost: props.product.pdCost,
-          pdIntro: props.product.pdIntro,
-          count: 1,
-        },
-      ],
-    }));
+    window.localStorage.setItem(
+      "basket",
+      JSON.stringify({
+        stCode: props.store.stCode,
+        stName: props.store.stName,
+        stAddress: props.store.stAddress,
+        stPhone: props.store.stPhone,
+        productList: [
+          {
+            pdCode: props.product.pdCode,
+            pcCode: props.product.pcCode,
+            pdName: props.product.pdName,
+            pdCost: props.product.pdCost,
+            pdIntro: props.product.pdIntro,
+            count: 1,
+          },
+        ],
+      })
+    );
   };
 
   const setProductCount = (pdCode, type) => {
-    const basket = JSON.parse(window.localStorage.getItem("basket"));
-
+    // const basket = JSON.parse(window.localStorage.getItem("basket"));
+    // let basket = props.basket;
     if (type === "plus") {
-      basket.productList.map((product) =>
-        product.pdCode === pdCode ? (product.count += 1) : null
-      );
+      // props.basket.productList.map((product, index) =>
+      //   product.pdCode === pdCode
+      //     ? props.setBasket((prev) => ({
+      //         ...prev,
+      //         productList: prev.productList[index].count++,
+      //       }))
+      //     : null
+      // );
     } else {
-      basket.productList.map((product, index) =>
+      props.basket.productList.map((product, index) =>
         product.pdCode === pdCode && product.count === 1
-          ? basket.productList.splice(index, 1)
+          ? props.basket.productList.splice(index, 1)
           : product.pdCode === pdCode && product.count > 1
           ? (product.count -= 1)
           : null
       );
     }
+    console.log(props.basket);
+    // props.setBasket(basket);
+    // if (type === "plus") {
+    //   basket.productList.map((product) =>
+    //     product.pdCode === pdCode ? (product.count += 1) : null
+    //   );
+    // } else {
+    //   basket.productList.map((product, index) =>
+    //     product.pdCode === pdCode && product.count === 1
+    //       ? basket.productList.splice(index, 1)
+    //       : product.pdCode === pdCode && product.count > 1
+    //       ? (product.count -= 1)
+    //       : null
+    //   );
+    // }
+    // window.localStorage.setItem("basket", JSON.stringify(basket));
   };
   return (
     <div className="card-body p-3 justify-between border-b-2 bg-white border-outline-container">
@@ -52,7 +76,10 @@ const ProductCard = (props) => {
         {/* <span className="text-sm text-left">{props.product.pdCost}</span> */}
         {props.type === "basket" ? (
           <div className="flex">
-            <button className="btn btn-xs btn-circle bg-outline-container">
+            <button
+              className="btn btn-xs btn-circle bg-outline-container"
+              onClick={() => setProductCount(props.product.pdCode, "minus")}
+            >
               -
             </button>
             <div className="mx-1">{props.product.count}</div>
@@ -73,14 +100,24 @@ const ProductCard = (props) => {
       </div>
 
       <div className="flex justify-end items-center">
-        <div className="mr-2">{props.product.pdCost}원</div>
+        <div className="mr-2">
+          {Number(props.product.pdCost).toLocaleString()}원
+        </div>
         {props.type === "basket" ? null : (
-          <div className={`text-sm ${props.product.pdCost > props.product.tagCost ? "text-myerror" : "text-myprimary"}`}>
-            {props.product.pdCost > props.product.tagCost ? `▲${props.product.pdCost-props.product.tagCost}` : `▼${props.product.tagCost-props.product.pdCost}`} 
+          <div
+            className={`text-sm ${
+              props.product.pdCost > props.product.tagCost
+                ? "text-myerror"
+                : "text-myprimary"
+            }`}
+          >
+            {props.product.pdCost > props.product.tagCost
+              ? `▲${props.product.pdCost - props.product.tagCost}`
+              : `▼${props.product.tagCost - props.product.pdCost}`}
           </div>
         )}
-        </div>
       </div>
+    </div>
   );
 };
 
