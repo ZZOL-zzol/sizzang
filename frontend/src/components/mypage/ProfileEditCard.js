@@ -11,7 +11,7 @@ import EditInput from "./seller/EditInput";
 /* 유저 정보 */
 const ProfileEditCard = (props) => {
   const navigate = useNavigate();
-  let user = props.user
+  let store = props.store;
   const [nickname, setNickname] = useState(props.user.userNickname);
   const [imageList, setImageList] = useState([]);
   const [editMarket, setEditMarket] = useState(false);
@@ -55,26 +55,31 @@ const ProfileEditCard = (props) => {
   };
 
   const onSellerEditButtonClick = () => {
-
-    console.log(user)
-    console.log(imageList)
+    console.log(store);
+    console.log(imageList);
     const formData = new FormData();
     imageList.forEach((file) => formData.append("file", file.file));
     formData.append(
-      'registInfo',
-      new Blob([JSON.stringify({"scCode":1,
-      "mkCode":1,
-      "stName": user.stName,
-      "stPhone": user.stPhone,
-      "stImg": '',
-      "stAccount": user.stAccount,
-      "stIntro": user.stIntro,
-      "stTime": user.stTime,
-      "stLatitude": "37.4818538",
-      "stLongtitude": "126.952325",
-      "userCode":user.userCode,
-      "stAddress":user.stAddress
-      })], { type: 'application/json' })
+      "registInfo",
+      new Blob(
+        [
+          JSON.stringify({
+            scCode: 1,
+            mkCode: 1,
+            stName: store.stName,
+            stPhone: store.stPhone,
+            stImg: "",
+            stAccount: store.stAccount,
+            stIntro: store.stIntro,
+            stTime: store.stTime,
+            stLatitude: "37.4818538",
+            stLongtitude: "126.952325",
+            userCode: store.userCode,
+            stAddress: store.stAddress,
+          }),
+        ],
+        { type: "application/json" }
+      )
     );
     axios
       .post(`${API_URL}/store`, formData, {
@@ -89,8 +94,8 @@ const ProfileEditCard = (props) => {
   };
 
   const setUserValue = (e) => {
-    user[e.target.name] = e.target.value
-  }
+    store[e.target.name] = e.target.value;
+  };
 
   return (
     <div className="w-full">
@@ -172,55 +177,125 @@ const ProfileEditCard = (props) => {
           <div className="bg-background-fill rounded-lg w-full flex flex-col p-5 gap-5">
             <div className="flex justify-between">
               <div className="flex text-lg font-bold">시장 정보</div>
-              <button className="text-myprimary" onClick={() => setEditMarket(!editMarket)}>
+              <button
+                className="text-myprimary"
+                onClick={() => setEditMarket(!editMarket)}
+              >
                 수정
               </button>
             </div>
             <div className="flex flex-col gap-2">
               <div className="flex justify-between">
                 <div>시장명</div>
-                {editMarket? <EditInput user={user} data='mkName' onInputChange={setUserValue}/>: <div className="text-outline">{props.user.mkName}</div>}
+                {editMarket ? (
+                  <EditInput
+                    store={store}
+                    data="mkName"
+                    onInputChange={setUserValue}
+                  />
+                ) : (
+                  <div className="text-outline">{props.store.mkName}</div>
+                )}
               </div>
               <div className="flex justify-between">
                 <div>주소</div>
-                {editMarket? <EditInput user={user} data='mkAddress' onInputChange={setUserValue}/>:<div className="text-outline">{props.user.mkAddress}</div>}
+                {editMarket ? (
+                  <EditInput
+                    store={store}
+                    data="mkAddress"
+                    onInputChange={setUserValue}
+                  />
+                ) : (
+                  <div className="text-outline">{props.store.mkAddress}</div>
+                )}
               </div>
             </div>
           </div>
           <div className="bg-background-fill rounded-lg w-full flex flex-col p-5 gap-5">
             <div className="flex justify-between">
               <div className="flex text-lg font-bold">점포 정보</div>
-              <button className="text-myprimary" onClick={() => setEditStore(!editStore)}>
+              <button
+                className="text-myprimary"
+                onClick={() => setEditStore(!editStore)}
+              >
                 수정
               </button>
             </div>
             <div className="flex flex-col gap-2">
               <div className="flex justify-between">
                 <div>점포명</div>
-                {editStore? <EditInput user={user} data='stName' onInputChange={setUserValue}/>:<div className="text-outline">{props.user.stName}</div>}
+                {editStore ? (
+                  <EditInput
+                    store={store}
+                    data="stName"
+                    onInputChange={setUserValue}
+                  />
+                ) : (
+                  <div className="text-outline">{props.store.stName}</div>
+                )}
               </div>
               <div className="flex justify-between">
                 <div>주소</div>
-                {editStore? <EditInput user={user} data='stAddress' onInputChange={setUserValue}/>:<div className="text-outline">{props.user.stAddress}</div>}
+                {editStore ? (
+                  <EditInput
+                    store={store}
+                    data="stAddress"
+                    onInputChange={setUserValue}
+                  />
+                ) : (
+                  <div className="text-outline">{props.store.stAddress}</div>
+                )}
               </div>
               <div className="flex justify-between">
                 <div>카테고리</div>
-                {editStore? <EditInput user={user} data='stCategory' onInputChange={setUserValue}/>:<div className="text-outline">{props.user.stCategory}</div>}
+                {editStore ? (
+                  <EditInput
+                    store={store}
+                    data="scCode"
+                    onInputChange={setUserValue}
+                  />
+                ) : (
+                  <div className="text-outline">{props.store.scName}</div>
+                )}
               </div>
               <div className="flex justify-between">
                 <div>전화번호</div>
-                {editStore? <EditInput user={user} data='stPhone' onInputChange={setUserValue}/>:<div className="text-outline">{props.user.stPhone}</div>}
+                {editStore ? (
+                  <EditInput
+                    store={store}
+                    data="stPhone"
+                    onInputChange={setUserValue}
+                  />
+                ) : (
+                  <div className="text-outline">{props.store.stPhone}</div>
+                )}
               </div>
               <div className="flex justify-between">
                 <div>영업시간</div>
-                {editStore? <EditInput user={user} data='stTime' onInputChange={setUserValue}/>:<div className="text-outline">{props.user.stTime}</div>}
+                {editStore ? (
+                  <EditInput
+                    store={store}
+                    data="stTime"
+                    onInputChange={setUserValue}
+                  />
+                ) : (
+                  <div className="text-outline">{props.store.stTime}</div>
+                )}
               </div>
               <div className="flex justify-between">
                 <div>소개</div>
-                {editStore? <EditInput user={user} data='stIntro' onInputChange={setUserValue}/>:<div className="text-outline">{props.user.stIntro}</div>}
+                {editStore ? (
+                  <EditInput
+                    store={store}
+                    data="stIntro"
+                    onInputChange={setUserValue}
+                  />
+                ) : (
+                  <div className="text-outline">{props.store.stIntro}</div>
+                )}
               </div>
             </div>
-          </div>  
+          </div>
           <div className="w-full flex flex-col bg-white bottom-0 items-center justify-center px-5 gap-2">
             <button
               className="btn h-[40px] w-full bg-myprimary text-xl text-white"

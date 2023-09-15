@@ -10,7 +10,8 @@ import axios from "axios";
 import { API_URL } from "../../../lib/constants";
 
 const SellerMyPage = (props) => {
-  const user = JSON.parse(window.localStorage.getItem('User'))
+  const user = JSON.parse(window.localStorage.getItem("User"));
+  const [store, setStore] = useState({});
   const [openProfileEdit, setOpenProfileEdit] = useState(false);
   const [openAddAccount, setOpenAddAccount] = useState(false);
   const [openProductEdit, setOpenProductEdit] = useState(false);
@@ -18,9 +19,11 @@ const SellerMyPage = (props) => {
   const [openReviewEdit, setOpenReviewEdit] = useState(false);
 
   useEffect(() => {
-    axios.get(`${API_URL}/store/user/${user.userCode}`).then(res=>console.log(res))
-  }, [])
-  
+    axios
+      .get(`${API_URL}/store/user/${user.userCode}`)
+      .then((res) => setStore(res.data.data[0]))
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <div className="SellerMyPage w-full h-full bg-white">
@@ -28,13 +31,21 @@ const SellerMyPage = (props) => {
         <ProfileEditCard
           setOpenProfileEdit={setOpenProfileEdit}
           user={props.user}
+          store={store}
         />
       ) : openAddAccount ? (
         <AccountListCard setOpenAddAccount={setOpenAddAccount} />
-      ) : openProductEdit? (<ProductEditCard setOpenProductEdit={setOpenProductEdit}/>): openHistoryEdit? (<div></div>) : openReviewEdit? (<div></div>) : (
+      ) : openProductEdit ? (
+        <ProductEditCard setOpenProductEdit={setOpenProductEdit} />
+      ) : openHistoryEdit ? (
+        <div></div>
+      ) : openReviewEdit ? (
+        <div></div>
+      ) : (
         <div className="flex flex-col p-5 gap-5">
           <ProfileSection
             user={props.user}
+            store={store}
             setOpenProfileEdit={setOpenProfileEdit}
           />
           <AccountSection
@@ -45,9 +56,24 @@ const SellerMyPage = (props) => {
             setOpenAddAccount={setOpenAddAccount}
           />
           <div className="flex w-full justify-between">
-            <MenuSection imageUrl="../chacha2.jpg" menuName="상품관리" bgColor='bg-secondary-container' onClickEvent={()=>setOpenProductEdit(true)}/>
-            <MenuSection imageUrl="../chacha2.jpg" menuName="매출관리" bgColor='bg-error-container' onClickEvent={()=>setOpenHistoryEdit(true)}/>
-            <MenuSection imageUrl="../chacha2.jpg" menuName="리뷰관리" bgColor='bg-primary-container' onClickEvent={()=>setOpenReviewEdit(true)}/>
+            <MenuSection
+              imageUrl="../chacha2.jpg"
+              menuName="상품관리"
+              bgColor="bg-secondary-container"
+              onClickEvent={() => setOpenProductEdit(true)}
+            />
+            <MenuSection
+              imageUrl="../chacha2.jpg"
+              menuName="매출관리"
+              bgColor="bg-error-container"
+              onClickEvent={() => setOpenHistoryEdit(true)}
+            />
+            <MenuSection
+              imageUrl="../chacha2.jpg"
+              menuName="리뷰관리"
+              bgColor="bg-primary-container"
+              onClickEvent={() => setOpenReviewEdit(true)}
+            />
           </div>
         </div>
       )}

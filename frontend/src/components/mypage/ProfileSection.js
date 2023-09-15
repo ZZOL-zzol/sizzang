@@ -19,10 +19,14 @@ const ProfileImage = ({ imageUrl, altText }) => {
 const SellerInfo = (props) => {
   return (
     <div>
-      {props.stName ? (
+      {props.store.stName ? (
         <div>
-          <div className="text-left text-lg font-bold">{props.mkName}</div>
-          <div className="text-left text-xl font-bold">{props.stName}</div>
+          <div className="text-left text-lg font-bold">
+            {props.store.mkName}
+          </div>
+          <div className="text-left text-xl font-bold">
+            {props.store.stName}
+          </div>
           <div
             className="text-left text-sm text-outline"
             onClick={() => props.setOpenProfileEdit(true)}
@@ -63,11 +67,14 @@ const ConsumerInfo = (props) => {
 };
 
 const ProfileSection = (props) => {
-  console.log(props.user.role);
+  console.log(props.store);
   return (
     <div className="w-full">
       <div className="flex items-center gap-3">
-        <ProfileImage imageUrl="../chacha2.jpg" altText="대체문구" />
+        <ProfileImage
+          imageUrl={props.store.stImg ? props.store.stImg : "./chacha2.jpg"}
+          altText="대체문구"
+        />
         {props.user.role === "CUSTOMER" ? (
           <ConsumerInfo
             userName={props.user.userName}
@@ -75,8 +82,7 @@ const ProfileSection = (props) => {
           />
         ) : (
           <SellerInfo
-            marketName="뿡빵뿡시장"
-            userName={props.user.userNickname}
+            store={props.store}
             setOpenProfileEdit={props.setOpenProfileEdit}
           />
         )}
