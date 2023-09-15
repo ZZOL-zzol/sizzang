@@ -2,51 +2,9 @@ import ProductCard from "../components/store/ProductCard";
 import Header from "../components/common/Header";
 import { useEffect, useState } from "react";
 import AccountCard from "../components/basket/AccountCard";
-
-// const basket =
-//   {
-//     stName: "네네치킨",
-//     stAddress: "관악구 봉천로 466",
-//     stPhone: "010-6664-9510",
-//     productList: [
-//       {
-//         pdCode: 1,
-//         pcCode: 1,
-//         stCode: "",
-
-//         mkCode: "",
-//         scCode: "",
-//         pdName: "옛날통닭",
-//         pdCost: 50000,
-//         pdIntro: "파닭파닭",
-//         count: 1,
-//       },
-//       {
-//         pdCode: 1,
-//         pcCode: 1,
-//         stCode: "",
-
-//         mkCode: "",
-//         scCode: "",
-//         pdName: "옛날통닭",
-//         pdCost: 50000,
-//         pdIntro: "파닭파닭",
-//         count: 1,
-//       },
-//       {
-//         pdCode: 1,
-//         pcCode: 1,
-//         stCode: "",
-
-//         mkCode: "",
-//         scCode: "",
-//         pdName: "옛날통닭",
-//         pdCost: 50000,
-//         pdIntro: "파닭파닭",
-//         count: 1,
-//       },
-//     ],
-//   };
+import axios from "axios";
+import { API_URL } from "../lib/constants";
+import { useSelector } from "react-redux";
 
 const accountList = [
   {
@@ -59,37 +17,79 @@ const accountList = [
   {
     accountCode: 1,
     accountHolder: "차차아버님",
-    accountNumber: "123-456-789",
+    accountNumber: "123-456-321",
     accountName: "차차야그만방해해계좌",
     accountBalance: 200000,
   },
 ];
 
 const BasketPage = () => {
+  const [selectedAccountNumber, setSelectedAccountNumber] = useState("");
   const [showAccount, setShowAccount] = useState(false);
+  const [basketStore, setBasketStore] = useState({});
+  const [basketProductList, setBasketProductList] = useState([]);
+  const [basketTotalCost, setBasketTotalCost] = useState(0);
+  const basketCount = useSelector((state) => state.basketCount.value);
+  const user = JSON.parse(window.localStorage.getItem("User"));
+
+  useEffect(() => {
+    const tmpBasketStore = JSON.parse(
+      window.localStorage.getItem("BasketStore")
+    );
+    const tmpBasketProductList = JSON.parse(
+      window.localStorage.getItem("BasketProductList")
+    );
+    if (basketStore) setBasketStore(tmpBasketStore);
+    if (basketProductList) setBasketProductList(tmpBasketProductList);
+
+    for (let i = 0; i < tmpBasketProductList.length; i++) {
+      setBasketTotalCost(
+        (prev) =>
+          prev + tmpBasketProductList[i].pdCost * tmpBasketProductList[i].count
+      );
+    }
+  }, []);
+
+  const onAccountClick = (value) => {
+    console.log(value);
+    setSelectedAccountNumber(value);
+  };
+
   const onPayButtonClick = () => {
     if (!showAccount) {
       setShowAccount(true);
     } else {
-      //결제를 어떤식으로 할건지...
-      //여기에 들어가야한다요
-      //신한 이체 api 사용 예정
+      console.log(basketStore);
+
+      axios
+        .get(`${API_URL}/store/${basketStore.stCode}`)
+        .then((res) => {
+          const data = {
+            myAccountNumber: selectedAccountNumber,
+            myMsg:
+              basketProductList[0].pdName +
+              "x" +
+              basketProductList[0].count +
+              " 외 " +
+              (basketCount - basketProductList[0].count) +
+              "건", //내 계좌에 찍힐 메세지
+            oppenentBankCode: "088",
+            opponentAccountNumber: res.data.data.stAccount,
+            transactionMsg: user.userName,
+            depositAmount: basketTotalCost,
+          };
+
+          console.log(data);
+          axios
+            .post(`${API_URL}/bank/v1/transfer/krw`, JSON.stringify(data), {
+              headers: { "Content-Type": "application/json" },
+            })
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err));
+        })
+        .catch((err) => console.log(err));
     }
   };
-  const [basket, setBasket] = useState({});
-  const [basketTotalCost, setBasketTotalCost] = useState(0);
-
-  useEffect(() => {
-    const basket = JSON.parse(window.localStorage.getItem("basket"));
-    if (basket) setBasket(basket);
-
-    for (let i = 0; i < basket.productList.length; i++) {
-      setBasketTotalCost(
-        (prev) =>
-          prev + basket.productList[i].pdCost * basket.productList[i].count
-      );
-    }
-  }, []);
 
   return (
     <div className="w-full h-full bg-background-fill">
@@ -99,20 +99,23 @@ const BasketPage = () => {
         route="javascript:window.history.back()"
       />
       <div className="flex flex-col w-full">
-        {basket.productList ? (
+        {basketStore ? (
           <div className="w-full">
             <div className="w-full p-5 bg-white mb-3 flex flex-col items-start">
-              <div className="font-semibold">{basket.stName}</div>
-              <div className="text-sm">{basket.stAddress}</div>
-              <div className="text-sm">{basket.stPhone}</div>
+              <div className="font-semibold">{basketStore.stName}</div>
+              <div className="text-sm">{basketStore.stAddress}</div>
+              <div className="text-sm">{basketStore.stPhone}</div>
             </div>
 
-            {basket.productList.map((product, index) => (
+            {basketProductList.map((product, index) => (
               <ProductCard
-                product={product}
-                basket={basket}
                 type="basket"
-                setBasket={setBasket}
+                basketProductList={basketProductList}
+                product={product}
+                basketStore={basketStore}
+                setBasketProductList={setBasketProductList}
+                setBasketStore={setBasketStore}
+                setBasketTotalCost={setBasketTotalCost}
                 index={index}
               />
             ))}
@@ -130,19 +133,37 @@ const BasketPage = () => {
             장바구니가 비어있습니다.
           </div>
         )}
-        {basket.productList ? (
+        {basketProductList ? (
           <div className="flex flex-col items-end justify-center bg-white h-[50px] px-5 text-lg">
             {basketTotalCost.toLocaleString()}원
           </div>
         ) : null}
       </div>
 
-      <div className="fixed w-full flex flex-col bg-white bottom-0 items-center justify-center px-5 py-7 gap-2">
+      <div
+        className={
+          showAccount
+            ? "fixed w-full flex flex-col bg-white bottom-0 items-center justify-center px-5 py-5 gap-5 rounded-t-[20px]"
+            : "fixed w-full flex flex-col bg-white bottom-0 items-center justify-center px-5 py-5 gap-5"
+        }
+      >
+        {showAccount ? (
+          <div className="flex self-end" onClick={() => setShowAccount(false)}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="1.5em"
+              viewBox="0 0 384 512"
+            >
+              <path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" />
+            </svg>
+          </div>
+        ) : null}
         {showAccount
           ? accountList.map((account) => (
               <AccountCard
                 account={account}
-                setShowAccount={setShowAccount}
+                selectedAccountNumber={selectedAccountNumber}
+                onClickEvent={() => onAccountClick(account.accountNumber)}
                 type="pay"
               />
             ))
