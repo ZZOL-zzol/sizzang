@@ -3,7 +3,7 @@ import Header from "../components/common/Header";
 import { useEffect, useState } from "react";
 import AccountCard from "../components/basket/AccountCard";
 
-// const basketList = [
+// const basket =
 //   {
 //     stName: "네네치킨",
 //     stAddress: "관악구 봉천로 466",
@@ -46,8 +46,7 @@ import AccountCard from "../components/basket/AccountCard";
 //         count: 1,
 //       },
 //     ],
-//   },
-// ];
+//   };
 
 const accountList = [
   {
@@ -67,7 +66,6 @@ const accountList = [
 ];
 
 const BasketPage = () => {
-  const tmp = window.localStorage.getItem("basket");
   const [showAccount, setShowAccount] = useState(false);
   const onPayButtonClick = () => {
     if (!showAccount) {
@@ -78,36 +76,63 @@ const BasketPage = () => {
       //신한 이체 api 사용 예정
     }
   };
-  const [basketList, setBasketList] = useState({});
+  const [basket, setBasket] = useState({});
+  const [basketTotalCost, setBasketTotalCost] = useState(0);
+
   useEffect(() => {
-    const basket = window.localStorage.getItem("basket");
-    if (basket) setBasketList(basket);
+    const basket = JSON.parse(window.localStorage.getItem("basket"));
+    if (basket) setBasket(basket);
+
+    for (let i = 0; i < basket.productList.length; i++) {
+      setBasketTotalCost(
+        (prev) =>
+          prev + basket.productList[i].pdCost * basket.productList[i].count
+      );
+    }
   }, []);
 
   return (
     <div className="w-full h-full bg-background-fill">
-      <Header title="장바구니" backButton />
+      <Header
+        title="장바구니"
+        backButton
+        route="javascript:window.history.back()"
+      />
       <div className="flex flex-col w-full">
-        {basketList.productList ? (
-          basketList.productList.map((store) => (
-            <div className="w-full">
-              <div className="w-full p-5 bg-white mb-3 flex flex-col items-start">
-                <div className="font-semibold">{store.stName}</div>
-                <div className="text-sm">{store.stAddress}</div>
-                <div className="text-sm">{store.stPhone}</div>
-              </div>
-
-              {store.productList.map((product) => (
-                <ProductCard product={product} type="basket" />
-              ))}
+        {basket.productList ? (
+          <div className="w-full">
+            <div className="w-full p-5 bg-white mb-3 flex flex-col items-start">
+              <div className="font-semibold">{basket.stName}</div>
+              <div className="text-sm">{basket.stAddress}</div>
+              <div className="text-sm">{basket.stPhone}</div>
             </div>
-          ))
+
+            {basket.productList.map((product, index) => (
+              <ProductCard
+                product={product}
+                basket={basket}
+                type="basket"
+                setBasket={setBasket}
+                index={index}
+              />
+            ))}
+          </div>
         ) : (
-          <div>장바구니가 비어있습니다.</div>
+          <div className="w-full p-5 bg-white mb-3 flex flex-col items-center gap-2">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="3em"
+              viewBox="-20 -20 600 550"
+              className="fill-white stroke-[20px] stroke-surface"
+            >
+              <path d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z" />
+            </svg>
+            장바구니가 비어있습니다.
+          </div>
         )}
-        {basketList.productList ? (
+        {basket.productList ? (
           <div className="flex flex-col items-end justify-center bg-white h-[50px] px-5 text-lg">
-            총 100,000원
+            {basketTotalCost.toLocaleString()}원
           </div>
         ) : null}
       </div>
@@ -115,7 +140,11 @@ const BasketPage = () => {
       <div className="fixed w-full flex flex-col bg-white bottom-0 items-center justify-center px-5 py-7 gap-2">
         {showAccount
           ? accountList.map((account) => (
-              <AccountCard account={account} setShowAccount={setShowAccount} type='pay'/>
+              <AccountCard
+                account={account}
+                setShowAccount={setShowAccount}
+                type="pay"
+              />
             ))
           : null}
 
