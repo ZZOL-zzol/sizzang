@@ -13,13 +13,13 @@ const ReviewCard = (props) => {
       <div className="w-full h-full flex flex-col items-center">
       
         <div className="flex flex-col">
-        <div className="card-title text-base">{props.history.hsName}</div>
+        <div className="card-title text-base">{props.history.ppList[0].ppName}x{props.history.ppList[0].ppInt} 외 {props.history.ppList.length}건</div>
           
-          <span className="text-sm">{props.history.hsDate}</span>
+          <span className="text-sm">{props.history.puDate}</span>
         </div>
         <div className="flex flex-col h-full self-end">
           
-          <div>{props.history.hsCost}</div>
+          <div>{props.history.puCost}원</div>
         </div>
       </div>
     </div>

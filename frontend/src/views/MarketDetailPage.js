@@ -9,6 +9,10 @@ import { API_URL } from "../lib/constants";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+//시장상세
+//점포목록 가져오기
+//  - 점포 카테고리 버튼으로 만들던가 하기.
+//이중 스크롤 문제
 
 
 const MarketDetailPage = () => {
@@ -58,11 +62,11 @@ const MarketDetailPage = () => {
       <Header title='시장 상세' backButton/>
       <div className="relative w-full overflow-auto items-center">
         <div className="absolute top-[200px] w-full">
-          <DetailInfoCard market={marketInfo} />
+          <DetailInfoCard market={marketInfo} marketReCnt={reviewList.length} />
         </div>
         <div className="w-full h-[260px]">
           {marketInfo.mkImg?<img
-            src={marketInfo.mkImg ? marketInfo.mkImg : "../Logo.png"}
+            src={marketInfo.mkImg ? marketInfo.mkImg : ""}
             alt="배경사진"
             className="w-full h-[260px]"
           />: null }
@@ -77,7 +81,7 @@ const MarketDetailPage = () => {
 
         {/* <div className={scrollY !==undefined && scrollY > 314? 'sticky top-[56px]': 'w-full'}> */}
         <div className="w-full">
-          <Tabs type="store" tab1='상품 목록' tab2='리뷰' onTabClick={setCurrentTab} />
+          <Tabs type="store" tab1='점포 목록' tab2='전체 리뷰' onTabClick={setCurrentTab} />
         </div>
       </div>
 

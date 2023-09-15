@@ -3,18 +3,20 @@ import Navbar from "../components/common/Navbar";
 import ConsumerMyPage from "../components/mypage/consumer/ConsumerMyPage";
 import SellerMyPage from "../components/mypage/seller/SellerMyPage";
 
+const ProfilePage = () => {
+  const user = JSON.parse(window.localStorage.getItem("User"));
 
-
-
-
-const ProfilePage = ({ userType }) => {
   return (
     <div className="w-full bg-background-fill">
-      <Header title='마이페이지'/>
-      <div className="w-full">
-      {userType === "seller" ? <SellerMyPage /> : <ConsumerMyPage />}
+      <Header title="마이페이지" />
+      <div className="w-full h-full">
+        {user.role === "SELLER" ? (
+          <SellerMyPage user={user} />
+        ) : (
+          <ConsumerMyPage user={user} />
+        )}
       </div>
-      <Navbar/>
+      <Navbar />
     </div>
   );
 };

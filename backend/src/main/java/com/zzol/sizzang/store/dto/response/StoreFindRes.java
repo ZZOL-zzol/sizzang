@@ -12,17 +12,20 @@ public class StoreFindRes {
     private String stLatitude;
     private String stLongtitude;
     private String stIntro;
+
 //    시장코드 넣어야함
     private int mkCode;
     //별점, 리뷰
     private int reCnt;
     private double reScore;
     //카테고
+    private String stAddress;
 
+    private String scName;
     public StoreFindRes() {
     }
 
-    public StoreFindRes(Long stCode, String stName, String stImg, String stIntro, String stLatitude, String stLongtitude, int mkCode, int reCnt, double reScore) {
+    public StoreFindRes(Long stCode, String stName, String stImg, String stIntro, String stLatitude, String stLongtitude, int mkCode, int reCnt, double reScore, String stAddress, String scName) {
         this.stCode = stCode;
         this.stName = stName;
         this.stImg = stImg;
@@ -32,5 +35,7 @@ public class StoreFindRes {
         this.mkCode = mkCode;
         this.reCnt = reCnt;
         this.reScore = reScore;
+        this.stAddress = stAddress;
+        this.scName = scName;
     }
 }
