@@ -11,25 +11,6 @@ import { API_URL } from "../lib/constants";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-// const reviewList = [
-//   {
-//     reCode: 1,
-//     userName: "차차아버님",
-//     reContent: "배가 터질거같아요 책임지세요 윽",
-//     reDate: "2023.09.10",
-//     reImg: "../chacha2.jpg",
-//     reScore: 9,
-//   },
-//   {
-//     reCode: 1,
-//     userName: "차차아버님",
-//     reContent: "배가 터질거같아요 책임지세요 윽",
-//     reDate: "2023.09.10",
-//     reImg: "../chacha2.jpg",
-//     reScore: 8,
-//   },
-// ];
-
 const StoreDetailPage = () => {
   const [store, setStore] = useState({});
   const [productList, setProductList] = useState([]);
@@ -105,7 +86,7 @@ const StoreDetailPage = () => {
       ) : (
         <div className="flex flex-col w-full h-[350px] overflow-auto gap-2 bg-background-fill">
           {reviewList.map((review) => (
-            <ReviewCard key={review.reCode} review={review} />
+            <ReviewCard key={review.reCode} review={review} isStore={1} />
           ))}
         </div>
       )}

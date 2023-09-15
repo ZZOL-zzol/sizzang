@@ -26,7 +26,6 @@ const PlaceSearchPage = () => {
           headers: { "Content-Type": "application/json" },
         })
       .then((res) => {
-        console.log(res.data.data);
         setMarketList(res.data.data);
       })
       .catch((err) => console.log(err));
