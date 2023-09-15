@@ -14,6 +14,8 @@ import Tabs from "../components/common/Tabs";
 import { KAMIS_API_URL } from "../lib/constants";
 import axios from "axios";
 import Loading from "../components/common/Loading";
+import { current } from "@reduxjs/toolkit";
+import { API_URL } from "../lib/constants";
 
 // const productList = [
 //   { pdCode:1, pcCode:1, stCode:'', mkCode:'', scCode:'', pdName: "옛날통닭", pdCost: 50000 },
@@ -46,11 +48,14 @@ const ProductSearchPage = () => {
     }
   };
 
+
+
   const onCategoryChange = () => {
     //1101:서울, 2100:부산, 2200:대구, 2401:광주, 2501:대전
     setIsLoading(true);
     setProductList([]);
     let countyCode = "";
+    let categoryIdx = 0;
     if (currentCategory === "seoul") {
       countyCode = "1101";
     } else if (currentCategory === "busan") {
@@ -59,29 +64,63 @@ const ProductSearchPage = () => {
       countyCode = "2200";
     } else if (currentCategory === "gwangju") {
       countyCode = "2401";
-    } else {
+    } else if( currentCategory === "daejeon"){
       countyCode = "2501";
+    }else{
+      categoryIdx = 1;
+    }
+    if(currentCategory === "fruits"){
+      countyCode = "1";
+    }else if(currentCategory === "sides"){
+      countyCode = "2";
+    }else if(currentCategory === "fishes"){
+      countyCode = "3";
+    }else if(currentCategory === "dried"){
+      countyCode = "4";
+    }else if(currentCategory === "farm"){
+      countyCode = "5";
+    }else if(currentCategory === "meats"){
+      countyCode = "6";
+    }else if(currentCategory === "foods"){
+      countyCode = "7";
     }
 
-    axios
-      .get(
-        `http://cors-anywhere.herokuapp.com/${KAMIS_API_URL}/service/price/xml.do?action=ItemInfo`,
-        {
-          params: {
-            p_cert_key: "9ec7751a-6865-4116-98d5-181afba8c407",
-            p_cert_id: "222",
-            p_returntype: "json",
-            p_countycode: countyCode,
-          },
-        }
-      )
-      .then((res) => {
-        setProductList(res.data.price);
-        setIsLoading(false);
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
+    if(categoryIdx==0){
+      axios
+        .get(
+          `http://cors-anywhere.herokuapp.com/${KAMIS_API_URL}/service/price/xml.do?action=ItemInfo`,
+          {
+            params: {
+              p_cert_key: "9ec7751a-6865-4116-98d5-181afba8c407",
+              p_cert_id: "222",
+              p_returntype: "json",
+              p_countycode: countyCode,
+            },
+          }
+        )
+        .then((res) => {
+          setProductList(res.data.price);
+          setIsLoading(false);
+          console.log(res);
+        })
+        .catch((err) => console.log(err));
+    }else{
+      console.log("들어갔니?");
+      axios
+        .get(`${API_URL}/product/${countyCode}`)
+        .then((res) => {
+          setProductList(res.data.price);
+          setIsLoading(false);
+          console.log(res);
+        })
+        .catch((err) => console.log(err));
+    }
   };
+
+  useEffect(() => {
+    console.log(currentCategory)
+
+  })
 
   useEffect(() => {
 
@@ -170,7 +209,15 @@ const ProductSearchPage = () => {
           ) : // productList.map((product, index) => (
           //   <ProductAverageCard product={product} key={index} setSelectedPdCode={()=>setSelectedPdCode(product.pdCode)}/>
           // ))
-          null}
+          currentView === 0 && resultList.length > 0 ? (
+            resultList.map((product, index) => (
+              <ProductCurrentPriceCard
+                product={product}
+                key={index}
+                setSelectedPdCode={() => setSelectedPdCode(product.pdCode)}
+              />
+            ))
+          ):null}
         </div>
       </div>
       <Navbar />
