@@ -91,7 +91,7 @@ const ProductCurrentPriceCard = (props) => {
                   ({props.product.unit})
                 </span>
               </div>
-              <div>
+              <div className="flex items-center">
                 <span className="text-base text-left mr-2">{props.product.dpr1}원</span>
                 {priceNow - priceMonthAgo > 0 ? (
                   <span className="text-xs text-left text-myerror">
@@ -105,7 +105,7 @@ const ProductCurrentPriceCard = (props) => {
               </div>
             </div>
 
-            <div className="text-right text-sm text-myerror">
+            <div className="text-right text-sm text-outline">
               한달전 {props.product.dpr3}
             </div>
           </div>
