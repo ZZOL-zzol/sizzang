@@ -26,6 +26,7 @@ const MarketStoreCard = (props) => {
 
             <div className="text-left text-sm">{props.market.mkPhone}</div>
           </div>
+          <div className="btn mt-8 w-24">시장 상세</div>
           <figure className="m-3 rounded-lg w-24 h-24">
             <img className="w-full h-full" src={props.market.mkImg} alt="marketImage" />
           </figure>

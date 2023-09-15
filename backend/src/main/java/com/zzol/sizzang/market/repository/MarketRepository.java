@@ -29,7 +29,7 @@ public interface MarketRepository extends JpaRepository<MarketEntity, Integer> {
     List<MarketEntity> searchMarketByName(String marketName, int limit, int offset);
 
     @Query(value = "SELECT * " +
-            "FROM market ORDER BY region_code DESC LIMIT ?1 OFFSET ?2", nativeQuery = true)
+            "FROM market ORDER BY mk_code LIMIT ?1 OFFSET ?2", nativeQuery = true)
     List<MarketEntity> getAllMarket(int limit, int offset);
 
 }
