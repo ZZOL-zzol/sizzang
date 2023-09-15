@@ -1,14 +1,16 @@
 package com.zzol.sizzang.chatgpt.service;
 
 
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.theokanning.openai.completion.chat.ChatMessage;
-import com.zzol.sizzang.chatgpt.model.RequestQuestionVo;
-import com.zzol.sizzang.chatgpt.model.RequestRecommFoodVo;
-import com.zzol.sizzang.chatgpt.model.ResponseVo;
+import com.zzol.sizzang.chatgpt.model.ChatGptRequestDto;
+import com.zzol.sizzang.chatgpt.model.response.ChatCompletion;
+import com.zzol.sizzang.farm.dto.response.PriceRes;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -16,10 +18,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.IOException;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -30,41 +30,46 @@ public class GptService {
     private String API_KEY;
     private static final String EDIT_ENDPOINT = "https://api.openai.com/v1/chat/completions";
 
-    public String recommendMenu(String prompt) {
+    public List<String> recommendMenu(ChatGptRequestDto chatGptRequestDto) throws JsonProcessingException {
+        List<String> ingredients = chatGptRequestDto.getIngredients();
+        List<String> menus = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization", "Bearer " + API_KEY);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.set("Authorization", "Bearer " + API_KEY);
 
-        List<ChatMessage> messages = new ArrayList<>();
+            List<ChatMessage> messages = new ArrayList<>();
 
-        messages.add(new ChatMessage("user", prompt+"(을)를 사용하여 만들 수 있는 메뉴 하나만 추천해줘. 3문장으로 완성해서 대답해."));
+            messages.add(new ChatMessage("user", ingredients.get(i) + "(을)를 사용하여 만들 수 있는 요리 이름만 하나만 말해줘"));
 
-        Map<String, Object> requestBody = new HashMap<>();
-        requestBody.put("messages", messages);
-        requestBody.put("model","gpt-3.5-turbo");
-        requestBody.put("temperature", 0.0f);
-        requestBody.put("max_tokens", 200);
+            Map<String, Object> requestBody = new HashMap<>();
+            requestBody.put("messages", messages);
+            requestBody.put("model", "gpt-3.5-turbo");
+            requestBody.put("temperature", 0.0f);
+            requestBody.put("max_tokens", 200);
 
-        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
+            HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
 
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Map> response = restTemplate.postForEntity(EDIT_ENDPOINT, requestEntity, Map.class);
-        Map<String, Object> responseBody = response.getBody();
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<Map> response = restTemplate.postForEntity(EDIT_ENDPOINT, requestEntity, Map.class);
 
-        try {
-            // ObjectMapper를 사용하여 Map을 JSON 문자열로 변환
+            Map<String, Object> responseBody = response.getBody();
             ObjectMapper objectMapper = new ObjectMapper();
-            String jsonResponse = objectMapper.writeValueAsString(responseBody);
+            String json = objectMapper.writeValueAsString(responseBody);
 
-            return jsonResponse;
-        } catch (Exception e) {
-            // 예외 처리
-            e.printStackTrace();
-            return "Error: Failed to convert responseBody to JSON";
+            try {
+                ObjectMapper objectMapper2 = new ObjectMapper();
+                JsonNode jsonNode = objectMapper2.readTree(json);
+
+                // "content" 필드 동적 추출
+                String content = jsonNode.at("/choices/0/message/content").asText();
+                menus.add(content);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-
-
-//        return responseBody.toString();
+        return menus;
     }
 }

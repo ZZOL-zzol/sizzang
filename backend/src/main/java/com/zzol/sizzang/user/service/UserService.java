@@ -1,6 +1,7 @@
 package com.zzol.sizzang.user.service;
 
 import com.amazonaws.services.s3.AmazonS3;
+import com.zzol.sizzang.banking.repository.BankRepository;
 import com.zzol.sizzang.global.jwt.JwtService;
 import com.zzol.sizzang.review.repository.ReviewRepository;
 import com.zzol.sizzang.s3.service.FileService;
@@ -28,6 +29,7 @@ import java.util.List;
 public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final BankRepository bankRepository;
     private final S3Service s3Service;
 
 
@@ -111,6 +113,8 @@ public class UserService {
     @Transactional
     public void updateUserAccount(String userAccount, String userId){
         userRepository.registUserAccountByUserId(userAccount, userId);
+        bankRepository.updateRegistUserAccountByUserId(userAccount);
+
     }
 
 

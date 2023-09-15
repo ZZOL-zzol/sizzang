@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.persistence.EntityManager;
 import java.util.Optional;
+
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 public interface BankRepository extends JpaRepository<Bank, String> {
@@ -20,8 +22,11 @@ public interface BankRepository extends JpaRepository<Bank, String> {
         + " AND user_id =?1" , nativeQuery = true)
     List<Bank> findRegistedAccountsByUserId(String userId);
 
-//    Optional<Bank> findByUserCode(String userCode);
-
+    @Modifying
+    @Query(value = " UPDATE bank " +
+            " SET registed = TRUE  " +
+            " WHERE account_number = ?1 " , nativeQuery = true)
+    void updateRegistUserAccountByUserId(String userAccount);
 }
 
 

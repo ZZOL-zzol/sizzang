@@ -2,11 +2,12 @@ import Header from '../components/common/Header';
 import Navbar from '../components/common/Navbar';
 import KakaoMap from '../components/common/KakaoMap';
 import MapExample from '../components/common/MapExample';
-import MarketStoreCard from '../components/common/MarketStoreCard';
+import MarketStoreCard from '../components/common/MarketStoreCard'; 
+import MapPractice from '../components/common/MapPractice'; 
 import { API_URL } from "../lib/constants";
 import { useEffect, useState } from "react";
-import axios from "axios";
-
+import axios from "axios"; 
+ 
 
 //처음 맵이랑 시장목록 나오는 화면.
 //인피니티스크롤 어떻게 적용함..?
@@ -35,10 +36,12 @@ const PlaceSearchPage = () => {
 
 
   return (
+    
     <div className="App flex flex-col text-3xl h-full w-full bg-background-fill">
       <Header title='장소 찾기' button={true}/>
       <div className='flex flex-col'>
-        <MapExample/>
+        {/* <MapExample/> */}
+        <MapPractice/>
       </div>
       <div>
         {marketList.map(market => <MarketStoreCard key={market.mkCode} market={market}/>)}

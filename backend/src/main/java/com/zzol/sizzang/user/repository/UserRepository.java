@@ -20,7 +20,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Modifying
     @Query(value = " UPDATE user " +
-            " SET user_account = ?1 " +
+            " SET user_account = ?1  " +
             " WHERE user_id = ?2 " , nativeQuery = true)
     void registUserAccountByUserId(String userAccount, String userId);
 
