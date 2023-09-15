@@ -31,21 +31,18 @@ const ProductAddForm = (props) => {
   };
 
   const onAddButtonClick = () => {
+    const newProduct = {
+      tagCode: 1,
+      stCode: 1,
+      pdCost: product.pdCost,
+      pdName: product.pdName,
+      pdIntro: product.pdIntro,
+    };
     const formData = new FormData();
+    props.setProductList((prev) => [...prev, newProduct]);
     formData.append(
       "registInfo",
-      new Blob(
-        [
-          JSON.stringify({
-            tagCode: 2,
-            stCode: 1,
-            pdCost: product.pdCost,
-            pdName: product.pdName,
-            pdIntro: product.pdIntro,
-          }),
-        ],
-        { type: "application/json" }
-      )
+      new Blob([JSON.stringify(newProduct)], { type: "application/json" })
     );
     axios
       .post(`${API_URL}/product`, formData, {
@@ -55,6 +52,7 @@ const ProductAddForm = (props) => {
       })
       .then((res) => {
         console.log(res);
+        props.setOpenAddForm(false);
       })
       .catch((err) => console.log(err));
   };

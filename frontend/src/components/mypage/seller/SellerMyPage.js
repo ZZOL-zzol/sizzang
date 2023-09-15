@@ -8,10 +8,12 @@ import AccountListCard from "../account/AccountListCard";
 import ProductEditCard from "./ProductEditCard";
 import axios from "axios";
 import { API_URL } from "../../../lib/constants";
+import HistoryEditCard from "./HistoryEditCard";
 
 const SellerMyPage = (props) => {
-  const user = JSON.parse(window.localStorage.getItem("User"));
+  const user = props.user;
   const [store, setStore] = useState({});
+  const [accountList, setAccountList] = useState([]);
   const [openProfileEdit, setOpenProfileEdit] = useState(false);
   const [openAddAccount, setOpenAddAccount] = useState(false);
   const [openProductEdit, setOpenProductEdit] = useState(false);
@@ -23,10 +25,22 @@ const SellerMyPage = (props) => {
       .get(`${API_URL}/store/user/${user.userCode}`)
       .then((res) => setStore(res.data.data[0]))
       .catch((err) => console.log(err));
+
+    axios
+      .post(
+        `${API_URL}/bank/v1/search/registedAccounts`,
+        JSON.stringify({ userId: user.userId }),
+        { headers: { "Content-Type": "application/json" } }
+      )
+      .then((res) => {
+        console.log(res.data);
+        setAccountList(res.data[0].accountList);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   return (
-    <div className="SellerMyPage w-full h-full bg-white">
+    <div className="SellerMyPage w-full h-full bg-white p-5">
       {openProfileEdit ? (
         <ProfileEditCard
           setOpenProfileEdit={setOpenProfileEdit}
@@ -38,21 +52,21 @@ const SellerMyPage = (props) => {
       ) : openProductEdit ? (
         <ProductEditCard setOpenProductEdit={setOpenProductEdit} />
       ) : openHistoryEdit ? (
-        <div></div>
+        <HistoryEditCard
+          setOpenHistoryEdit={setOpenHistoryEdit}
+          account={accountList[0]}
+        />
       ) : openReviewEdit ? (
         <div></div>
       ) : (
-        <div className="flex flex-col p-5 gap-5">
+        <div className="flex flex-col gap-5">
           <ProfileSection
             user={props.user}
             store={store}
             setOpenProfileEdit={setOpenProfileEdit}
           />
           <AccountSection
-            imageUrl="../chacha2.jpg"
-            accountName="차곡차곡계좌"
-            accountNumber="121254-4564"
-            balance="420원"
+            account={accountList[0]}
             setOpenAddAccount={setOpenAddAccount}
           />
           <div className="flex w-full justify-between">

@@ -147,7 +147,7 @@ const ProfileEditCard = (props) => {
           </div>
         </div>
       ) : (
-        <div className="flex flex-col items-center gap-3 px-5">
+        <div className="flex flex-col items-center gap-3">
           <div className="flex w-full justify-between">
             <button
               className="btn btn-ghost normal-case text-xl font-environmentR"

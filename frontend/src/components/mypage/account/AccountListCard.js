@@ -4,32 +4,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { API_URL } from "../../../lib/constants";
 
-const accountList = [
-  {
-    accountCode: 1,
-    accountHolder: "차차아버님",
-    accountNumber: "123-456-789",
-    accountName: "차차야그만방해해계좌",
-    accountBalance: 200000,
-  },
-  {
-    accountCode: 2,
-    accountHolder: "차차아버님",
-    accountNumber: "123-456-789",
-    accountName: "차차야그만방해해계좌",
-    accountBalance: 200000,
-  },
-  {
-    accountCode: 3,
-    accountHolder: "차차아버님",
-    accountNumber: "123-456-789",
-    accountName: "차차야그만방해해계좌",
-    accountBalance: 200000,
-  },
-];
-
 const AccountListCard = (props) => {
-  const [accountList, setAccountList] = useState([]);
+  const [everyAccountList, setEveryAccountList] = useState([]);
   const user = JSON.parse(window.localStorage.getItem("User"));
 
   useEffect(() => {
@@ -40,7 +16,8 @@ const AccountListCard = (props) => {
         { headers: { "Content-Type": "application/json" } }
       )
       .then((res) => {
-        // setAccountList(res.data);
+        console.log(res.data);
+        setEveryAccountList(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -68,7 +45,8 @@ const AccountListCard = (props) => {
       <div className="text-lg font-bold self-start pl-2">
         등록할 계좌를 선택하세요.
       </div>
-      {accountList.map((account) => (
+
+      {everyAccountList.map((account) => (
         <AccountCard
           account={account}
           type="addAccount"
