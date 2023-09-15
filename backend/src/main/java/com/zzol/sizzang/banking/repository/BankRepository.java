@@ -11,7 +11,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-public interface BankRepository extends JpaRepository<Bank, String> {
+public interface BankRepository extends JpaRepository<Bank, Long> {
 
     Bank findByAccountNumber(String accountNumber);
 
