@@ -8,6 +8,8 @@ import com.zzol.sizzang.banking.dto.Response.SearchTransactionResponseDto;
 import com.zzol.sizzang.banking.dto.Response.TransferResponseDto;
 import com.zzol.sizzang.banking.entity.Bank;
 import com.zzol.sizzang.banking.service.BankService;
+import com.zzol.sizzang.common.exception.Template.FileIOException;
+import com.zzol.sizzang.common.model.CommonResponse;
 import com.zzol.sizzang.user.entity.User;
 import com.zzol.sizzang.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -76,7 +78,7 @@ public class BankController {
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
-    @Operation(description = "계좌 등록 메서드")
+    @Operation(description = "앱에 계좌 등록 메서드")
     @PostMapping("/v1/auth/saveaccount")
     public ResponseEntity<?> registAccount(@RequestBody RegistAccountRequestDto registAccountRequestDto) {
         log.info("registAccount 요청");
@@ -102,6 +104,23 @@ public class BankController {
         log.info("계좌조회 요청 id : {}", searchRegistedAccountRequestDto.getUserId());
         List<SearchAccountResponseDto> accountList = bankService.searchRegistedAccounts(searchRegistedAccountRequestDto);
         return new ResponseEntity<>(accountList, HttpStatus.OK);
+    }
+
+    @Operation(description = "내 계좌 등록 메서드")
+    @PostMapping("/v1/auth/addAccountList")
+    public ResponseEntity<?> addAccountList(@RequestBody AddAccountListRequestDto requestDto) {
+        log.info("addAccountList 요청");
+        log.info("계좌확인 : {}", requestDto.getAccountNumber());
+        log.info("id : {}", requestDto.getUserId());
+
+        Bank bank = bankService.addUserAccountList(requestDto);
+
+        if (bank != null) {  // regist 성공하면 success
+            log.info("계좌등록성공");
+            return new ResponseEntity<>("계좌등록성공", HttpStatus.OK);
+        } else {    // 실패하면 Exception
+            throw new FileIOException();
+        }
     }
 
 }

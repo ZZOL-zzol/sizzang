@@ -1,9 +1,7 @@
 package com.zzol.sizzang.banking.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,6 +11,9 @@ import java.util.List;
 @ToString
 @Getter
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Bank {
     @Id
     @Column(name = "bank_code")
@@ -29,4 +30,5 @@ public class Bank {
     private String userId; // -> userCode 수정
     private int accountBalance; //잔액
     private boolean registed; //계좌 앱에 등록 여부, true:등록, false: 미등록
+
 }
