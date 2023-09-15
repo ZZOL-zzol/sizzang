@@ -7,7 +7,7 @@ import lombok.Data;
 @Builder
 public class StoreSelectRes {
 //    시장코드 넣어야함
-//    Long mkCode;
+    private int mkCode;
     private String stOwner;
     private String scName;
     private Long stCode;
