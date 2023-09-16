@@ -12,6 +12,7 @@ import BasketPage from "./views/BasketPage";
 import HistoryPage from "./views/HistoryPage";
 import ReviewUploadPage from "./views/ReviewUploadPage";
 import StampPage from "./views/StampPage";
+import ProductAverageCard from "./components/product/ProductAverageCard";
 
 const isLogedin = true;
 
@@ -50,6 +51,7 @@ const App = () => {
         <Route path='/review' element={<ReviewUploadPage/>}/>
         <Route path="/stamp" element={<StampPage/>}/>
         <Route path="/product/prtag/:prTag" element={<ProductSearchPage/>}/>
+        <Route path="/store/prtag/:prTag" element={<ProductAverageCard/>}/>
       </Routes>
     </div>
   );

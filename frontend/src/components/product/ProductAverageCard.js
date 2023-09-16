@@ -1,5 +1,7 @@
 import MarketStoreCard from "../common/MarketStoreCard";
 import { useEffect, useState } from "react";
+import axios from "axios";
+import { API_URL} from "../../lib/constants";
 
 // const storeList = [
 //   {
@@ -50,10 +52,13 @@ const ProductAverageCard = (props) => {
   const [priceNow, setPriceNow] = useState(0);
   const [priceMonthAgo, setPriceMonthAgo] = useState(0);
   const [storeList, setStoreList] = useState([]);
-  console.log(props);
   useEffect(() => {
-    // console.log("프롭스");
-    // console.log(props);
+    axios
+    .get(`http://localhost:8080/store/prtag/${props.product.tagCode}`)
+    .then((res) => {
+      setStoreList(res.data.data);
+    })
+    .catch((err) => console.log(err));
     setPriceNow(Number(props.product.tagCost));
   }, []);
 
