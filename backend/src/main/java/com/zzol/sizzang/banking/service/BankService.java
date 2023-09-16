@@ -45,7 +45,9 @@ public class BankService {
 
         // 가장 최신 정보 불러오기
         TransactionHistory latestTransaction = transactionRepository.findLastestInfoByBankCode(userAccount); //거래내역
+        System.out.println("asdfasdf");
         if(bankRepository.findByAccountNumber(userAccount) != null){
+            System.out.println("dddd");
             Bank bank = bankRepository.findByAccountNumber(userAccount); //계좌 내역
             TransactionHistory userTransaction = new TransactionHistory();
             userTransaction.setAccountNumber(userAccount); //계좌
@@ -73,6 +75,19 @@ public class BankService {
             transactionRepository.save(userTransaction); //거래내역 db 업데이트
 
             log.info("certificationKey: {}", certificationKey);
+        }else{
+            TransactionHistory userTransaction = new TransactionHistory();
+            userTransaction.setAccountNumber(userAccount); //계좌
+            userTransaction.setDepositAmount(1); //임금금액
+            userTransaction.setDivision(1);//종류 : 입금
+            userTransaction.setMyMsg(certificationKey + " ZZOL"); //인증키
+            LocalDateTime currentDateTime = LocalDateTime.now();
+            userTransaction.setTransactionDatetime(Timestamp.valueOf(currentDateTime));
+            userTransaction.setBank(latestTransaction.getBank());
+            userTransaction.setWithdrawalAmount(0);
+            userTransaction.setAccountBalance(1); //1원인증
+            transactionRepository.save(userTransaction);
+
         }
         return certificationKey.toString();
     }
