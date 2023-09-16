@@ -18,8 +18,10 @@ const [history, setHistory] = useState(
     return(
         <div className="w-full">
         <Header title='리뷰 쓰기' backButton/>
+        <div className="h-full py-16">
         <ReviewCard history={history} type='writing'/>
         <ReviewForm history={history}/>
+        </div>
         </div>
     )
 }

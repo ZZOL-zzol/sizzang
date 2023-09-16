@@ -5,6 +5,7 @@ const Tabs = (props) => {
   // console.log(props.onTabClick)
   const setTabInfo = (value) => {
     setCurrentInfoTab(value);
+    console.log(value)
     if (props.setCurrentCategory) {
       props.setCurrentCategory("all");
     }

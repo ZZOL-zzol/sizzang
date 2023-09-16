@@ -50,18 +50,20 @@ import { API_URL} from "../../lib/constants";
 // ];
 
 const ProductAverageCard = (props) => {
+  // console.log(props.product)
   const [priceNow, setPriceNow] = useState(0);
   const [priceMonthAgo, setPriceMonthAgo] = useState(0);
   const [storeList, setStoreList] = useState([]);
-  useEffect(() => {
-    axios
-    .get(`http://localhost:8080/store/prtag/${props.product.tagCode}`)
-    .then((res) => {
-      setStoreList(res.data.data);
-    })
-    .catch((err) => console.log(err));
-    setPriceNow(Number(props.product.tagCost));
-  }, []);
+
+    const onProductCardClick = () => {
+      axios
+      .get(`${API_URL}/store/prtag/${props.product.tagCode}`)
+      .then((res) => {
+        setStoreList(res.data.data);
+      })
+      .catch((err) => console.log(err));
+      setPriceNow(Number(props.product.tagCost));
+    }
 
   return (
     <div className="collapse bg-white rounded-none w-full">
@@ -69,7 +71,7 @@ const ProductAverageCard = (props) => {
       <div className="collapse-title p-0">
         <div
           className="card card-side bg-base-100 rounded-none border-b-2"
-          onClick={props.setSelectedPdCode}
+          onClick={()=>onProductCardClick()}
         >
           <div className="card-body p-3 justify-between">
             <div className="gap-0 flex justify-between">

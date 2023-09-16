@@ -40,7 +40,7 @@ const SellerMyPage = (props) => {
   }, []);
 
   return (
-    <div className="SellerMyPage w-full h-full bg-white p-5">
+    <div className="SellerMyPage w-full h-full bg-white px-5 py-16">
       {openProfileEdit ? (
         <ProfileEditCard
           setOpenProfileEdit={setOpenProfileEdit}
@@ -69,7 +69,7 @@ const SellerMyPage = (props) => {
             account={accountList[0]}
             setOpenAddAccount={setOpenAddAccount}
           />
-          <div className="flex w-full justify-between">
+          <div className="flex flex-col w-full gap-5">
             <MenuSection
               imageUrl="../chacha2.jpg"
               menuName="상품관리"
@@ -81,12 +81,6 @@ const SellerMyPage = (props) => {
               menuName="매출관리"
               bgColor="bg-error-container"
               onClickEvent={() => setOpenHistoryEdit(true)}
-            />
-            <MenuSection
-              imageUrl="../chacha2.jpg"
-              menuName="리뷰관리"
-              bgColor="bg-primary-container"
-              onClickEvent={() => setOpenReviewEdit(true)}
             />
           </div>
         </div>

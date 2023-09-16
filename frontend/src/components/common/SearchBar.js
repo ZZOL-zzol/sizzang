@@ -1,6 +1,6 @@
 const SearchBar = (props) => {
   return (
-    <div className='relative w-full px-5 mt-1'>
+    <div className='relative w-full h-[60px] px-5 py-auto mt-1'>
     <input
       type="text"
       placeholder={props.placeholder}
@@ -12,7 +12,7 @@ const SearchBar = (props) => {
     </input>
     <button
     type="submit"
-    className="absolute right-3 top-[35%] flex bg-transparent px-2 rounded-md text-lg w-16 justify-center items-center"
+    className="absolute right-3 top-[25%] flex bg-transparent px-2 rounded-md text-lg w-16 justify-center items-center"
     onClick={()=>props.onClickEvent()}
 
   >

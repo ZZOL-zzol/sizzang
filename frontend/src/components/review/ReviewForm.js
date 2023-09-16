@@ -2,20 +2,53 @@ import { useState } from "react";
 import Rating from "./Rating";
 import TextArea from "./TextArea";
 import ImageUpload from "./ImageUpload";
-import {API_URL} from "../../lib/constants"
+import { API_URL } from "../../lib/constants";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ReviewForm = (props) => {
-  const user = JSON.parse(window.localStorage.getItem('User'))
+  const navigate = useNavigate()
+  const user = JSON.parse(window.localStorage.getItem("User"));
   const [reviewContent, setReviewContent] = useState("");
   const [imageList, setImageList] = useState([]);
   const [reviewScore, setReviewScore] = useState(0);
   const onRegistButtonClick = () => {
-    axios.post(`${API_URL}/review/add`,JSON.stringify({"userCode":user.userCode, "stCode" : props.history.stCode, "puCode" : props.history.puCode, "reContent" : reviewContent , "reImg": imageList[0].url}))
-  }
+    const formData = new FormData();
+    imageList.forEach((file) => formData.append("file", file.file));
+    axios
+      .post(`${API_URL}/review/add/img`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+
+        const data = {
+          userCode: user.userCode,
+          stCode: props.history.stCode,
+          puCode: props.history.puCode,
+          reTitle:'',
+          reContent: reviewContent,
+          reImg: res.data.data,
+          reScore: reviewScore,
+        };
+
+        console.log(data)
+        axios
+          .post(
+            `${API_URL}/review/add`,
+            JSON.stringify(data),
+            { headers: { "Content-Type": "application/json" } }
+          )
+          .then((res) => {console.log(res); navigate('/history') })
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <div className="flex flex-col items-center p-5 gap-3">
-      <Rating setReviewScore={setReviewScore}/>
+      <Rating setReviewScore={setReviewScore} />
 
       <div className="flex flex-col w-full">
         <label className="self-start mb-1 flex items-center gap-1">
@@ -46,7 +79,7 @@ const ReviewForm = (props) => {
           </svg>
           이미지 업로드
         </label>
-        <ImageUpload imageList={imageList} setImageList={setImageList}/>
+        <ImageUpload imageList={imageList} setImageList={setImageList} />
       </div>
 
       <div className="fixed w-full flex flex-col bg-white bottom-0 items-center justify-center px-5 py-7 gap-2">

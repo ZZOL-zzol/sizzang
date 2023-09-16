@@ -8,7 +8,7 @@ const Category = (props) => {
           <div className="w-full h-16">
             <div
               className="tab w-1/3"
-              onClick={() => {props.setCurrentCategory("all")}}
+              onClick={() => {props.onChangeEvent("all",0)}}
             >
               <div className="flex flex-col">
                 <svg
@@ -32,7 +32,7 @@ const Category = (props) => {
             </div>
             <div
               className="tab w-1/3"
-              onClick={() => {props.setCurrentCategory("1101")}}
+              onClick={() => {props.onChangeEvent("1101",0)}}
             >
               <div className="flex flex-col">
                 <svg
@@ -56,7 +56,7 @@ const Category = (props) => {
             </div>
             <div
               className="tab w-1/3"
-              onClick={() => {props.setCurrentCategory("2100")}}
+              onClick={() => {props.onChangeEvent("2100",0)}}
             >
               <div className="flex flex-col">
                 <svg
@@ -84,7 +84,7 @@ const Category = (props) => {
           <div className="w-full h-16">
             <div
               className="tab w-1/3"
-              onClick={() => {props.setCurrentCategory("2200")}}
+              onClick={() => {props.onChangeEvent("2200",0)}}
             >
               <div className="flex flex-col">
                 <svg
@@ -108,7 +108,7 @@ const Category = (props) => {
             </div>
             <div
               className="tab w-1/3"
-              onClick={() => {props.setCurrentCategory("2401")}}
+              onClick={() => {props.onChangeEvent("2401",0)}}
             >
               <div className="flex flex-col">
                 <svg
@@ -132,7 +132,7 @@ const Category = (props) => {
             </div>
             <div
               className="tab w-1/3"
-              onClick={() => {props.setCurrentCategory("2501")}}
+              onClick={() => {props.onChangeEvent("2501",0)}}
             >
               <div className="flex flex-col">
                 <svg
@@ -161,7 +161,7 @@ const Category = (props) => {
           <div className="w-full h-16">
             <div
               className="tab w-1/4"
-              onClick={() => {props.setCurrentCategory("all")}}
+              onClick={() => {props.onChangeEvent("all",1)}}
             >
               <div className="flex flex-col">
                 <svg
@@ -185,7 +185,7 @@ const Category = (props) => {
             </div>
             <div
               className="tab w-1/4"
-              onClick={() => {props.setCurrentCategory("7")}}
+              onClick={() => {props.onChangeEvent("7",1)}}
             >
               <div className="flex flex-col">
                 <svg
@@ -209,7 +209,7 @@ const Category = (props) => {
             </div>
             <div
               className="tab w-1/4"
-              onClick={() => {props.setCurrentCategory("6")}}
+              onClick={() => {props.onChangeEvent("6",1)}}
             >
               <div className="flex flex-col">
                 <svg
@@ -233,7 +233,7 @@ const Category = (props) => {
             </div>
             <div
               className="tab w-1/4"
-              onClick={() => {props.setCurrentCategory("5")}}
+              onClick={() => {props.onChangeEvent("5",1)}}
             >
               <div className="flex flex-col">
                 <svg
@@ -260,7 +260,7 @@ const Category = (props) => {
           <div className="w-full h-16">
             <div
               className="tab w-1/4"
-              onClick={() =>{props.setCurrentCategory("3")}}
+              onClick={() =>{props.onChangeEvent("3",1)}}
             >
               <div className="flex flex-col">
                 <svg
@@ -284,7 +284,7 @@ const Category = (props) => {
             </div>
             <div
               className="tab w-1/4"
-              onClick={() => {props.setCurrentCategory("4")}}
+              onClick={() => {props.onChangeEvent("4",1)}}
             >
               <div className="flex flex-col">
                 <svg
@@ -308,7 +308,7 @@ const Category = (props) => {
             </div>
             <div
               className="tab w-1/4"
-              onClick={() => {props.setCurrentCategory("2")}}
+              onClick={() => {props.onChangeEvent("2",1)}}
             >
               <div className="flex flex-col">
                 <svg
@@ -332,7 +332,7 @@ const Category = (props) => {
             </div>
             <div
               className="tab w-1/4"
-              onClick={() =>{props.setCurrentCategory("1")}}
+              onClick={() =>{props.onChangeEvent("1",1)}}
             >
               <div className="flex flex-col">
                 <svg
