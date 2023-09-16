@@ -2,7 +2,6 @@ package com.zzol.sizzang.store.controller;
 
 import com.zzol.sizzang.common.exception.Template.*;
 import com.zzol.sizzang.common.model.CommonResponse;
-import com.zzol.sizzang.product.dto.response.ProductFindRes;
 import com.zzol.sizzang.store.dto.request.FindByConditionGetReq;
 import com.zzol.sizzang.store.dto.request.StoreModifyPutReq;
 import com.zzol.sizzang.store.dto.request.StoreRegistInsertReq;
@@ -196,6 +195,23 @@ public class StoreController {
                 storeService.findByStoreByUser(userCode));
 
         log.info("StoreController_findAllByUser_end: " + findRes);
+        return CommonResponse.success(findRes.orElseThrow(TemplateNoResultException::new));
+    }
+
+    /**
+     * tag별 점포 List 조회
+     *
+     * @return
+     */
+    @Operation(description = "유저별 점포 조회 메서드입니다.")
+    @GetMapping("/prtag/{tagCode}")
+    public CommonResponse<List<StoreFindRes>> findAllByTag(@PathVariable int tagCode) {
+        log.info("StoreController_findAllByTag_start: ");
+
+        Optional<List<StoreFindRes>> findRes = Optional.ofNullable(
+                storeService.findStoreCodeByTag(tagCode));
+
+        log.info("StoreController_findAllByTag_end: " + findRes);
         return CommonResponse.success(findRes.orElseThrow(TemplateNoResultException::new));
     }
 }
