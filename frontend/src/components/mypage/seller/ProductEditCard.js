@@ -10,7 +10,7 @@ const ProductEditCard = (props) => {
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/product/1`)
+      .get(`${API_URL}/product/${props.stCode}`)
       .then((res) => setProductList(res.data.data));
   }, []);
 
@@ -39,6 +39,7 @@ const ProductEditCard = (props) => {
           <ProductAddForm
             setOpenAddForm={setOpenAddForm}
             setProductList={setProductList}
+            store={props.store}
           />
         ) : (
           <div

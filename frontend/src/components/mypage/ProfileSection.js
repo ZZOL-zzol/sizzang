@@ -19,7 +19,7 @@ const ProfileImage = ({ imageUrl, altText }) => {
 const SellerInfo = (props) => {
   return (
     <div>
-      {props.store.stName ? (
+      {props.store && props.store.stName ? (
         <div>
           <div className="text-left text-lg font-bold">
             {props.store.mkName}

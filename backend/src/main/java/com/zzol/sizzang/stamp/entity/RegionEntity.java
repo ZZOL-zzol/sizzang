@@ -20,8 +20,11 @@ public class RegionEntity {
     private String regionNameFirst;
     @Column(name = "region_name_second")
     private String regionNameSecond;
-    @Column(name = "stamp_url")
-    private String stampUrl;
+    @Column(name = "mascot_url")
+    private String mascotUrl;
+    @Column(name = "mascot_name")
+    private String mascotName;
+
 }
 
 

@@ -41,7 +41,7 @@ public class GptService {
 
             List<ChatMessage> messages = new ArrayList<>();
 
-            messages.add(new ChatMessage("user", ingredients.get(i) + "(을)를 사용하여 만들 수 있는 요리 이름만 하나만 말해줘"));
+            messages.add(new ChatMessage("user", ingredients.get(i) + "(을)를 사용하여 만들 수 있는 요리 하나만 추천해줘.필요한 재료설명을 포함해서 완전한 3문장으로만 대답해."));
 
             Map<String, Object> requestBody = new HashMap<>();
             requestBody.put("messages", messages);

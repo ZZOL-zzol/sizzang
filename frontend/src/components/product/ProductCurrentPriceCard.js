@@ -76,12 +76,10 @@ const ProductCurrentPriceCard = (props) => {
   }, []);
 
   return (
-    <div className="collapse bg-white rounded-none w-full">
-      <input type="checkbox" />
-      <div className="collapse-title p-0">
+    <div className=" bg-white rounded-none w-full">
+      <div className="p-0">
         <div
           className="card card-side bg-base-100 rounded-none border-b-2"
-          onClick={props.setSelectedPdCode}
         >
           <div className="card-body p-3 justify-between">
             <div className="gap-0 flex justify-between">
@@ -95,11 +93,11 @@ const ProductCurrentPriceCard = (props) => {
                 <span className="text-base text-left mr-2">{props.product.dpr1}원</span>
                 {priceNow - priceMonthAgo > 0 ? (
                   <span className="text-xs text-left text-myerror">
-                    ▲{priceNow - priceMonthAgo}
+                    ▲{(priceNow - priceMonthAgo).toLocaleString()}
                   </span>
                 ) : (
-                  <span className="text-xs text-left">
-                    ▼{priceMonthAgo - priceNow}
+                  <span className="text-xs text-left text-myprimary">
+                    ▼{(priceMonthAgo - priceNow).toLocaleString()}
                   </span>
                 )}
               </div>
@@ -110,11 +108,6 @@ const ProductCurrentPriceCard = (props) => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="collapse-content">
-        {storeList.map((store, index) => (
-          <MarketStoreCard store={store} key={index} />
-        ))}
       </div>
     </div>
   );

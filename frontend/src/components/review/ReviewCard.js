@@ -8,14 +8,15 @@ const ReviewCard = (props) => {
   const onReviewButtonClick = () => {
     navigate('/review', {state:{history : props.history}})
   }
+  console.log(props.history)
   return (
     <div className=" bg-white h-[80px] p-[10px]">
       <div className="w-full h-full flex flex-col items-center">
       
         <div className="flex flex-col">
-        <div className="card-title text-base">{props.history.ppList[0].ppName}x{props.history.ppList[0].ppInt} 외 {props.history.ppList.length}건</div>
+        <div className="card-title text-base">{props.history.details[0].prName}x{props.history.details[0].puCnt} 외 {props.history.details.length}건</div>
           
-          <span className="text-sm">{props.history.puDate}</span>
+          <span className="text-sm">{props.history.puDate.split(' ')[0]}</span>
         </div>
         <div className="flex flex-col h-full self-end">
           

@@ -50,12 +50,11 @@ const StoreDetailPage = () => {
 
     }, []);
 
-
   return (
-    <div className="flex flex-col w-full h-full bg-white outline outline-1">
-      <Header title="점포 상세" backButton basketButton />
-      <div className="relative w-full overflow-auto items-center">
-        <div className="absolute top-[200px] w-full">
+    <div className="flex flex-col w-full h-full bg-white">
+      <Header title="점포 상세" backButton basketButton route={`/market/${store.mkCode}`} />
+      <div className="relative w-full items-center py-16">
+        <div className="absolute top-[264px] w-full">
           <DetailInfoCard store={store} storeReCnt={reviewList.length}/>
         </div>
         <div className="w-full h-[260px]">
@@ -73,24 +72,23 @@ const StoreDetailPage = () => {
         </div>
 
         {/* <div className={scrollY !==undefined && scrollY > 314? 'sticky top-[56px]': 'w-full'}> */}
-        <div className="w-full">
+        <div className="w-full h-8">
           <Tabs type="store" tab1='상품 목록' tab2='리뷰' onTabClick={setCurrentTab} />
         </div>
-      </div>
-      {currentTab === 0 ? (
-        <div className="flex flex-col w-full h-[350px] overflow-auto">
+        {currentTab === 0 ? (
+        <div className="flex flex-col max-h-[412px] overflow-auto">
           {productList.map((product) => (
             <ProductCard key={product.pdCode} product={product} store={store} />
           ))}
         </div>
       ) : (
-        <div className="flex flex-col w-full h-[350px] overflow-auto gap-2 bg-background-fill">
+        <div className="flex flex-col w-full h-full overflow-auto gap-2 bg-background-fill">
           {reviewList.map((review) => (
             <ReviewCard key={review.reCode} review={review} isStore={1} />
           ))}
         </div>
       )}
-
+      </div>
       <Navbar />
     </div>
   );

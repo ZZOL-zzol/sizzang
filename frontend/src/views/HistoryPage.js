@@ -7,39 +7,35 @@ import axios from "axios";
 import { API_URL } from "../lib/constants";
 
 
-const historyList = [
-  {puCode : 1, stCode : 1, puCost : 10000, puDate : '2023-09-13', userAccount:"110184999999", ppList:[{ppName:'양념치킨', ppInt:'2'},{ppName:'양념치킨', ppInt:'2'},{ppName:'양념치킨', ppInt:'2'}]},
-  {puCode : 1, stCode : 1, puCost : 10000, puDate : '2023-09-13', userAccount:"110184999999", ppList:[{ppName:'양념치킨', ppInt:'2'},{ppName:'양념치킨', ppInt:'2'},{ppName:'양념치킨', ppInt:'2'}]},
-  {puCode : 1, stCode : 1, puCost : 10000, puDate : '2023-09-13', userAccount:"110184999999", ppList:[{ppName:'양념치킨', ppInt:'2'},{ppName:'양념치킨', ppInt:'2'},{ppName:'양념치킨', ppInt:'2'}]},
-  {puCode : 1, stCode : 1, puCost : 10000, puDate : '2023-09-13', userAccount:"110184999999", ppList:[{ppName:'양념치킨', ppInt:'2'},{ppName:'양념치킨', ppInt:'2'},{ppName:'양념치킨', ppInt:'2'}]},
-]
+// const historyList = [
+//   {puCode : 1, stCode : 1, puCost : 10000, puDate : '2023-09-13', userAccount:"110184999999", ppList:[{ppName:'양념치킨', ppInt:'2'},{ppName:'양념치킨', ppInt:'2'},{ppName:'양념치킨', ppInt:'2'}]},
+//   {puCode : 1, stCode : 1, puCost : 10000, puDate : '2023-09-13', userAccount:"110184999999", ppList:[{ppName:'양념치킨', ppInt:'2'},{ppName:'양념치킨', ppInt:'2'},{ppName:'양념치킨', ppInt:'2'}]},
+//   {puCode : 1, stCode : 1, puCost : 10000, puDate : '2023-09-13', userAccount:"110184999999", ppList:[{ppName:'양념치킨', ppInt:'2'},{ppName:'양념치킨', ppInt:'2'},{ppName:'양념치킨', ppInt:'2'}]},
+//   {puCode : 1, stCode : 1, puCost : 10000, puDate : '2023-09-13', userAccount:"110184999999", ppList:[{ppName:'양념치킨', ppInt:'2'},{ppName:'양념치킨', ppInt:'2'},{ppName:'양념치킨', ppInt:'2'}]},
+// ]
 
 const HistoryPage = () => {
+ 
   const location = useLocation();
+  console.log(location.state.accountNumber)
   const [accountNumber, setAccountNumber] = useState(
     location.state.accountNumber
   );
-    // const [historyList, setHistoryList] = useState([])
+    const [historyList, setHistoryList] = useState([])
 
   useEffect(() => {
-    // axios.post(
-    //   `${API_URL}/bank/v1/search/transaction`,
-    //   {
-    //     dataHeader: { apiKey: "2023_Shinhan_SSAFY_Hackaton" },
-    //     dataBody: { 계좌번호: "110184999999" },
-    //   },
-    //   { headers: { "Content-Type": "application/json" } }
-    // )
-    // .then(res => console.log(res))
-    // .catch(err => console.log(err));
+    axios.post(
+      `${API_URL}/purchase/get`, JSON.stringify({accountNumber: accountNumber}), {headers : { "Content-Type" : "application/json"}}
+    ).then(res => setHistoryList(res.data.data))
+    .catch(err => console.log(err))
   }, []);
 
   return (
     <div className="w-full bg-background-fill">
       <Header title="내 소비내역" backButton route="/profile" />
-      <div className="flex flex-col w-full mt-5 gap-2">
+      <div className="flex flex-col w-full h-full py-20 gap-2">
         {historyList.map((history) => (
-          <HistoryCard history={history} />
+          <HistoryCard history={history} accountNumber={accountNumber}/>
         ))}
       </div>
       <Navbar />

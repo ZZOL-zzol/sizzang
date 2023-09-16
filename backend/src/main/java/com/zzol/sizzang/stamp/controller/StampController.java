@@ -2,6 +2,7 @@ package com.zzol.sizzang.stamp.controller;
 
 import com.zzol.sizzang.common.model.CommonResponse;
 import com.zzol.sizzang.stamp.dto.request.StampReq;
+import com.zzol.sizzang.stamp.entity.RegionEntity;
 import com.zzol.sizzang.stamp.entity.StampEntity;
 import com.zzol.sizzang.stamp.service.StampService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -34,8 +35,8 @@ public class StampController {
 
     @PostMapping("/getAll")
     @Operation(summary = "스탬프 불러오기", description = "회원번호로 스탬프 전부 불러오기")
-    public CommonResponse<List<StampEntity>> getStampList (@RequestBody StampReq stampReq) {
-        List<StampEntity> data = stampService.getStampList(stampReq);
+    public CommonResponse<List<RegionEntity>> getStampList (@RequestBody StampReq stampReq) {
+        List<RegionEntity> data = stampService.getStampList(stampReq);
         return CommonResponse.success(data);
     }
 }

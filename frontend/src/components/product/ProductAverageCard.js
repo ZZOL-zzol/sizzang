@@ -1,72 +1,98 @@
 import MarketStoreCard from "../common/MarketStoreCard";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { API_URL} from "../../lib/constants";
 
-const storeList = [
-  {
-    stCode: 1,
-    mkCode: 1,
-    stOwner: "차차아버님",
-    stName: "네네치킨",
-    stPhone: "010-6664-9510",
-    stImg: "../chacha2.jpg",
-    stAccount: "",
-    stAccountHolder: "정재웅",
-    stIntro: "파닭은 네네가 제일 맛있는듯",
-    stTime: "",
-    stAddress : '관악구 봉천로 466',
-    scName : '음식점'
-  },
-  {
-    stCode: 1,
-    mkCode: 1,
-    stOwner: "차차아버님",
-    stName: "네네치킨",
-    stPhone: "010-6664-9510",
-    stImg: "../chacha2.jpg",
-    stAccount: "",
-    stAccountHolder: "정재웅",
-    stIntro: "파닭은 네네가 제일 맛있는듯",
-    stTime: "",
-    stAddress : '관악구 봉천로 466',
-    scName : '음식점'
-  },
-  {
-    stCode: 1,
-    mkCode: 1,
-    stOwner: "차차아버님",
-    stName: "네네치킨",
-    stPhone: "010-6664-9510",
-    stImg: "../chacha2.jpg",
-    stAccount: "",
-    stAccountHolder: "정재웅",
-    stIntro: "파닭은 네네가 제일 맛있는듯",
-    stTime: "",
-    stAddress : '관악구 봉천로 466',
-    scName : '음식점'
-  },
-];
+
+// const storeList = [
+//   {
+//     stCode: 1,
+//     mkCode: 1,
+//     stOwner: "차차아버님",
+//     stName: "네네치킨",
+//     stPhone: "010-6664-9510",
+//     stImg: "../chacha2.jpg",
+//     stAccount: "",
+//     stAccountHolder: "정재웅",
+//     stIntro: "파닭은 네네가 제일 맛있는듯",
+//     stTime: "",
+//     stAddress : '관악구 봉천로 466',
+//     scName : '음식점'
+//   },
+//   {
+//     stCode: 1,
+//     mkCode: 1,
+//     stOwner: "차차아버님",
+//     stName: "네네치킨",
+//     stPhone: "010-6664-9510",
+//     stImg: "../chacha2.jpg",
+//     stAccount: "",
+//     stAccountHolder: "정재웅",
+//     stIntro: "파닭은 네네가 제일 맛있는듯",
+//     stTime: "",
+//     stAddress : '관악구 봉천로 466',
+//     scName : '음식점'
+//   },
+//   {
+//     stCode: 1,
+//     mkCode: 1,
+//     stOwner: "차차아버님",
+//     stName: "네네치킨",
+//     stPhone: "010-6664-9510",
+//     stImg: "../chacha2.jpg",
+//     stAccount: "",
+//     stAccountHolder: "정재웅",
+//     stIntro: "파닭은 네네가 제일 맛있는듯",
+//     stTime: "",
+//     stAddress : '관악구 봉천로 466',
+//     scName : '음식점'
+//   },
+// ];
 
 const ProductAverageCard = (props) => {
+  // console.log(props.product)
+  const [priceNow, setPriceNow] = useState(0);
+  const [priceMonthAgo, setPriceMonthAgo] = useState(0);
+  const [storeList, setStoreList] = useState([]);
 
+    const onProductCardClick = () => {
+      axios
+      .get(`${API_URL}/store/prtag/${props.product.tagCode}`)
+      .then((res) => {
+        // console.log(res.data.data)
+        setStoreList(res.data.data);
+      })
+      .catch((err) => console.log(err));
+      setPriceNow(Number(props.product.tagCost));
+    }
 
   return (
-    <div className="collapse bg-white rounded-none">
+    <div className="collapse bg-white rounded-none w-full" onClick={()=>onProductCardClick()}>
       <input type="checkbox" />
-      <div className="collapse-title p-0 pt-2 ">
+      <div className="collapse-title p-0">
         <div
           className="card card-side bg-base-100 rounded-none border-b-2"
-          onClick={props.setSelectedPdCode}
         >
           <div className="card-body p-3 justify-between">
             <div className="gap-0 flex justify-between">
-              <div className="card-title text-base">{props.product.pdName}</div>
-              <span className="text-sm text-left">{props.product.pdCost}</span>
+              <div className="card-title text-base">
+                {props.product.tagName}
+                <span className="text-xs text-left">
+                  ({props.product.tagUnit})
+                </span>
+              </div>
+              <div className="flex items-center">
+                <span className="text-base text-left mr-2">평균 {props.product.tagCost}원</span>
+              </div>
             </div>
-
-            {/* <div className="text-right text-sm text-myerror">▲1000</div> */}
           </div>
         </div>
       </div>
-      <div className="collapse-content">{storeList.map((store,index)=><MarketStoreCard store={store} key={index}/>)}</div>
+      <div className="collapse-content">
+        {storeList.length>0?storeList.map((store, index) => (
+          <MarketStoreCard store={store} key={index} />
+        )):null}
+      </div>
     </div>
   );
 };

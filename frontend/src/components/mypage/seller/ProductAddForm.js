@@ -32,12 +32,13 @@ const ProductAddForm = (props) => {
 
   const onAddButtonClick = () => {
     const newProduct = {
-      tagCode: 1,
-      stCode: 1,
+      tagCode: 91,
+      stCode: 14,
       pdCost: product.pdCost,
       pdName: product.pdName,
       pdIntro: product.pdIntro,
     };
+    console.log(newProduct)
     const formData = new FormData();
     props.setProductList((prev) => [...prev, newProduct]);
     formData.append(

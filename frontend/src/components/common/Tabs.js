@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const Tabs = (props) => {
   const [currentInfoTab, setCurrentInfoTab] = useState(0);
-  // console.log(props.onTabClick)
+
   const setTabInfo = (value) => {
     setCurrentInfoTab(value);
     if (props.setCurrentCategory) {

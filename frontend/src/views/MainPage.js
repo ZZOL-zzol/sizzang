@@ -18,8 +18,8 @@ const MainPage = () => {
         <div className="w-full px-10">
           <Button
             type = 'main'
-            innerText="장 보러 가기"
-            color="bg-red-100"
+            innerText="시장 찾기"
+            color="bg-error-container"
             image="./market.svg"
             onClick={()=>{navigate('/place'); dispatch(setCurrentTab(1))}}
           />
@@ -27,8 +27,8 @@ const MainPage = () => {
           <div className="w-full px-10">
           <Button
             type = 'main'
-            innerText="농산물 시세 확인"
-            color="bg-red-100"
+            innerText="상품 찾기"
+            color="bg-primary-container"
             image="./product.svg"
             onClick={()=>{navigate('/product'); dispatch(setCurrentTab(2))}}
           />
@@ -37,7 +37,7 @@ const MainPage = () => {
           <Button
             type = 'main'
             innerText="마이페이지"
-            color="bg-red-100"
+            color="bg-secondary-container"
             image="./mypage.svg"
             onClick={()=>{navigate('/profile'); dispatch(setCurrentTab(3))}}
           />

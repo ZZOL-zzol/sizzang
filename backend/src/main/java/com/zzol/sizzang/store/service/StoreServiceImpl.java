@@ -4,6 +4,8 @@ import com.zzol.sizzang.common.exception.Template.NoDataException;
 import com.zzol.sizzang.common.exception.Template.StoreNotFoundException;
 import com.zzol.sizzang.market.entity.MarketEntity;
 import com.zzol.sizzang.market.repository.MarketRepository;
+import com.zzol.sizzang.product.entity.ProductEntity;
+import com.zzol.sizzang.product.repository.ProductRepository;
 import com.zzol.sizzang.review.repository.ReviewRepository;
 import com.zzol.sizzang.s3.service.S3Service;
 import com.zzol.sizzang.store.dto.request.FindByConditionGetReq;
@@ -24,8 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -38,17 +39,28 @@ public class StoreServiceImpl implements StoreService{
     private final ReviewRepository reviewRepository;
     private final MarketRepository marketRepository;
     private final UserRepository userRepository;
+    private final ProductRepository productRepository;
 
     private S3Service s3Service;
 
     @Autowired
-    public StoreServiceImpl(StCategoryRepository stCategoryRepository, StoreRepository storeRepository, ReviewRepository reviewRepository, MarketRepository marketRepository, UserRepository userRepository) {
+    public StoreServiceImpl(StCategoryRepository stCategoryRepository, StoreRepository storeRepository, ReviewRepository reviewRepository, MarketRepository marketRepository, UserRepository userRepository, ProductRepository productRepository) {
         this.stCategoryRepository = stCategoryRepository;
         this.storeRepository = storeRepository;
         this.reviewRepository = reviewRepository;
         this.marketRepository = marketRepository;
         this.userRepository = userRepository;
+        this.productRepository = productRepository;
     }
+
+    public class StoreFindResComparator implements Comparator<StoreFindRes> {
+        @Override
+        public int compare(StoreFindRes res1, StoreFindRes res2) {
+            // reScore를 내림차순으로 정렬
+            return Double.compare(res2.getReScore(), res1.getReScore());
+        }
+    }
+
 
     /**
      * 게시글 Regist API 에 대한 서비스
@@ -221,6 +233,7 @@ public class StoreServiceImpl implements StoreService{
                 .stLongtitude(storeEntity.getStLongtitude())
                 .stAddress(storeEntity.getStAddress())
                 .scName(stCategoryRepository.findByScCode(storeEntity.getStCategoryEntity().getScCode()).get().getScName())
+                .mkCode(storeEntity.getMarketEntity().getMkCode())
                 .build();
 
         // 게시글 상세 정보 조회 결과
@@ -308,4 +321,32 @@ public class StoreServiceImpl implements StoreService{
         return res;
     }
 
+
+    @Override
+    public List<StoreFindRes> findStoreCodeByTag(int tagCode) {
+        log.info("ProductService_findProductCodeByTag_start: ");
+
+        List<ProductEntity> pe = productRepository.findByPrTagEntity_TagCode(tagCode);
+        List<StoreEntity> stores = new ArrayList<>();
+        for(ProductEntity p : pe){
+            stores.add(p.getStoreEntity());
+        }
+        List<StoreFindRes> res = stores.stream().map(m -> StoreFindRes.builder()
+                .mkCode(m.getMarketEntity().getMkCode())
+                .reCnt(reviewRepository.findByStCode(m.getStCode()).size())
+                .reScore((reviewRepository.findByStCode(m.getStCode()).size()==0)?0:reviewRepository.getReviewScore(m.getStCode()))
+                .stCode(m.getStCode())
+                .stImg(m.getStImg())
+                .stName(m.getStName())
+                .stLatitude(m.getStLatitude())
+                .stLongtitude(m.getStLongtitude())
+                .stAddress(m.getStAddress())
+                .scName(stCategoryRepository.findByScCode(m.getStCategoryEntity().getScCode()).get().getScName())
+                .build()
+        ).collect(Collectors.toList());
+
+        Collections.sort(res, new StoreFindResComparator());
+        log.info("ProductService_findProductCodeByTag_end: true");
+        return res;
+    }
 }
