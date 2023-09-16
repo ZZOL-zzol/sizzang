@@ -26,9 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -54,6 +52,15 @@ public class StoreServiceImpl implements StoreService{
         this.userRepository = userRepository;
         this.productRepository = productRepository;
     }
+
+    public class StoreFindResComparator implements Comparator<StoreFindRes> {
+        @Override
+        public int compare(StoreFindRes res1, StoreFindRes res2) {
+            // reScore를 내림차순으로 정렬
+            return Double.compare(res2.getReScore(), res1.getReScore());
+        }
+    }
+
 
     /**
      * 게시글 Regist API 에 대한 서비스
@@ -337,6 +344,8 @@ public class StoreServiceImpl implements StoreService{
                 .scName(stCategoryRepository.findByScCode(m.getStCategoryEntity().getScCode()).get().getScName())
                 .build()
         ).collect(Collectors.toList());
+
+        Collections.sort(res, new StoreFindResComparator());
         log.info("ProductService_findProductCodeByTag_end: true");
         return res;
     }
