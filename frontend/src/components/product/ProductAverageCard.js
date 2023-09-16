@@ -59,6 +59,7 @@ const ProductAverageCard = (props) => {
       axios
       .get(`${API_URL}/store/prtag/${props.product.tagCode}`)
       .then((res) => {
+        // console.log(res.data.data)
         setStoreList(res.data.data);
       })
       .catch((err) => console.log(err));
@@ -66,12 +67,11 @@ const ProductAverageCard = (props) => {
     }
 
   return (
-    <div className="collapse bg-white rounded-none w-full">
+    <div className="collapse bg-white rounded-none w-full" onClick={()=>onProductCardClick()}>
       <input type="checkbox" />
       <div className="collapse-title p-0">
         <div
           className="card card-side bg-base-100 rounded-none border-b-2"
-          onClick={()=>onProductCardClick()}
         >
           <div className="card-body p-3 justify-between">
             <div className="gap-0 flex justify-between">
@@ -89,9 +89,9 @@ const ProductAverageCard = (props) => {
         </div>
       </div>
       <div className="collapse-content">
-        {storeList.map((store, index) => (
+        {storeList.length>0?storeList.map((store, index) => (
           <MarketStoreCard store={store} key={index} />
-        ))}
+        )):null}
       </div>
     </div>
   );

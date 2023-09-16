@@ -71,13 +71,13 @@ const SellerMyPage = (props) => {
           />
           <div className="flex flex-col w-full gap-5">
             <MenuSection
-              imageUrl="../chacha2.jpg"
+              imageUrl="../product.svg"
               menuName="상품관리"
               bgColor="bg-secondary-container"
               onClickEvent={() => setOpenProductEdit(true)}
             />
             <MenuSection
-              imageUrl="../chacha2.jpg"
+              imageUrl="../mypage.svg"
               menuName="매출관리"
               bgColor="bg-error-container"
               onClickEvent={() => setOpenHistoryEdit(true)}
