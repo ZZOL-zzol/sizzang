@@ -5,6 +5,7 @@ import com.zzol.sizzang.product.dto.request.ProductModifyPutReq;
 import com.zzol.sizzang.product.dto.request.ProductRegistInsertReq;
 import com.zzol.sizzang.product.dto.response.ProductFindRes;
 import com.zzol.sizzang.product.entity.ProductEntity;
+import com.zzol.sizzang.store.entity.StoreEntity;
 
 import java.util.List;
 
@@ -19,4 +20,5 @@ public interface ProductService {
     BaIResult deleteProduct(Long stCode);
 
     List<ProductFindRes> findProductByTag (int tagCode);
+
 }
