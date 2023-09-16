@@ -76,7 +76,7 @@ const MapPractice = () => {
     // };
   
     return (
-      <div>
+      <div> 
         <div>
           <div id="map" style={{ width: "500px", height: "400px" }}></div>
         </div>
@@ -92,7 +92,7 @@ const MapPractice = () => {
                 </div>
               </form>
               <Map />
-            </div>
+            </div> 
           </div>
           <hr />
           <ul id="placesList"></ul>
