@@ -6,11 +6,13 @@ import { useDispatch } from "react-redux";
 import { setBasketCount } from "../../store";
 
 const Header = (props) => {
+  const navigate = useNavigate();
   const basketCount = useSelector((state) => state.basketCount.value);
   const dispatch = useDispatch();
 
   useEffect(() => {
     const basketProductList = JSON.parse(window.localStorage.getItem("BasketProductList"));
+    
 
     let tmpCount = 0;
 
@@ -18,12 +20,10 @@ const Header = (props) => {
       for (let i = 0; i < basketProductList.length; i++) {
         tmpCount += basketProductList[i].count;
       }
-
       dispatch(setBasketCount(tmpCount));
     }
   }, []);
 
-  const navigate = useNavigate();
   return (
     <div className="navbar bg-base-100 fixed top-0 z-40">
       <div className="flex-1">

@@ -1,9 +1,7 @@
 import Header from "../components/common/Header";
 import Navbar from "../components/common/Navbar";
-import KakaoMap from "../components/common/KakaoMap";
-import MapExample from "../components/common/MapExample";
 import MarketStoreCard from "../components/common/MarketStoreCard";
-import MapPractice from "../components/common/MapPractice";
+import MapSection from "../components/common/MapSection";
 import { API_URL } from "../lib/constants";
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -60,7 +58,7 @@ const PlaceSearchPage = () => {
       <Header title="시장 찾기" button={true} />
       <div className="flex flex-col">
         {/* <MapExample/> */}
-        <MapPractice
+        <MapSection
           marketList={marketList}
           keyword={keyword}
           setKeyword={setKeyword}

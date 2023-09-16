@@ -32,8 +32,8 @@ const ProductAddForm = (props) => {
 
   const onAddButtonClick = () => {
     const newProduct = {
-      tagCode: 1,
-      stCode: 1,
+      tagCode: 90,
+      stCode: props.store.stCode,
       pdCost: product.pdCost,
       pdName: product.pdName,
       pdIntro: product.pdIntro,
