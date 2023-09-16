@@ -9,15 +9,21 @@ const AccountListCard = (props) => {
   const [everyAccountList, setEveryAccountList] = useState([]);
   const [newAccountName, setNewAccountName] = useState("");
   const [newAccountNumber, setNewAccountNumber] = useState("");
+  const [oneCoinText, setOneCoinText] = useState("");
+  const [oneCoinTransfer, setOneCoinTransfer] = useState(false);
   const user = JSON.parse(window.localStorage.getItem("User"));
 
   const onAccountNameChange = (e) => {
-    setNewAccountName(e.target.value)
-  }
+    setNewAccountName(e.target.value);
+  };
 
   const onAccountNumberChange = (e) => {
-    setNewAccountNumber(e.target.value)
-  }
+    setNewAccountNumber(e.target.value);
+  };
+
+  const onOneCoinTextChange = (e) => {
+    setOneCoinText(e.target.value);
+  };
 
   useEffect(() => {
     axios
@@ -34,17 +40,42 @@ const AccountListCard = (props) => {
   }, []);
 
   const onAuthenticateButtonClick = () => {
-    axios.get(
-      `${API_URL}/bank/v1/auth/addAccountList`,
-      JSON.stringify({
-        userId: user.userID,
-        accountName: newAccountName,
-        accountNumber: newAccountNumber,
-      }),
-      {
-        headers: { "Content-Type": "application/json" },
-      }
-    );
+    axios
+      .post(
+        `${API_URL}/bank/v1/auth/addAccountList`,
+        JSON.stringify({
+          userId: user.userID,
+          accountName: newAccountName,
+          accountNumber: newAccountNumber,
+        }),
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const onOneCoinButtonClick = () => {
+    console.log(newAccountNumber);
+    axios
+      .post(
+        `${API_URL}/bank/v1/auth/1transfer`,
+        JSON.stringify({
+          bankCode: "119",
+          accountNumber: newAccountNumber,
+        }),
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      )
+      .then((res) => {
+        setOneCoinTransfer(true);
+        console.log(res.data);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -52,7 +83,10 @@ const AccountListCard = (props) => {
       <div className="flex w-full justify-between pr-5">
         <button
           className="btn btn-ghost normal-case text-xl font-environmentR"
-          onClick={() => props.setOpenAddAccount(false)}
+          onClick={() => {
+            props.setOpenAddAccount(false);
+            window.location.replace("/profile")
+          }}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -76,6 +110,8 @@ const AccountListCard = (props) => {
           account={account}
           type="addAccount"
           key={account.accountCode}
+          accountList={props.accountList}
+          setAccountList={props.setAccountList}
         />
       ))}
       <div
@@ -111,16 +147,55 @@ const AccountListCard = (props) => {
 
           <h3 className="font-bold text-lg">새 계좌 등록</h3>
           <div className="flex flex-col gap-2">
-          <div className="flex gap-2 items-center">
-            <img src="./shc_symbol_ci.png" alt="shinhan_logo" className="w-8" />
-            신한은행
+            {oneCoinTransfer ? (
+              <div className="flex gap-2 items-center text-start my-3">
+                신한은행 입금내역을 확인하고 입금명 'ZZOL' 앞 네자리 숫자를
+                확인해주세요!
+              </div>
+            ) : (
+              <div className="flex gap-2 items-center">
+                <img
+                  src="./shc_symbol_ci.png"
+                  alt="shinhan_logo"
+                  className="w-8"
+                />
+                신한은행
+              </div>
+            )}
+
+            <TextInput
+              placeholder="계좌이름"
+              onChangeEvent={onAccountNameChange}
+              value={newAccountName}
+            />
+            <TextInput
+              placeholder="계좌번호"
+              onChangeEvent={onAccountNumberChange}
+              value={newAccountNumber}
+            />
+            {oneCoinTransfer ? (
+              <TextInput
+                placeholder="네자리 숫자"
+                onChangeEvent={onOneCoinTextChange}
+                value={oneCoinText}
+              />
+            ) : null}
           </div>
-          <TextInput placeholder="계좌이름" onChangeEvent={onAccountNameChange} value={newAccountName}/>
-          <TextInput placeholder="계좌번호" onChangeEvent={onAccountNumberChange} value={newAccountNumber}/>
-          </div>
-          <div className="w-full rounded-lg h-[40px] bg-myprimary mt-5 flex items-center justify-center text-white text-lg font-medium">
-            인증 요청
-          </div>
+          {oneCoinTransfer ? (
+            <div
+              className="w-full rounded-lg h-[40px] bg-myprimary mt-5 flex items-center justify-center text-white text-lg font-medium"
+              onClick={() => onAuthenticateButtonClick()}
+            >
+              인증하기
+            </div>
+          ) : (
+            <div
+              className="w-full rounded-lg h-[40px] bg-myprimary mt-5 flex items-center justify-center text-white text-lg font-medium"
+              onClick={onOneCoinButtonClick}
+            >
+              1원 보내기
+            </div>
+          )}
         </div>
       </dialog>
     </div>

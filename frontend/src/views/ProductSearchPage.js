@@ -1,19 +1,15 @@
-import MarketStoreCard from "../components/common/MarketStoreCard";
-import Carousel from "../components/product/Carousel";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import Header from "../components/common/Header";
+import Loading from "../components/common/Loading";
 import Navbar from "../components/common/Navbar";
-import TextInput from "../components/common/TextInput";
-import DetailInfoCard from "../components/common/DetailInfoCard";
-import SmallButton from "../components/common/SmallButton";
 import SearchBar from "../components/common/SearchBar";
+import Tabs from "../components/common/Tabs";
+import Carousel from "../components/product/Carousel";
 import Category from "../components/product/Category";
 import ProductAverageCard from "../components/product/ProductAverageCard";
 import ProductCurrentPriceCard from "../components/product/ProductCurrentPriceCard";
-import { useEffect, useState } from "react";
-import Tabs from "../components/common/Tabs";
-import { KAMIS_API_URL } from "../lib/constants";
-import axios from "axios";
-import Loading from "../components/common/Loading";
+import { API_URL, KAMIS_API_URL } from "../lib/constants";
 
 // const productList = [
 //   { pdCode:1, pcCode:1, stCode:'', mkCode:'', scCode:'', pdName: "옛날통닭", pdCost: 50000 },
@@ -30,6 +26,7 @@ const ProductSearchPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [keyword, setKeyword] = useState("");
   const [resultList, setResultList] = useState([]);
+  const [countyCode, setCountyCode] = useState("");
 
   const onKeywordChange = (e) => {
     setKeyword(e.target.value);
@@ -46,45 +43,140 @@ const ProductSearchPage = () => {
     }
   };
 
-  const onCategoryChange = () => {
+
+
+  const onCategoryChange = async() => {
+    // //1101:서울, 2100:부산, 2200:대구, 2401:광주, 2501:대전
+    // setIsLoading(true);
+    // setProductList([]);
+
+    // console.log(currentCategory);
+    // if(currentView===0){
+    //   await axios
+    //     .get(
+    //       `http://cors-anywhere.herokuapp.com/${KAMIS_API_URL}/service/price/xml.do?action=ItemInfo`,
+    //       {
+    //         params: {
+    //           p_cert_key: "9ec7751a-6865-4116-98d5-181afba8c407",
+    //           p_cert_id: "222",
+    //           p_returntype: "json",
+    //           p_countycode: currentCategory,
+    //         },
+    //       }
+    //     )
+    //     .then((res) => {
+    //       // setProductList([]);
+    //       setProductList(res.data.price);
+    //       setIsLoading(false);
+    //       console.log(res);
+    //     })
+    //     .catch((err) => console.log(err));
+    // }else{
+    //   console.log("들어갔니?");
+    //   if(currentView===1){      
+    //     console.log("너냐?")
+    //   axios
+    //   .get(`http://localhost:8080/prtag`)
+    //   .then((res) => {
+    //     // setProductList([])
+    //     setProductList(res.data.data);
+    //     setIsLoading(false);
+    //     console.log(productList);
+    //   }
+    // )}else{
+    //   await axios
+    //     .get(`${API_URL}/prtag/${currentCategory}`)
+    //     .then((res) => {
+    //       // setProductList([])
+    //       setProductList(res.data.data);
+    //       setIsLoading(false);
+    //       console.log(productList);
+    //     })
+    //     .catch((err) => console.log(err));
+    //   }
+    // }
+  };
+
+  useEffect(()=>{
     //1101:서울, 2100:부산, 2200:대구, 2401:광주, 2501:대전
     setIsLoading(true);
     setProductList([]);
-    let countyCode = "";
-    if (currentCategory === "seoul") {
-      countyCode = "1101";
-    } else if (currentCategory === "busan") {
-      countyCode = "2100";
-    } else if (currentCategory === "daegu") {
-      countyCode = "2200";
-    } else if (currentCategory === "gwangju") {
-      countyCode = "2401";
-    } else {
-      countyCode = "2501";
-    }
 
-    axios
-      .get(
-        `http://cors-anywhere.herokuapp.com/${KAMIS_API_URL}/service/price/xml.do?action=ItemInfo`,
-        {
-          params: {
-            p_cert_key: "9ec7751a-6865-4116-98d5-181afba8c407",
-            p_cert_id: "222",
-            p_returntype: "json",
-            p_countycode: countyCode,
-          },
-        }
-      )
+    console.log(currentCategory);
+    if(currentView===0){
+      if(currentCategory==="all"){
+        console.log("뷰0, 카테 올")
+        axios
+        .get(
+          `http://cors-anywhere.herokuapp.com/${KAMIS_API_URL}/service/price/xml.do`,
+          {
+            params: {
+              p_cert_key: "9ec7751a-6865-4116-98d5-181afba8c407",
+              p_cert_id: "222",
+              p_returntype: "json",
+            },
+          }
+        )
+        .then((res) => {
+          setProductList(res.data.price);
+          setIsLoading(false);
+          console.log(res);
+        })
+        .catch((err) => console.log(err));
+        
+        console.log("실행?")
+
+      }else{
+        console.log("뷰0, 카테 나머지")
+        axios
+        .get(
+          `http://cors-anywhere.herokuapp.com/${KAMIS_API_URL}/service/price/xml.do?action=ItemInfo`,
+          {
+            params: {
+              p_cert_key: "9ec7751a-6865-4116-98d5-181afba8c407",
+              p_cert_id: "222",
+              p_returntype: "json",
+              p_countycode: currentCategory,
+            },
+          }
+        )
+        .then((res) => {
+          // setProductList([]);
+          setProductList(res.data.price);
+          setIsLoading(false);
+          console.log(res);
+        })
+        .catch((err) => console.log(err));
+
+
+      }
+    }else{
+      if(currentCategory==="all"){     
+        console.log("뷰1, 카테 올") 
+        console.log("너냐?")
+      axios
+      .get(`http://localhost:8080/prtag`)
       .then((res) => {
-        setProductList(res.data.price);
+        setProductList(res.data.data);
         setIsLoading(false);
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
-  };
+        console.log(productList);
+      }
+    )}else{
+      console.log("뷰1, 카테 나머지")
+      axios
+        .get(`${API_URL}/prtag/${currentCategory}`)
+        .then((res) => {
+          setProductList(res.data.data);
+          setIsLoading(false);
+          console.log(productList);
+        })
+        .catch((err) => console.log(err));
+      }
+    }
+  }, [currentView, currentCategory])
 
   useEffect(() => {
-
+    
     axios
       .get(
         `http://cors-anywhere.herokuapp.com/${KAMIS_API_URL}/service/price/xml.do`,
@@ -121,7 +213,7 @@ const ProductSearchPage = () => {
             currentView={currentView}
             currentCategory={currentCategory}
             setCurrentCategory={setCurrentCategory}
-            onChangeEvent={onCategoryChange}
+            // onChangeEvent={onCategoryChange}
           ></Category>
         )}
         <div className="bg-white">
@@ -167,10 +259,15 @@ const ProductSearchPage = () => {
                 setSelectedPdCode={() => setSelectedPdCode(product.pdCode)}
               />
             ))
-          ) : // productList.map((product, index) => (
-          //   <ProductAverageCard product={product} key={index} setSelectedPdCode={()=>setSelectedPdCode(product.pdCode)}/>
-          // ))
-          null}
+          ) : currentView === 1 && resultList.length === 0 ? (
+            productList.map((product, index) => (
+              <ProductAverageCard
+                product={product}
+                key={index}
+                setSelectedPdCode={() => setSelectedPdCode(product.pdCode)}
+              />
+            ))
+          ):null}
         </div>
       </div>
       <Navbar />

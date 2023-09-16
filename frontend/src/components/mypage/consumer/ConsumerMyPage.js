@@ -27,18 +27,9 @@ const ConsumerMyPage = (props) => {
         JSON.stringify({ userId: user.userId }),
         { headers: { "Content-Type": "application/json" } }
       )
-      .then((res) => setAccountList(res.data))
-      .catch((err) => console.log(err));
-
-    axios
-      .post(
-        `${API_URL}/bank/v1/search/registedAccounts`,
-        JSON.stringify({ userId: user.userId }),
-        { headers: { "Content-Type": "application/json" } }
-      )
       .then((res) => {
-        console.log(res);
-        // setAccountList(res.data[0].accountList);
+        console.log(res.data);
+        setAccountList(res.data);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -51,7 +42,11 @@ const ConsumerMyPage = (props) => {
           user={props.user}
         />
       ) : openAddAccount ? (
-        <AccountListCard setOpenAddAccount={setOpenAddAccount} />
+        <AccountListCard
+          accountList={accountList}
+          setOpenAddAccount={setOpenAddAccount}
+          setAccountList={setAccountList}
+        />
       ) : (
         <div className="flex flex-col gap-3">
           <ProfileSection
@@ -71,15 +66,17 @@ const ConsumerMyPage = (props) => {
               className="flex justify-center items-center gap-2 text-outline"
               onClick={() => setOpenAddAccount(true)}
             >
+              <div className="relative w-5 h-5 rounded-full bg-outline">
               <svg
-                className="fill-outline"
                 xmlns="http://www.w3.org/2000/svg"
-                height="1em"
+                height="0.7em"
                 viewBox="0 0 512 512"
+                className="fill-white absolute left-[4.5px] top-[4.5px]"
               >
-                <path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM232 344V280H168c-13.3 0-24-10.7-24-24s10.7-24 24-24h64V168c0-13.3 10.7-24 24-24s24 10.7 24 24v64h64c13.3 0 24 10.7 24 24s-10.7 24-24 24H280v64c0 13.3-10.7 24-24 24s-24-10.7-24-24z" />
+                <path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z" />
               </svg>
-              계좌 간편 등록
+              </div>
+              계좌 목록 관리
             </div>
             <div></div>
             <div>

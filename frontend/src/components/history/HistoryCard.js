@@ -8,15 +8,16 @@ const HistoryCard = (props) => {
   const onReviewButtonClick = () => {
     navigate('/review', {state:{history : props.history}})
   }
+  console.log(props.history)
   return (
     <div className=" bg-white h-[80px] p-[10px]">
       <div className="w-full h-full flex flex-row justify-between">
         <div className="flex flex-col">
-        <div className="card-title text-base">{props.history.ppList[0].ppName}x{props.history.ppList[0].ppInt} 외 {props.history.ppList.length}건 </div>
+        <div className="card-title text-base">{props.history.details[0].prName}x{props.history.details[0].puCnt} 외 {props.history.details.length}건 </div>
           <span className="text-sm text-left">{props.history.puDate}</span>
         </div>
         <div className="flex flex-col h-full justify-between">
-          {props.history.reviewed?  <div className="w-[64px]"></div> : <SmallButton innerText="리뷰 쓰기" color="bg-primary-container" onReviewButtonClick={onReviewButtonClick}/>}
+          {props.history.reRegisterd?  <div className="w-[64px]"></div> : <SmallButton innerText="리뷰 쓰기" color="bg-primary-container" onReviewButtonClick={onReviewButtonClick}/>}
           
           <div>{props.history.puCost}원</div>
         </div>
