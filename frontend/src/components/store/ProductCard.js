@@ -70,7 +70,7 @@ const ProductCard = (props) => {
       );
     }
     props.setBasketProductList(basketProductList);
-    if (props.basketProductList.length === 0) {
+    if (basketProductList.length === 0 ) {
       props.setBasketStore({});
       window.localStorage.setItem("BasketStore", "{}");
     }

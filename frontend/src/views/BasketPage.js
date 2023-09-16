@@ -29,6 +29,7 @@ const BasketPage = () => {
   const [basketStore, setBasketStore] = useState({});
   const [basketProductList, setBasketProductList] = useState([]);
   const [basketTotalCost, setBasketTotalCost] = useState(0);
+  const [myAccountList, setMyAccountList] = useState([]);
   const basketCount = useSelector((state) => state.basketCount.value);
   const user = JSON.parse(window.localStorage.getItem("User"));
 
@@ -39,15 +40,30 @@ const BasketPage = () => {
     const tmpBasketProductList = JSON.parse(
       window.localStorage.getItem("BasketProductList")
     );
-    if (basketStore) setBasketStore(tmpBasketStore);
-    if (basketProductList) setBasketProductList(tmpBasketProductList);
+    if (tmpBasketStore) setBasketStore(tmpBasketStore);
+    if (tmpBasketProductList) {
+      setBasketProductList(tmpBasketProductList);
 
-    for (let i = 0; i < tmpBasketProductList.length; i++) {
-      setBasketTotalCost(
-        (prev) =>
-          prev + tmpBasketProductList[i].pdCost * tmpBasketProductList[i].count
-      );
+      for (let i = 0; i < tmpBasketProductList.length; i++) {
+        setBasketTotalCost(
+          (prev) =>
+            prev +
+            tmpBasketProductList[i].pdCost * tmpBasketProductList[i].count
+        );
+      }
     }
+
+    axios
+      .post(
+        `${API_URL}/bank/v1/search/registedAccounts`,
+        JSON.stringify({ userId: user.userId }),
+        { headers: { "Content-Type": "application/json" } }
+      )
+      .then((res) => {
+        console.log(res.data);
+        setMyAccountList(res.data);
+      })
+      .catch((err) => console.log(err));
   }, []);
 
   const onAccountClick = (value) => {
@@ -60,31 +76,64 @@ const BasketPage = () => {
       setShowAccount(true);
     } else {
       console.log(basketStore);
+      console.log(basketProductList);
+
+      const purchaseData = [];
+      basketProductList.map((product) =>
+        purchaseData.push({
+          puCnt: product.count,
+          prName: product.pdName + "x" + product.count,
+          prPrice: product.pdCost * product.count,
+        })
+      );
 
       axios
         .get(`${API_URL}/store/${basketStore.stCode}`)
         .then((res) => {
           const data = {
             myAccountNumber: selectedAccountNumber,
-            myMsg:
-              basketProductList[0].pdName +
-              "x" +
-              basketProductList[0].count +
-              " 외 " +
-              (basketCount - basketProductList[0].count) +
-              "건", //내 계좌에 찍힐 메세지
+            // myMsg:
+            //   basketProductList[0].pdName +
+            //   "x" +
+            //   basketProductList[0].count +
+            //   " 외 " +
+            //   (basketCount - basketProductList[0].count) +
+            //   "건",
+            myMsg: basketStore.stName,
             oppenentBankCode: "088",
             opponentAccountNumber: res.data.data.stAccount,
             transactionMsg: user.userName,
             depositAmount: basketTotalCost,
           };
-
           console.log(data);
           axios
             .post(`${API_URL}/bank/v1/transfer/krw`, JSON.stringify(data), {
               headers: { "Content-Type": "application/json" },
             })
-            .then((res) => console.log(res))
+            .then((res) => {
+              console.log(res);
+
+              axios.post(
+                `${API_URL}/purchase/regist`,
+                JSON.stringify({
+                  stCode: basketStore.stCode,
+                  puCost: basketTotalCost,
+                  accountNumber: selectedAccountNumber,
+                  details: purchaseData,
+                }),
+                {
+                  headers: { "Content-Type": "application/json" },
+                }
+              );
+            })
+            .then((res) => {
+              console.log(res);
+              window.localStorage.removeItem("BasketProductList");
+              window.localStorage.removeItem("BasketStore");
+              setBasketProductList([]);
+              setBasketStore({});
+              setBasketTotalCost(0);
+            })
             .catch((err) => console.log(err));
         })
         .catch((err) => console.log(err));
@@ -99,7 +148,7 @@ const BasketPage = () => {
         route="javascript:window.history.back()"
       />
       <div className="flex flex-col w-full">
-        {basketStore ? (
+        {basketStore.stName ? (
           <div className="w-full">
             <div className="w-full p-5 bg-white mb-3 flex flex-col items-start">
               <div className="font-semibold">{basketStore.stName}</div>
@@ -141,10 +190,11 @@ const BasketPage = () => {
       </div>
 
       <div
-        className={
+        className={ basketProductList.length >0?
           showAccount
             ? "fixed w-full flex flex-col bg-white bottom-0 items-center justify-center px-5 py-5 gap-5 rounded-t-[20px]"
             : "fixed w-full flex flex-col bg-white bottom-0 items-center justify-center px-5 py-5 gap-5"
+            : ''
         }
       >
         {showAccount ? (
@@ -159,22 +209,24 @@ const BasketPage = () => {
           </div>
         ) : null}
         {showAccount
-          ? accountList.map((account) => (
+          ? myAccountList.map((account) => (
               <AccountCard
-                account={account}
+                account={account.accountList[0]}
                 selectedAccountNumber={selectedAccountNumber}
-                onClickEvent={() => onAccountClick(account.accountNumber)}
+                onClickEvent={() =>
+                  onAccountClick(account.accountList[0].accountNumber)
+                }
                 type="pay"
               />
             ))
           : null}
-
-        <button
+        {basketProductList.length >0?<button
           className="btn h-[40px] w-full bg-myprimary text-xl text-white"
           onClick={() => onPayButtonClick()}
         >
           {showAccount ? "결제하기" : "바로 결제"}
-        </button>
+        </button> : null }
+        
       </div>
     </div>
   );

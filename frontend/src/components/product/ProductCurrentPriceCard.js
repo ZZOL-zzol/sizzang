@@ -51,28 +51,30 @@ const ProductCurrentPriceCard = (props) => {
   const [priceMonthAgo, setPriceMonthAgo] = useState(0);
 
   useEffect(() => {
-    if (props.product.dpr1.length > 3) {
-      setPriceNow(
-        Number(
-          props.product.dpr1
-            .split(",")[0]
-            .concat(props.product.dpr1.split(",")[1])
-        )
-      );
-    } else {
-      setPriceNow(Number(props.product.dpr1));
-    }
-    if (props.product.dpr3.length > 3) {
-      setPriceMonthAgo(
-        Number(
-          props.product.dpr3
-            .split(",")[0]
-            .concat(props.product.dpr3.split(",")[1])
-        )
-      );
-    } else {
-      setPriceMonthAgo(Number(props.product.dpr3));
-    }
+    // console.log("프롭스");
+    // console.log(props);
+    // if (props.product.dpr1.length > 3) {
+    //   setPriceNow(
+    //     Number(
+    //       props.product.dpr1
+    //         .split(",")[0]
+    //         .concat(props.product.dpr1.split(",")[1])
+    //     )
+    //   );
+    // } else {
+    //   setPriceNow(Number(props.product.dpr1));
+    // }
+    // if (props.product.dpr3.length > 3) {
+    //   setPriceMonthAgo(
+    //     Number(
+    //       props.product.dpr3
+    //         .split(",")[0]
+    //         .concat(props.product.dpr3.split(",")[1])
+    //     )
+    //   );
+    // } else {
+    //   setPriceMonthAgo(Number(props.product.dpr3));
+    // }
   }, []);
 
   return (
