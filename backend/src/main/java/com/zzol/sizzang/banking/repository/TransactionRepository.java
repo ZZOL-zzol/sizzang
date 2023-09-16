@@ -16,11 +16,11 @@ public interface TransactionRepository extends JpaRepository<TransactionHistory,
             " ORDER BY transaction_datetime " +
             " DESC LIMIT 1 " , nativeQuery = true)
     TransactionHistory findLastestInfoByBankCode(String userAccount);
+}
+
 
 //    TransactionHistory findByAccountNumber(String userAccount);
 
 //    Optional<Bank> findByAccountNumberAnd(String userCode);
-
-}
 
 

@@ -1,11 +1,10 @@
 package com.zzol.sizzang.farm.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import net.bytebuddy.description.type.TypeList;
 
+@Builder
+@ToString
 @Getter
 @Setter
 @NoArgsConstructor

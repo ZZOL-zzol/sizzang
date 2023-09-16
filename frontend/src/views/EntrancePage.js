@@ -65,11 +65,13 @@ const EntrancePage = () => {
           <TextInput
             placeholder="ID"
             onChangeEvent={onUserIdChange}
+            onEnterKeyDownEvent={onLoginClick}
             value={userId}
           />
           <TextInput
             placeholder="PASSWORD"
             onChangeEvent={onUserPasswordChange}
+            onEnterKeyDownEvent={onLoginClick}
             value={userPassword}
           />
         </div>

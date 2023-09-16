@@ -50,10 +50,9 @@ const StoreDetailPage = () => {
 
     }, []);
 
-
   return (
     <div className="flex flex-col w-full h-full bg-white outline outline-1">
-      <Header title="점포 상세" backButton basketButton />
+      <Header title="점포 상세" backButton basketButton route={`/market/${store.mkCode}`} />
       <div className="relative w-full overflow-auto items-center">
         <div className="absolute top-[200px] w-full">
           <DetailInfoCard store={store} storeReCnt={reviewList.length}/>
@@ -77,14 +76,15 @@ const StoreDetailPage = () => {
           <Tabs type="store" tab1='상품 목록' tab2='리뷰' onTabClick={setCurrentTab} />
         </div>
       </div>
+
       {currentTab === 0 ? (
-        <div className="flex flex-col w-full h-[350px] overflow-auto">
+        <div className="flex flex-col w-full h-full overflow-auto">
           {productList.map((product) => (
             <ProductCard key={product.pdCode} product={product} store={store} />
           ))}
         </div>
       ) : (
-        <div className="flex flex-col w-full h-[350px] overflow-auto gap-2 bg-background-fill">
+        <div className="flex flex-col w-full h-full overflow-auto gap-2 bg-background-fill">
           {reviewList.map((review) => (
             <ReviewCard key={review.reCode} review={review} isStore={1} />
           ))}

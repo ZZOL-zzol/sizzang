@@ -1,16 +1,17 @@
-// const account = {
-//   accountCode: 1,
-//   accountHolder: "차차아버님",
-//   accountNumber: "123-456-789",
-//   accountName: "차차야그만방해해계좌",
-//   accountBalance: 200000,
-// };
+import { useState } from "react";
 
 const AccountCard = (props) => {
   return (
-    <div className="card flex-row bg-white shadow-xl p-5 w-full gap-3" onClick={()=>props.setShowAccount(false)}>
+    <div
+      className={
+        props.selectedAccountNumber === props.account.accountNumber
+          ? "card flex-row bg-background-fill p-5 w-full gap-3 border-myprimary border-2"
+          : "card flex-row bg-background-fill p-5 w-full gap-3"
+      }
+      onClick={props.onClickEvent}
+    >
       <figure>
-        <img src="./chacha2.jpg" alt="Shoes" className="rounded-xl w-10 h-10" />
+        <img src="./shc_symbol_ci.png" alt="Shoes" className="rounded-xl w-10 h-10" />
       </figure>
       <div className="card-body flex-row items-center text-center p-0 justify-between">
         <div className="flex flex-col items-start">

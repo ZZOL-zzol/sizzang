@@ -10,13 +10,13 @@ const Header = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const basket = JSON.parse(window.localStorage.getItem("basket"));
+    const basketProductList = JSON.parse(window.localStorage.getItem("BasketProductList"));
 
     let tmpCount = 0;
 
-    if (basket) {
-      for (let i = 0; i < basket.productList.length; i++) {
-        tmpCount += basket.productList[i].count;
+    if (basketProductList) {
+      for (let i = 0; i < basketProductList.length; i++) {
+        tmpCount += basketProductList[i].count;
       }
 
       dispatch(setBasketCount(tmpCount));
