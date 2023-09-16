@@ -173,7 +173,7 @@ const ProductSearchPage = () => {
         .catch((err) => console.log(err));
       }
     }
-  }, [currentView, currentCategory])
+  }, [currentCategory,currentView])
 
   useEffect(() => {
     
@@ -264,7 +264,7 @@ const ProductSearchPage = () => {
               <ProductAverageCard
                 product={product}
                 key={index}
-                setSelectedPdCode={() => setSelectedPdCode(product.pdCode)}
+                setSelectedPdCode={() => setSelectedPdCode(product.tagCode)}
               />
             ))
           ):null}

@@ -33,11 +33,28 @@ public class PrTagController {
      */
     @Operation(description = "태그 전체 조회 메서드입니다.")
     @GetMapping("/{pcCode}")
-    public CommonResponse<List<PrTagFindRes>> findAll(@PathVariable int pcCode) {
-        log.info("PrTagController_findAll_start: ");
+    public CommonResponse<List<PrTagFindRes>> findTagByCategory(@PathVariable int pcCode) {
+        log.info("PrTagController_findTagByCategory_start: ");
 
         Optional<List<PrTagFindRes>> findRes = Optional.ofNullable(
                 prTagService.findTagByCategory(pcCode));
+
+        log.info("PrTagController_findTagByCategory_end: " + findRes);
+        return CommonResponse.success(findRes.orElseThrow(TemplateNoResultException::new));
+    }
+
+    /**
+     * 카테고리별 tag List 조회
+     *
+     * @return
+     */
+    @Operation(description = "태그 전체 조회 메서드입니다.")
+    @GetMapping
+    public CommonResponse<List<PrTagFindRes>> findAll() {
+        log.info("PrTagController_findAll_start: ");
+
+        Optional<List<PrTagFindRes>> findRes = Optional.ofNullable(
+                prTagService.findAll());
 
         log.info("PrTagController_findAll_end: " + findRes);
         return CommonResponse.success(findRes.orElseThrow(TemplateNoResultException::new));
