@@ -23,7 +23,9 @@ const SellerMyPage = (props) => {
   useEffect(() => {
     axios
       .get(`${API_URL}/store/user/${user.userCode}`)
-      .then((res) => setStore(res.data.data[0]))
+      .then((res) => {
+        setStore(res.data.data[0]);
+      })
       .catch((err) => console.log(err));
 
     axios
@@ -48,9 +50,13 @@ const SellerMyPage = (props) => {
           store={store}
         />
       ) : openAddAccount ? (
-        <AccountListCard setOpenAddAccount={setOpenAddAccount}/>
+        <AccountListCard setOpenAddAccount={setOpenAddAccount} />
       ) : openProductEdit ? (
-        <ProductEditCard setOpenProductEdit={setOpenProductEdit} store={store}/>
+        <ProductEditCard
+          setOpenProductEdit={setOpenProductEdit}
+          store={store}
+          stCode={14}
+        />
       ) : openHistoryEdit ? (
         <HistoryEditCard
           setOpenHistoryEdit={setOpenHistoryEdit}

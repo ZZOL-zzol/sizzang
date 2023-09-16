@@ -4,7 +4,7 @@ import SmallButton from "../common/SmallButton";
 const HistoryCard = (props) => {
   const navigate = useNavigate();
   const onReviewButtonClick = () => {
-    navigate("/review", { state: { history: props.history } });
+    navigate("/review", { state: { history: props.history, accountNumber: props.accountNumber } });
   };
   return (
     <div className=" bg-white h-[80px] p-[10px]">

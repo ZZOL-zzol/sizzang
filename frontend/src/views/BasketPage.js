@@ -4,24 +4,8 @@ import { useEffect, useState } from "react";
 import AccountCard from "../components/basket/AccountCard";
 import axios from "axios";
 import { API_URL } from "../lib/constants";
-import { useSelector } from "react-redux";
-
-const accountList = [
-  {
-    accountCode: 1,
-    accountHolder: "차차아버님",
-    accountNumber: "123-456-789",
-    accountName: "차차야그만방해해계좌",
-    accountBalance: 200000,
-  },
-  {
-    accountCode: 1,
-    accountHolder: "차차아버님",
-    accountNumber: "123-456-321",
-    accountName: "차차야그만방해해계좌",
-    accountBalance: 200000,
-  },
-];
+import { useSelector, useDispatch } from "react-redux";
+import { setBasketCount } from "../store";
 
 const BasketPage = () => {
   const [selectedAccountNumber, setSelectedAccountNumber] = useState("");
@@ -31,6 +15,7 @@ const BasketPage = () => {
   const [basketTotalCost, setBasketTotalCost] = useState(0);
   const [myAccountList, setMyAccountList] = useState([]);
   const basketCount = useSelector((state) => state.basketCount.value);
+  const dispatch = useDispatch()
   const user = JSON.parse(window.localStorage.getItem("User"));
 
   useEffect(() => {
@@ -40,7 +25,7 @@ const BasketPage = () => {
     const tmpBasketProductList = JSON.parse(
       window.localStorage.getItem("BasketProductList")
     );
-    if (tmpBasketStore) setBasketStore(tmpBasketStore);
+    if (tmpBasketStore) {setBasketStore(tmpBasketStore)};
     if (tmpBasketProductList) {
       setBasketProductList(tmpBasketProductList);
 
@@ -127,7 +112,8 @@ const BasketPage = () => {
               );
             })
             .then((res) => {
-              console.log(res);
+              setShowAccount(false)
+              dispatch(setBasketCount(0))
               window.localStorage.removeItem("BasketProductList");
               window.localStorage.removeItem("BasketStore");
               setBasketProductList([]);
@@ -141,7 +127,7 @@ const BasketPage = () => {
   };
 
   return (
-    <div className="w-full h-full bg-background-fill">
+    <div className="w-full h-full bg-background-fill py-16">
       <Header
         title="장바구니"
         backButton
