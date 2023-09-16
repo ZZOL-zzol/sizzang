@@ -14,7 +14,7 @@ const MarketStoreCard = (props) => {
   return (
     <div>
       {props.market ? (
-        <div className="card card-side bg-base-100 rounded-none border-b-2">
+        <div className="card px-2 card-side bg-base-100 rounded-none border-b-2">
         <div className="flex w-full">
           <figure className="m-3 rounded-lg w-24 h-24">
             <img className="w-full h-full" src={props.market.mkImg} alt="marketImage" />
@@ -31,7 +31,7 @@ const MarketStoreCard = (props) => {
         </div>
         </div>
       ) : (
-        <div className="card card-side bg-base-100 rounded-none border-b-2" onClick={() => navigateTo()}>
+        <div className="card px-2 card-side bg-base-100 rounded-none border-b-2" onClick={() => navigateTo()}>
         <div className="flex w-full">
           <div className="card-body p-3 justify-between">
             <div className="gap-0 flex flex-col">

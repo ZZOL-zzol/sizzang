@@ -42,7 +42,7 @@ const MapPractice = () => {
   return (
     <div>
       <div>
-        <div id="map" style={{ width: "500px", height: "400px" }}></div>
+        <div id="map" className="w-full h-[400px]"></div>
       </div>
       <div id="menu_wrap" className="">
         <div className="option">
