@@ -3,9 +3,11 @@ const ReviewCard = (props) => {
     <div className="w-full p-5 bg-white">
       <div className="flex justify-between items-start">
         <div className="flex flex-col items-start">
-          <div className="text-lg">{props.isStore ? "" : props.review.stName}</div>
-          <div>{props.review.userNickname}</div>
-          <div className="text-sm text-outline">{props.review.createTime.substring(0,16)}</div>
+          <div className="text-xl font-bold mb-2">{props.isStore ? "" : props.review.stName}</div>
+          <div className="flex">
+            <div className="text-lg mb-1">{props.review.userNickname}</div> 
+            <div className="text-sm text-outline ml-2 mt-2">{props.review.createTime.substring(0,16)}</div>
+          </div>
           <div className="text-sm text-outline">{props.review.reContent}</div>
         </div>
         <div className="text-sm flex items-center">

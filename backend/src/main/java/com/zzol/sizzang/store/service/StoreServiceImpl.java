@@ -221,6 +221,7 @@ public class StoreServiceImpl implements StoreService{
                 .stLongtitude(storeEntity.getStLongtitude())
                 .stAddress(storeEntity.getStAddress())
                 .scName(stCategoryRepository.findByScCode(storeEntity.getStCategoryEntity().getScCode()).get().getScName())
+                .mkCode(storeEntity.getMarketEntity().getMkCode())
                 .build();
 
         // 게시글 상세 정보 조회 결과
