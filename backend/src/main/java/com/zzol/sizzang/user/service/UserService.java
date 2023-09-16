@@ -114,7 +114,6 @@ public class UserService {
     public void updateUserAccount(String userAccount, String userId){
         userRepository.registUserAccountByUserId(userAccount, userId);
         bankRepository.updateRegistUserAccountByUserId(userAccount);
-
     }
 
 
@@ -133,5 +132,15 @@ public class UserService {
     public void uploadUserImg(UploadUserimgRequestDto uploadUserimgRequestDto) {
         userRepository.registUserImgByUserId(uploadUserimgRequestDto.getUserImgUrl(), uploadUserimgRequestDto.getUserId());
     }
+
+    /**
+     * 유저 계좌 등록 메서드
+     * */
+    @Transactional
+    public void deleteUserAccount(String userAccount){
+        bankRepository.deleleRegistUserAccountByUserId(userAccount);
+    }
+
+
 
 }

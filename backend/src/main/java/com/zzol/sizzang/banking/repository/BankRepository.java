@@ -27,6 +27,13 @@ public interface BankRepository extends JpaRepository<Bank, Long> {
             " SET registed = TRUE  " +
             " WHERE account_number = ?1 " , nativeQuery = true)
     void updateRegistUserAccountByUserId(String userAccount);
+
+
+    @Modifying
+    @Query(value = " UPDATE bank " +
+            " SET registed = FALSE  " +
+            " WHERE account_number = ?1 " , nativeQuery = true)
+    void deleleRegistUserAccountByUserId(String userAccount);
 }
 
 

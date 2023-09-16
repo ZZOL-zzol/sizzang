@@ -123,4 +123,13 @@ public class BankController {
         }
     }
 
+    @Operation(description = "앱에 계좌 등록 취소 메서드")
+    @PostMapping("/v1/auth/deleteAccount")
+    public ResponseEntity<?> deleteAccount(@RequestBody DeleteAccountRequestDto requestDto) {
+        log.info("registAccount 요청");
+        log.info("계좌확인 : {}", requestDto.getAccountNumber());
+        userService.deleteUserAccount(requestDto.getAccountNumber());
+        return new ResponseEntity<>("계좌등록 해제 완료", HttpStatus.OK);
+    }
+
 }
