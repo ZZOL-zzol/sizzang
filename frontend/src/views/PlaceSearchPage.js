@@ -57,7 +57,7 @@ const PlaceSearchPage = () => {
 
   return (
     <div className="App flex flex-col text-3xl h-full w-full bg-background-fill py-16">
-      <Header title="장소 찾기" button={true} />
+      <Header title="시장 찾기" button={true} />
       <div className="flex flex-col">
         {/* <MapExample/> */}
         <MapPractice

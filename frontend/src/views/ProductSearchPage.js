@@ -11,12 +11,7 @@ import ProductAverageCard from "../components/product/ProductAverageCard";
 import ProductCurrentPriceCard from "../components/product/ProductCurrentPriceCard";
 import { API_URL, KAMIS_API_URL } from "../lib/constants";
 
-// const productList = [
-//   { pdCode:1, pcCode:1, stCode:'', mkCode:'', scCode:'', pdName: "옛날통닭", pdCost: 50000 },
-//   { pdCode:1, pcCode:1, stCode:'', mkCode:'', scCode:'', pdName: "옛날통닭", pdCost: 50000 },
-//   { pdCode:1, pcCode:1, stCode:'', mkCode:'', scCode:'', pdName: "옛날통닭", pdCost: 50000 },
-//   { pdCode:1, pcCode:1, stCode:'', mkCode:'', scCode:'', pdName: "옛날통닭", pdCost: 50000 },
-// ];
+
 
 const ProductSearchPage = () => {
   const [productList, setProductList] = useState([]);
@@ -43,70 +38,36 @@ const ProductSearchPage = () => {
     }
   };
 
+  const onTabClick = (value) => {
+    console.log(value)
+    setCurrentView(value)
+    if(value === 1){
+      setCurrentCategory('all')
+      console.log('-오늘의 전체 평균가')
+      axios
+        .get(`${API_URL}/prtag`)
+        .then((res) => {
+          setProductList(res.data.data);
+          setIsLoading(false);
+        })
+        .catch((err) => console.log(err));
+    }else{
+      setCurrentCategory('all')
+    }
+  }
 
-
-  const onCategoryChange = async() => {
-    // //1101:서울, 2100:부산, 2200:대구, 2401:광주, 2501:대전
-    // setIsLoading(true);
-    // setProductList([]);
-
-    // console.log(currentCategory);
-    // if(currentView===0){
-    //   await axios
-    //     .get(
-    //       `http://cors-anywhere.herokuapp.com/${KAMIS_API_URL}/service/price/xml.do?action=ItemInfo`,
-    //       {
-    //         params: {
-    //           p_cert_key: "9ec7751a-6865-4116-98d5-181afba8c407",
-    //           p_cert_id: "222",
-    //           p_returntype: "json",
-    //           p_countycode: currentCategory,
-    //         },
-    //       }
-    //     )
-    //     .then((res) => {
-    //       // setProductList([]);
-    //       setProductList(res.data.price);
-    //       setIsLoading(false);
-    //       console.log(res);
-    //     })
-    //     .catch((err) => console.log(err));
-    // }else{
-    //   console.log("들어갔니?");
-    //   if(currentView===1){      
-    //     console.log("너냐?")
-    //   axios
-    //   .get(`http://localhost:8080/prtag`)
-    //   .then((res) => {
-    //     // setProductList([])
-    //     setProductList(res.data.data);
-    //     setIsLoading(false);
-    //     console.log(productList);
-    //   }
-    // )}else{
-    //   await axios
-    //     .get(`${API_URL}/prtag/${currentCategory}`)
-    //     .then((res) => {
-    //       // setProductList([])
-    //       setProductList(res.data.data);
-    //       setIsLoading(false);
-    //       console.log(productList);
-    //     })
-    //     .catch((err) => console.log(err));
-    //   }
-    // }
-  };
-
-  useEffect(()=>{
+  const onViewCategoryChange = (category, view) => {
     //1101:서울, 2100:부산, 2200:대구, 2401:광주, 2501:대전
+    setCurrentCategory(category)
+    setIsLoading(true);
+    setProductList([]);
+    console.log(category)
     setIsLoading(true);
     setProductList([]);
 
-    console.log(currentCategory);
-    if(currentView===0){
-      if(currentCategory==="all"){
-        console.log("뷰0, 카테 올")
-        axios
+    if (view === 0 && category === "all") {
+      console.log('- 오늘의 전체 시세')
+      axios
         .get(
           `http://cors-anywhere.herokuapp.com/${KAMIS_API_URL}/service/price/xml.do`,
           {
@@ -123,12 +84,9 @@ const ProductSearchPage = () => {
           console.log(res);
         })
         .catch((err) => console.log(err));
-        
-        console.log("실행?")
-
-      }else{
-        console.log("뷰0, 카테 나머지")
-        axios
+    } else if (view === 0 && category !== "all") {
+      console.log('- 오늘의 지역별 시세')
+      axios
         .get(
           `http://cors-anywhere.herokuapp.com/${KAMIS_API_URL}/service/price/xml.do?action=ItemInfo`,
           {
@@ -136,70 +94,65 @@ const ProductSearchPage = () => {
               p_cert_key: "9ec7751a-6865-4116-98d5-181afba8c407",
               p_cert_id: "222",
               p_returntype: "json",
-              p_countycode: currentCategory,
+              p_countycode: category,
             },
           }
         )
         .then((res) => {
-          // setProductList([]);
           setProductList(res.data.price);
           setIsLoading(false);
           console.log(res);
         })
         .catch((err) => console.log(err));
-
-
-      }
-    }else{
-      if(currentCategory==="all"){     
-        console.log("뷰1, 카테 올") 
-        console.log("너냐?")
+    } else if (view === 1 && category === "all") {
+      console.log('- 오늘의 전체 평균가')
       axios
-      .get(`http://localhost:8080/prtag`)
-      .then((res) => {
-        setProductList(res.data.data);
-        setIsLoading(false);
-        console.log(productList);
-      }
-    )}else{
-      console.log("뷰1, 카테 나머지")
-      axios
-        .get(`${API_URL}/prtag/${currentCategory}`)
+        .get(`${API_URL}/prtag`)
         .then((res) => {
           setProductList(res.data.data);
           setIsLoading(false);
-          console.log(productList);
         })
         .catch((err) => console.log(err));
-      }
+    }else{
+      console.log('- 오늘의 품목별 평균가')
+      axios
+        .get(`${API_URL}/prtag/${category}`)
+        .then((res) => {
+          setProductList(res.data.data);
+          setIsLoading(false);
+        })
+        .catch((err) => console.log(err))
     }
-  }, [currentCategory,currentView])
+  };
 
   useEffect(() => {
-    
     axios
-      .get(
-        `http://cors-anywhere.herokuapp.com/${KAMIS_API_URL}/service/price/xml.do`,
-        {
-          params: {
-            p_cert_key: "9ec7751a-6865-4116-98d5-181afba8c407",
-            p_cert_id: "222",
-            p_returntype: "json",
-          },
-        }
-      )
-      .then((res) => {
-        setProductList(res.data.price);
-        setIsLoading(false);
-        console.log(res);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+        .get(
+          `http://cors-anywhere.herokuapp.com/${KAMIS_API_URL}/service/price/xml.do`,
+          {
+            params: {
+              p_cert_key: "9ec7751a-6865-4116-98d5-181afba8c407",
+              p_cert_id: "222",
+              p_returntype: "json",
+            },
+          }
+        )
+        .then((res) => {
+          setProductList(res.data.price);
+          setIsLoading(false);
+          console.log(res);
+        })
+        .catch((err) => console.log(err));
+  }, [])
+  
 
+
+  //1101:서울, 2100:부산, 2200:대구, 2401:광주, 2501:대전
+  console.log("리렌더")
   return (
     <div className="App flex flex-col text-3xl h-full w-full bg-background-fill py-16">
-      <Header title="상품" basketButton />
-      <div className="flex flex-col flex-grow">
+      <Header title="상품 시세" basketButton />
+      <div className="flex flex-col h-full">
         <div className="bg-white w-full h-16">
           <SearchBar
             placeholder="상품을 검색하세요."
@@ -212,16 +165,14 @@ const ProductSearchPage = () => {
           <Category
             currentView={currentView}
             currentCategory={currentCategory}
-            setCurrentCategory={setCurrentCategory}
-            // onChangeEvent={onCategoryChange}
+            onChangeEvent={onViewCategoryChange}
           ></Category>
         )}
         <div className="bg-white">
           <Tabs
             tab1="오늘의 시세"
             tab2="상품 평균가"
-            onTabClick={setCurrentView}
-            setCurrentCategory={setCurrentCategory}
+            onTabClick={onTabClick}
           />
         </div>
         <div className="bg-white pt-5">
@@ -238,7 +189,7 @@ const ProductSearchPage = () => {
           </div>
           <Carousel></Carousel>
         </div>
-        <div className="h-[320px] overflow-scroll">
+        <div className="h-auto overflow-scroll">
           {isLoading ? (
             <div className="w-full pt-10 mx-auto">
               <Loading />
@@ -267,7 +218,7 @@ const ProductSearchPage = () => {
                 setSelectedPdCode={() => setSelectedPdCode(product.tagCode)}
               />
             ))
-          ):null}
+          ) : null}
         </div>
       </div>
       <Navbar />

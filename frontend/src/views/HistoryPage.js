@@ -42,7 +42,7 @@ const HistoryPage = () => {
   return (
     <div className="w-full bg-background-fill">
       <Header title="내 소비내역" backButton route="/profile" />
-      <div className="flex flex-col w-full mt-5 gap-2">
+      <div className="flex flex-col w-full h-full py-20 gap-2">
         {historyList.map((history) => (
           <HistoryCard history={history} />
         ))}

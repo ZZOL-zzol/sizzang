@@ -17,7 +17,7 @@ const HistoryCard = (props) => {
           <span className="text-sm text-left">{props.history.puDate}</span>
         </div>
         <div className="flex flex-col h-full justify-between">
-          {props.history.reRegisterd?  <div className="w-[64px]"></div> : <SmallButton innerText="리뷰 쓰기" color="bg-primary-container" onReviewButtonClick={onReviewButtonClick}/>}
+          {props.history.reRegisted?  <SmallButton innerText="리뷰 완료" color="bg-outline-container"/> : <SmallButton innerText="리뷰 쓰기" color="bg-primary-container" onReviewButtonClick={onReviewButtonClick}/>}
           
           <div>{props.history.puCost}원</div>
         </div>

@@ -54,6 +54,8 @@ const AccountListCard = (props) => {
       )
       .then((res) => {
         console.log(res);
+        setOneCoinTransfer(false)
+        document.getElementById("my_modal_1").close()
       })
       .catch((err) => console.log(err));
   };
