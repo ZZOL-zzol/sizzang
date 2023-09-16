@@ -19,6 +19,10 @@ const AccountCard = (props) => {
       )
       .then((res) => {
         console.log(res);
+
+        let tmpAccount = { ...account };
+        tmpAccount.registed = true;
+        setAccount(tmpAccount);
         props.setAccountList((prev) => [
           ...prev,
           {
@@ -33,9 +37,7 @@ const AccountCard = (props) => {
             ],
           },
         ]);
-        let tmpAccount = {...account}
-        tmpAccount.registed = true;
-        setAccount(tmpAccount)
+        
       })
       .catch((err) => console.log(err));
   };
@@ -50,13 +52,12 @@ const AccountCard = (props) => {
         { headers: { "Content-Type": "application/json" } }
       )
       .then(() => {
-        let tmpAccount = {...account}
+        let tmpAccount = { ...account };
         tmpAccount.registed = false;
-        setAccount(tmpAccount)
-        
+        setAccount(tmpAccount);
       })
       .catch((err) => console.log(err));
-  }
+  };
 
   return (
     <div
@@ -92,7 +93,7 @@ const AccountCard = (props) => {
                   xmlns="http://www.w3.org/2000/svg"
                   height="1.5em"
                   viewBox="0 0 448 512"
-                  className="fill-myprimary"
+                  className="fill-myerror"
                 >
                   <path d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z" />
                 </svg>

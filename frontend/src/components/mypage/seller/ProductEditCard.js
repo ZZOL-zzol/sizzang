@@ -39,6 +39,7 @@ const ProductEditCard = (props) => {
           <ProductAddForm
             setOpenAddForm={setOpenAddForm}
             setProductList={setProductList}
+            store={props.store}
           />
         ) : (
           <div

@@ -48,9 +48,9 @@ const SellerMyPage = (props) => {
           store={store}
         />
       ) : openAddAccount ? (
-        <AccountListCard setOpenAddAccount={setOpenAddAccount} />
+        <AccountListCard setOpenAddAccount={setOpenAddAccount}/>
       ) : openProductEdit ? (
-        <ProductEditCard setOpenProductEdit={setOpenProductEdit} />
+        <ProductEditCard setOpenProductEdit={setOpenProductEdit} store={store}/>
       ) : openHistoryEdit ? (
         <HistoryEditCard
           setOpenHistoryEdit={setOpenHistoryEdit}
