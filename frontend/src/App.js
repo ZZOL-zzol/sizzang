@@ -49,6 +49,7 @@ const App = () => {
         <Route path="/history" element={<HistoryPage />}></Route>
         <Route path='/review' element={<ReviewUploadPage/>}/>
         <Route path="/stamp" element={<StampPage/>}/>
+        <Route path="/product/prtag/:prTag" element={<ProductSearchPage/>}/>
       </Routes>
     </div>
   );

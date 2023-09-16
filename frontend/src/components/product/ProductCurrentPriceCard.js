@@ -51,6 +51,8 @@ const ProductCurrentPriceCard = (props) => {
   const [priceMonthAgo, setPriceMonthAgo] = useState(0);
 
   useEffect(() => {
+    // console.log("프롭스");
+    // console.log(props);
     if (props.product.dpr1.length > 3) {
       setPriceNow(
         Number(

@@ -32,6 +32,7 @@ const ProductSearchPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [keyword, setKeyword] = useState("");
   const [resultList, setResultList] = useState([]);
+  const [countyCode, setCountyCode] = useState("");
 
   const onKeywordChange = (e) => {
     setKeyword(e.target.value);
@@ -50,43 +51,15 @@ const ProductSearchPage = () => {
 
 
 
-  const onCategoryChange = () => {
+  const onCategoryChange = async() => {
+    console.log("uE 실행");
     //1101:서울, 2100:부산, 2200:대구, 2401:광주, 2501:대전
     setIsLoading(true);
     setProductList([]);
-    let countyCode = "";
-    let categoryIdx = 0;
-    if (currentCategory === "seoul") {
-      countyCode = "1101";
-    } else if (currentCategory === "busan") {
-      countyCode = "2100";
-    } else if (currentCategory === "daegu") {
-      countyCode = "2200";
-    } else if (currentCategory === "gwangju") {
-      countyCode = "2401";
-    } else if( currentCategory === "daejeon"){
-      countyCode = "2501";
-    }else{
-      categoryIdx = 1;
-    }
-    if(currentCategory === "fruits"){
-      countyCode = "1";
-    }else if(currentCategory === "sides"){
-      countyCode = "2";
-    }else if(currentCategory === "fishes"){
-      countyCode = "3";
-    }else if(currentCategory === "dried"){
-      countyCode = "4";
-    }else if(currentCategory === "farm"){
-      countyCode = "5";
-    }else if(currentCategory === "meats"){
-      countyCode = "6";
-    }else if(currentCategory === "foods"){
-      countyCode = "7";
-    }
 
-    if(categoryIdx==0){
-      axios
+    console.log(currentCategory);
+    if(currentView===0){
+      await axios
         .get(
           `http://cors-anywhere.herokuapp.com/${KAMIS_API_URL}/service/price/xml.do?action=ItemInfo`,
           {
@@ -94,11 +67,12 @@ const ProductSearchPage = () => {
               p_cert_key: "9ec7751a-6865-4116-98d5-181afba8c407",
               p_cert_id: "222",
               p_returntype: "json",
-              p_countycode: countyCode,
+              p_countycode: currentCategory,
             },
           }
         )
         .then((res) => {
+          // setProductList([]);
           setProductList(res.data.price);
           setIsLoading(false);
           console.log(res);
@@ -106,24 +80,27 @@ const ProductSearchPage = () => {
         .catch((err) => console.log(err));
     }else{
       console.log("들어갔니?");
-      axios
-        .get(`${API_URL}/product/${countyCode}`)
+      await axios
+        .get(`${API_URL}/prtag/${currentCategory}`)
         .then((res) => {
-          setProductList(res.data.price);
+          // setProductList([])
+          setProductList(res.data.data);
           setIsLoading(false);
-          console.log(res);
+          console.log(productList);
         })
         .catch((err) => console.log(err));
     }
   };
 
+  useEffect(()=>{
+    if(currentCategory==="all"){}
+    else{
+    onCategoryChange();
+    }
+  }, [currentCategory])
+
   useEffect(() => {
-    console.log(currentCategory)
-
-  })
-
-  useEffect(() => {
-
+    
     axios
       .get(
         `http://cors-anywhere.herokuapp.com/${KAMIS_API_URL}/service/price/xml.do`,
@@ -206,12 +183,9 @@ const ProductSearchPage = () => {
                 setSelectedPdCode={() => setSelectedPdCode(product.pdCode)}
               />
             ))
-          ) : // productList.map((product, index) => (
-          //   <ProductAverageCard product={product} key={index} setSelectedPdCode={()=>setSelectedPdCode(product.pdCode)}/>
-          // ))
-          currentView === 0 && resultList.length > 0 ? (
-            resultList.map((product, index) => (
-              <ProductCurrentPriceCard
+          ) : currentView === 1 && resultList.length === 0 ? (
+            productList.map((product, index) => (
+              <ProductAverageCard
                 product={product}
                 key={index}
                 setSelectedPdCode={() => setSelectedPdCode(product.pdCode)}
