@@ -35,7 +35,7 @@ const ConsumerMyPage = (props) => {
   }, []);
 
   return (
-    <div className="w-full h-full bg-white p-5">
+    <div className="w-full h-full bg-white py-16 px-5">
       {openProfileEdit ? (
         <ProfileEditCard
           setOpenProfileEdit={setOpenProfileEdit}

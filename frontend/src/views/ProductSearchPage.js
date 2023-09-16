@@ -197,7 +197,7 @@ const ProductSearchPage = () => {
   }, []);
 
   return (
-    <div className="App flex flex-col text-3xl h-full w-full bg-background-fill">
+    <div className="App flex flex-col text-3xl h-full w-full bg-background-fill py-16">
       <Header title="상품" basketButton />
       <div className="flex flex-col flex-grow">
         <div className="bg-white w-full h-16">

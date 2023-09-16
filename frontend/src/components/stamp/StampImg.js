@@ -1,8 +1,9 @@
-const StampImg = () => {
+const StampImg = (props) => {
+  console.log(props.src)
   return (
     <div className="avatar">
       <div className="w-60 rounded">
-        <img src="./chacha2.jpg" alt="stamp"/>
+        <img src={props.src} alt="stamp"/>
       </div>
     </div>
   );
