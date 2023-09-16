@@ -15,4 +15,6 @@ public interface PrTagService {
      * pcCode로 taglist 찾기
      * */
     List<PrTagFindRes> findTagByCategory (int pcCode);
+
+    List<PrTagFindRes> findAll();
 }
