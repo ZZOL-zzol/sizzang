@@ -24,7 +24,6 @@ const PlaceSearchPage = () => {
   const [offset, setOffset] = useState(0);
 
   const onSearchButtonClick = () => {
-    console.log("왜 리로딩?");
     axios
       .post(
         `${API_URL}/market/search`,

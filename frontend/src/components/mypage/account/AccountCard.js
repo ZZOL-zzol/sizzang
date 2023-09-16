@@ -60,7 +60,7 @@ const AccountCard = (props) => {
 
   return (
     <div
-      className="card shadow-none bg-background-fill flex-row p-5 w-full gap-3"
+      className="card shadow-none bg-background-fill flex-row p-5 w-full gap-3 rounded-lg"
       onClick={
         props.type === "history"
           ? () => props.onClickEvent(account.accountNumber)
