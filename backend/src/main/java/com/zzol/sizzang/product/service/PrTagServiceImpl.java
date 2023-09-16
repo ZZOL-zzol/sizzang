@@ -74,5 +74,22 @@ public class PrTagServiceImpl implements PrTagService {
         return res;
     }
 
+    @Override
+    public List<PrTagFindRes> findAll() {
+        log.info("PrTagService_findAll_start: ");
+
+        List<PrTagFindRes> res = prTagRepository.findAll()
+                .stream().map(m -> PrTagFindRes.builder()
+                        .tagName(m.getTagName())
+                        .tagUnit(m.getTagUnit())
+                        .tagCost(m.getTagCost())
+                        .tagCode(m.getTagCode())
+                        .build()
+                ).collect(Collectors.toList());
+
+        log.info("PrTagService_findAll_end: true");
+        return res;
+    }
+
 
 }

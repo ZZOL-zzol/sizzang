@@ -24,6 +24,7 @@ public class RegionEntity {
     private String mascotUrl;
     @Column(name = "mascot_name")
     private String mascotName;
+
 }
 
 

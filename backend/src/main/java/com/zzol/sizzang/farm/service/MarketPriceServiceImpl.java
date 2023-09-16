@@ -120,11 +120,11 @@ public class MarketPriceServiceImpl implements MarketPriceService {
 
     @Override
     public List<MarketPriceEntity> findCheaperItem(int direction){
-        List<MarketPriceEntity> items = marketPriceRepository.findByDirectionOrderByValueDesc(direction);
+        List<String> items = marketPriceRepository.getCheaperItems(direction);
 
         List<MarketPriceEntity> resultItems = new ArrayList<>();
-        for(int i= 0; i<5; i++) {
-            resultItems.add(items.get(i));
+        for(int i= 0; i<3; i++) {
+            resultItems.add(marketPriceRepository.getCheaperItemEntity(items.get(i)));
         }
         return resultItems;
     }
