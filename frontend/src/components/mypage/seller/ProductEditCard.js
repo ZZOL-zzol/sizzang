@@ -10,7 +10,7 @@ const ProductEditCard = (props) => {
 
   useEffect(() => {
     axios
-      .get(`${API_URL}/product/1`)
+      .get(`${API_URL}/product/${props.stCode}`)
       .then((res) => setProductList(res.data.data));
   }, []);
 

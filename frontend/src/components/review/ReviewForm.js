@@ -41,7 +41,7 @@ const ReviewForm = (props) => {
             JSON.stringify(data),
             { headers: { "Content-Type": "application/json" } }
           )
-          .then((res) => {console.log(res); navigate('/history') })
+          .then((res) => {console.log(res); navigate('/history', { state: { accountNumber: props.accountNumber } }) })
           .catch((err) => console.log(err));
       })
       .catch((err) => console.log(err));

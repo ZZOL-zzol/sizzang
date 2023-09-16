@@ -15,36 +15,27 @@ import { API_URL } from "../lib/constants";
 // ]
 
 const HistoryPage = () => {
+ 
   const location = useLocation();
+  console.log(location.state.accountNumber)
   const [accountNumber, setAccountNumber] = useState(
     location.state.accountNumber
   );
     const [historyList, setHistoryList] = useState([])
 
   useEffect(() => {
-    // axios.post(
-    //   `${API_URL}/bank/v1/search/transaction`,
-    //   {
-    //     dataHeader: { apiKey: "2023_Shinhan_SSAFY_Hackaton" },
-    //     dataBody: { 계좌번호: "110184999999" },
-    //   },
-    //   { headers: { "Content-Type": "application/json" } }
-    // )
-    // .then(res => console.log(res))
-    // .catch(err => console.log(err));
     axios.post(
       `${API_URL}/purchase/get`, JSON.stringify({accountNumber: accountNumber}), {headers : { "Content-Type" : "application/json"}}
     ).then(res => setHistoryList(res.data.data))
     .catch(err => console.log(err))
   }, []);
 
-  console.log(historyList)
   return (
     <div className="w-full bg-background-fill">
       <Header title="내 소비내역" backButton route="/profile" />
       <div className="flex flex-col w-full h-full py-20 gap-2">
         {historyList.map((history) => (
-          <HistoryCard history={history} />
+          <HistoryCard history={history} accountNumber={accountNumber}/>
         ))}
       </div>
       <Navbar />
