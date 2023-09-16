@@ -25,7 +25,7 @@ const Header = (props) => {
 
   const navigate = useNavigate();
   return (
-    <div className="navbar bg-base-100 sticky top-0 z-40">
+    <div className="navbar bg-base-100 fixed top-0 z-40">
       <div className="flex-1">
         {props.backButton ? (
           <Link to={props.route}>

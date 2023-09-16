@@ -3,27 +3,26 @@ import SearchBar from "./SearchBar";
 import Map from "./Map";
 
 const { kakao } = window;
-
-const MapPractice = () => {
-    const [keyword, setKeyword] = useState("");
+const MapPractice = (props) => {
+    
     const [map, setMap] = useState(null);
   
-    useEffect(() => {
-      const container = document.getElementById("map");
-      const options = {
-        center: new kakao.maps.LatLng(37.2255, 127.1161),
-        level: 3,
-      };
-      const newMap = new kakao.maps.Map(container, options);
-      setMap(newMap);
-      const markerPosition = new kakao.maps.LatLng(37.2255, 127.1161);
-      const marker = new kakao.maps.Marker({
-        position: markerPosition,
-      });
-      marker.setMap(newMap);
-    }, []);
+    // useEffect(() => {
+    //   const container = document.getElementById("map");
+    //   const options = {
+    //     center: new kakao.maps.LatLng(37.2255, 127.1161),
+    //     level: 3,
+    //   };
+    //   const newMap = new kakao.maps.Map(container, options);
+    //   setMap(newMap);
+    //   const markerPosition = new kakao.maps.LatLng(37.2255, 127.1161);
+    //   const marker = new kakao.maps.Marker({
+    //     position: markerPosition,
+    //   });
+    //   marker.setMap(newMap);
+    // }, []);
   
-    useEffect(() => {
+    // useEffect(() => {
       // // 장소 검색 객체를 생성
       // const ps = new kakao.maps.services.Places();
   
@@ -63,7 +62,7 @@ const MapPractice = () => {
     //         infowindow.open(map, marker);
     //     });
     // }
-    }, [map, keyword]);
+    // }, [map, props.keyword]);
   
     // const searchLocation = (address) => {
     //   const geocoder = new kakao.maps.services.Geocoder();
@@ -74,29 +73,34 @@ const MapPractice = () => {
     //     }
     //   });
     // };
+    const onKeywordChange = (e) => {
+      console.log('1')
+      props.setKeyword(e.target.value);
+    }
+
+    
   
     return (
-      <div> 
-        <div>
-          <div id="map" style={{ width: "500px", height: "400px" }}></div>
-        </div>
+      <div className="w-full h-full flex flex-col"> 
+        {/* <div>
+          <div id="map" style={{height: "350px" }}></div>
+        </div> */}
+        <Map mkLatitude={props.mkLatitude} mkLongtitude={props.mkLongtitude} mkName={props.mkName}/>
         <div id="menu_wrap" className="">
           <div className="option">
             <div>
-              <form>
                 <div className="flex flex-col w-full bg-white pb-2">
                   <SearchBar
                     placeholder="시장, 점포를 입력하세요."
-                    setKeyword={setKeyword}
+                    keyword = {props.keyword}
+                    onChangeEvent={onKeywordChange}
+                    onClickEvent={props.onSearchButtonClick}
                   ></SearchBar>
                 </div>
-              </form>
-              <Map />
+              
             </div> 
           </div>
           <hr />
-          <ul id="placesList"></ul>
-          <div id="pagination"></div>
         </div>
       </div>
     );
