@@ -30,4 +30,6 @@ public interface StoreService {
     List<StoreFindRes> selectAllStoreByMarket(int mkCode);
 
     List<StoreFindByUserRes> findByStoreByUser(Long userCode);
+
+    public List<StoreFindRes> findStoreCodeByTag(int tagCode);
 }
