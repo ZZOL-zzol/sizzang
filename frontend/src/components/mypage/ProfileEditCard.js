@@ -194,7 +194,7 @@ const ProfileEditCard = (props) => {
                     onInputChange={setUserValue}
                   />
                 ) : (
-                  <div className="text-outline">{props.store.mkName}</div>
+                  <div className="text-outline">{props.store?props.store.mkName:""}</div>
                 )}
               </div>
               <div className="flex justify-between">
@@ -206,7 +206,7 @@ const ProfileEditCard = (props) => {
                     onInputChange={setUserValue}
                   />
                 ) : (
-                  <div className="text-outline">{props.store.mkAddress}</div>
+                  <div className="text-outline">{props.store?props.store.mkAddress:""}</div>
                 )}
               </div>
             </div>
@@ -231,7 +231,7 @@ const ProfileEditCard = (props) => {
                     onInputChange={setUserValue}
                   />
                 ) : (
-                  <div className="text-outline">{props.store.stName}</div>
+                  <div className="text-outline">{props.store?props.store.stName:""}</div>
                 )}
               </div>
               <div className="flex justify-between">
@@ -243,7 +243,7 @@ const ProfileEditCard = (props) => {
                     onInputChange={setUserValue}
                   />
                 ) : (
-                  <div className="text-outline">{props.store.stAddress}</div>
+                  <div className="text-outline">{props.store?props.store.stAddress:""}</div>
                 )}
               </div>
               <div className="flex justify-between">
@@ -255,7 +255,7 @@ const ProfileEditCard = (props) => {
                     onInputChange={setUserValue}
                   />
                 ) : (
-                  <div className="text-outline">{props.store.scName}</div>
+                  <div className="text-outline">{props.store?props.store.scName:""}</div>
                 )}
               </div>
               <div className="flex justify-between">
@@ -267,7 +267,7 @@ const ProfileEditCard = (props) => {
                     onInputChange={setUserValue}
                   />
                 ) : (
-                  <div className="text-outline">{props.store.stPhone}</div>
+                  <div className="text-outline">{props.store?props.store.stPhone:""}</div>
                 )}
               </div>
               <div className="flex justify-between">
@@ -279,7 +279,7 @@ const ProfileEditCard = (props) => {
                     onInputChange={setUserValue}
                   />
                 ) : (
-                  <div className="text-outline">{props.store.stTime}</div>
+                  <div className="text-outline">{props.store?props.store.stTime:""}</div>
                 )}
               </div>
               <div className="flex justify-between">
@@ -291,7 +291,7 @@ const ProfileEditCard = (props) => {
                     onInputChange={setUserValue}
                   />
                 ) : (
-                  <div className="text-outline">{props.store.stIntro}</div>
+                  <div className="text-outline">{props.store?props.store.stIntro:""}</div>
                 )}
               </div>
             </div>
