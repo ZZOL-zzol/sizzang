@@ -11,7 +11,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-public interface BankRepository extends JpaRepository<Bank, String> {
+public interface BankRepository extends JpaRepository<Bank, Long> {
 
     Bank findByAccountNumber(String accountNumber);
 
@@ -27,6 +27,13 @@ public interface BankRepository extends JpaRepository<Bank, String> {
             " SET registed = TRUE  " +
             " WHERE account_number = ?1 " , nativeQuery = true)
     void updateRegistUserAccountByUserId(String userAccount);
+
+
+    @Modifying
+    @Query(value = " UPDATE bank " +
+            " SET registed = FALSE  " +
+            " WHERE account_number = ?1 " , nativeQuery = true)
+    void deleleRegistUserAccountByUserId(String userAccount);
 }
 
 

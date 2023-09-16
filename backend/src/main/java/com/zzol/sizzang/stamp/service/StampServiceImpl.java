@@ -24,8 +24,9 @@ public class StampServiceImpl implements StampService{
     }
 
     @Override
-    public List<StampEntity> getStampList(StampReq stampReq) {
-        List<StampEntity> stampList = stampRepository.findAllByUserCode(stampReq.getUserCode());
+    public List<RegionEntity> getStampList(StampReq stampReq) {
+        List<RegionEntity> stampList = regionRepository.getByUserCode(stampReq.getUserCode());
+
         return stampList;
     }
 
