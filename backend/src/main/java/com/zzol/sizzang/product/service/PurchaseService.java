@@ -1,8 +1,13 @@
 package com.zzol.sizzang.product.service;
 
-import com.zzol.sizzang.product.dto.request.PurchaseRegistRes;
+import com.zzol.sizzang.product.dto.request.PurchaseRegistReq;
+import com.zzol.sizzang.product.dto.response.PurchaseRegistRes;
+
+import java.util.List;
 
 public interface PurchaseService {
 
-    public void addPurchase(PurchaseRegistRes purchaseRegistRes);
+    void addPurchase(PurchaseRegistReq purchaseRegistReq);
+
+    List<PurchaseRegistRes> getDetailList(String accountNumber);
 }

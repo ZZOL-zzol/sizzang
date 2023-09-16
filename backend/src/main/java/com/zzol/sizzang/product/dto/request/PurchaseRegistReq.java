@@ -8,7 +8,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PurchaseRegistRes {
+public class PurchaseRegistReq {
 
 //    private Long puCode;
 //    private Boolean reRegisted;
