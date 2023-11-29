@@ -102,7 +102,7 @@
 
 ## 🗂️ ERD
 
-<!-- ![ERD](./exec/images/ERD.png) -->
+![ERD](./images/erd.png)
 
 <br/>
 
