@@ -56,10 +56,10 @@
 <div align=center>
 <h4>💻 BACKEND</h4>
 <img src="https://img.shields.io/badge/springboot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white">
-<img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white">
+<!-- <img src="https://img.shields.io/badge/springsecurity-6DB33F?style=for-the-badge&logo=springsecurity&logoColor=white"> -->
 <img src="https://img.shields.io/badge/JPA-02303A?style=for-the-badge&logo=JPA&logoColor=white">
-<img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JWT&logoColor=white">
-<img src="https://img.shields.io/badge/SSE-FF4154?style=for-the-badge&logo=SSE&logoColor=white">
+<!-- <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=JWT&logoColor=white"> -->
+<!-- <img src="https://img.shields.io/badge/SSE-FF4154?style=for-the-badge&logo=SSE&logoColor=white"> -->
 </div>
 
 <br/>
@@ -75,7 +75,7 @@
 <div align=center>
 <h4>🗄 DB</h4>
 <img src="https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white">
-<img src="https://img.shields.io/badge/redis-DC382D?style=for-the-badge&logo=redis&logoColor=white">
+<!-- <img src="https://img.shields.io/badge/redis-DC382D?style=for-the-badge&logo=redis&logoColor=white"> -->
 </div>
 
 <br/>
