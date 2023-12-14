@@ -78,15 +78,9 @@
 
 <br/>
 
-<!-- ## 📝 포팅 메뉴얼
-
-### [바로가기](./exec/포팅메뉴얼.md)
-
-<br/> -->
-
 ## ⚙️ 개발 과정
 
-- git flow 를 전적으로 따랐으며 rebase를 적극 활용하는 시도를 했다.
+- "파트 / 작업구분 / 기능" 양식으로 기능별 Branch 관리
 
 <br/>
 
@@ -122,33 +116,16 @@
 
 ## 😊 서비스 화면
 
-| <span style="font-size:20px;">회원 가입</span>      | <span style="font-size:20px;">나무 생성</span>      | <span style="font-size:20px;">정원 목록 확인</span> |
+| <span style="font-size:20px;">로그인</span>      | <span style="font-size:20px;">시장검색</span>      | <span style="font-size:20px;">시장상세</span> |
 | --------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------- |
-| <img src="./exec/images/회원가입.gif" height="600"> | <img src="./exec/images/나무생성.gif" height="600"> | <img src="./exec/images/정원목록.gif" height="600"> |
+| <img src="./exec/images/로그인.gif" height="600"> | <img src="./exec/images/시장검색.gif" height="600"> | <img src="./exec/images/시장상세.gif" height="600"> |
 
-| <span style="font-size:20px;">열매 확인</span>      | <span style="font-size:20px;">나무 검색</span>      | <span style="font-size:20px;">정원 생성</span>      |
+| <span style="font-size:20px;">상품시세</span>      | <span style="font-size:20px;">요리추천</span>      | <span style="font-size:20px;">장바구니, 결제</span>      |
 | --------------------------------------------------- | --------------------------------------------------- | --------------------------------------------------- |
-| <img src="./exec/images/열매확인.png" height="600"> | <img src="./exec/images/나무검색.png" height="600"> | <img src="./exec/images/정원생성.png" height="600"> |
+| <img src="./exec/images/상품시세.gif" height="600"> | <img src="./exec/images/요리추천.gif" height="600"> | <img src="./exec/images/장바구니,결제.gif" height="600"> |
 
-| <span style="font-size:20px;">정원 조회</span>      | <span style="font-size:20px;">나무/꽃 심기</span>      | <span style="font-size:20px;">열매 달기</span>      |
+| <span style="font-size:20px;">계좌등록</span>      | <span style="font-size:20px;">상품등록</span>      | <span style="font-size:20px;">리뷰작성</span>      |
 | --------------------------------------------------- | ------------------------------------------------------ | --------------------------------------------------- |
-| <img src="./exec/images/정원조회.gif" height="600"> | <img src="./exec/images/나무,꽃심기.gif" height="600"> | <img src="./exec/images/열매달기.gif" height="600"> |
-
-| <span style="font-size:20px;">관리자 화면</span>       |
-| ------------------------------------------------------ |
-| <img src="./exec/images/관리자페이지.gif" width="800"> |
+| <img src="./exec/images/계좌등록.gif" height="600"> | <img src="./exec/images/상품등록.gif" height="600"> | <img src="./exec/images/리뷰작성.gif" height="600"> |
 
 <br/><br/>
-
-## 프로젝트 버전 관리
-
-<!-- - ver1.0.0
-
-  - 최초 배포
-  - 이미지 생성 및 저장 가능
-  - 정원 생성 및 가입, 초대(공유)
-  - 실시간 알림 서비스
-
-- ver1.1.0(예정)
-  - 맵 템플릿 추가 및 변경 가능
-  - 정원 내 접속 인원들 간 채팅 기능 -->
